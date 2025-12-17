@@ -4,7 +4,6 @@ const images = [
   "/images/hero/carousel/studio-1.jpeg",
   "/images/hero/carousel/studio-2.jpeg",
   "/images/hero/carousel/studio-3.jpeg",
-  "/images/hero/carousel/studio-4.jpeg",
 ];
 
 export default function HeroCarousel() {
@@ -32,9 +31,16 @@ export default function HeroCarousel() {
         <h1>FisioFitness</h1>
         <p>Fisioterapia & Allenamento Personalizzato</p>
 
-        <a href="#contatti" className="btn">
+        <button
+          className="btn"
+          onClick={() => {
+            document
+              .querySelector(".chi-cta")
+              ?.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
           Prenota una consulenza
-        </a>
+        </button>
       </div>
     </section>
   );

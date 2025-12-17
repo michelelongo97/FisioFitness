@@ -18,11 +18,12 @@ body {
 /* ======================= HEADER ======================= */
 header {
   width: 100%;
-  min-height: 10vh;
-  background-color: #146272;
+  height: 80px;
+  /*background-color: #146272;*/
   color: antiquewhite;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 999;
   padding: 8px 0;
 }
@@ -37,6 +38,7 @@ header {
 .logo {
   width: 180px;
   height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
 }
 
 /* ======================= FOOTER ======================= */
@@ -125,8 +127,7 @@ header {
 /* ================= HERO CAROUSEL ================= */
 .hero-carousel {
   position: relative;
-  height: 90vh;
-  overflow: hidden;
+  height: 100vh;
 }
 
 .hero-slide {
@@ -208,16 +209,6 @@ header {
 
 /* ======================= DESKTOP ======================= */
 @media (min-width: 768px) {
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .header-top {
-    justify-content: flex-start;
-  }
-
   .footer-top {
     flex-direction: row;
     justify-content: space-between;
@@ -336,6 +327,7 @@ header {
   text-align: center;
   background: #75dac7;
   color: #146272;
+  scroll-margin-top: 100px;
 }
 
 .chi-cta p {
