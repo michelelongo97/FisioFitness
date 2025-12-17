@@ -18,7 +18,7 @@ body {
 /* ======================= HEADER ======================= */
 header {
   width: 100%;
-  min-height: 100px;
+  min-height: 10vh;
   background-color: #146272;
   color: antiquewhite;
   position: sticky;
@@ -37,11 +37,6 @@ header {
 .logo {
   width: 180px;
   height: auto;
-}
-
-main {
-  background-color: #fff;
-  min-height: 75vh;
 }
 
 /* ======================= FOOTER ======================= */
@@ -127,6 +122,51 @@ main {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* ================= HERO CAROUSEL ================= */
+.hero-carousel {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* overlay */
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-overlay h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.hero-overlay p {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
 .chi-siamo-premium {
   background: #fff;
   color: #1a1a1a;
@@ -200,6 +240,13 @@ main {
 
   .footer-info p {
     font-size: 16px;
+  }
+  .hero-overlay h1 {
+    font-size: 52px;
+  }
+
+  .hero-overlay p {
+    font-size: 22px;
   }
 }
 
