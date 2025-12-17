@@ -238,6 +238,11 @@ header {
   .hero-overlay p {
     font-size: 22px;
   }
+
+  .cta-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
 .chi-siamo-premium {
@@ -323,16 +328,67 @@ header {
 
 /* CTA */
 .chi-cta {
-  padding: 80px 20px;
+  background: linear-gradient(135deg, #146272, #3da9a9);
+  color: white;
   text-align: center;
-  background: #75dac7;
-  color: #146272;
-  scroll-margin-top: 100px;
+  padding: 60px 20px;
+}
+
+.chi-cta h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
 }
 
 .chi-cta p {
-  padding-top: 20px;
-  padding-bottom: 30px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  font-size: 16px;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+/* BOTTONI */
+.cta-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 240px;
+  padding: 14px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-btn svg {
+  font-size: 20px;
+}
+
+/* COLORI */
+.cta-btn.phone {
+  background: white;
+  color: #146272;
+}
+
+.cta-btn.whatsapp {
+  background: #25d366;
+  color: white;
+}
+
+.cta-btn.email {
+  background: #0d4a54;
+  color: white;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {

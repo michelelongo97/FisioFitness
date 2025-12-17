@@ -1,4 +1,8 @@
 import HeroCarousel from "../components/HeroCarousel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+
+import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
   return (
@@ -119,18 +123,42 @@ export default function HomePage() {
 
         {/* CTA */}
         <section className="chi-cta">
-          <h3>Inizia il tuo percorso</h3>
+          <h2>Prenota una consulenza</h2>
           <p>
-            Prenota una consulenza e costruisci un percorso su misura per te
+            Contattami direttamente per una valutazione fisioterapica o un
+            percorso personalizzato.
           </p>
-          <a
-            href={import.meta.env.VITE_MEET_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn"
-          >
-            Prenota un appuntamento
-          </a>
+
+          <div className="cta-buttons">
+            {/* TELEFONO */}
+            <a
+              href={`tel:${import.meta.env.VITE_PHONE_NUMBER}`}
+              className="cta-btn phone"
+            >
+              <FontAwesomeIcon icon={faPhone} />
+              <span>Chiama</span>
+            </a>
+
+            {/* WHATSAPP */}
+            <a
+              href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn whatsapp"
+            >
+              <FontAwesomeIcon icon={faWhatsapp} />
+              <span>WhatsApp</span>
+            </a>
+
+            {/* EMAIL */}
+            <a
+              href={`mailto:${import.meta.env.VITE_EMAIL}`}
+              className="cta-btn email"
+            >
+              <FontAwesomeIcon icon={faEnvelope} />
+              <span>Email</span>
+            </a>
+          </div>
         </section>
       </main>
     </>
