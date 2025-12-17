@@ -1,0 +1,204 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+/* GENERAL */
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ======================= HEADER ======================= */
+header {
+  width: 100%;
+  min-height: 100px;
+  background-color: #146272;
+  color: antiquewhite;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 8px 0;
+}
+
+/* Parte alta header → LOGO */
+.header-top {
+  display: flex;
+  justify-content: center; /* MOBILE → logo centrato */
+  align-items: center;
+  position: relative;
+}
+.logo {
+  width: 180px;
+  height: auto;
+}
+
+main {
+  background-color: #fff;
+  min-height: 75vh;
+}
+
+/* ======================= FOOTER ======================= */
+.footer {
+  background: linear-gradient(to top, #2f8f8f, #3da9a9);
+  color: antiquewhite;
+  padding: 50px 15px 25px;
+}
+
+.footer h4 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* TOP */
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* COLONNE */
+.footer-col {
+  text-align: center;
+}
+
+/* SOCIAL */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.social-icons a svg {
+  font-size: 26px;
+  color: #75dac7;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.social-icons a:hover svg {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+/* SPONSOR */
+.sponsor-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.sponsor-logos img {
+  height: 42px; /* 🔑 chiave per proporzioni */
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  opacity: 0.85;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sponsor-logos img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* INFO */
+.footer-info p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+/* BOTTOM */
+.footer-bottom {
+  margin-top: 40px;
+  padding-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.75;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chi-siamo-premium {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+/* BUTTONS */
+.btn,
+.btn-danger {
+  margin: 20px 5px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn {
+  background-color: #146272;
+  color: antiquewhite;
+}
+.btn:hover {
+  background-color: #0d4a54;
+  transform: scale(1.03);
+}
+
+.btn-danger {
+  background-color: rgb(155, 9, 9);
+  color: white;
+}
+.btn-danger:hover {
+  background-color: rgb(120, 0, 0);
+}
+
+.btn:active,
+.btn-danger:active {
+  transform: scale(0.98);
+}
+
+/* ======================= DESKTOP ======================= */
+@media (min-width: 768px) {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .header-top {
+    justify-content: flex-start;
+  }
+
+  .footer-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer-col {
+    flex: 1;
+  }
+
+  .footer h4 {
+    font-size: 20px;
+  }
+
+  .sponsor-logos img {
+    height: 46px;
+    max-width: 160px;
+  }
+
+  .footer-info p {
+    font-size: 16px;
+  }
+}
