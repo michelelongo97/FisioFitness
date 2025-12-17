@@ -202,3 +202,112 @@ main {
     font-size: 16px;
   }
 }
+
+.chi-siamo-premium {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+/* HERO */
+.chi-hero {
+  padding: 80px 20px;
+  background: #f4f8f8;
+}
+
+.chi-hero-content {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.chi-hero-img {
+  width: 320px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.chi-hero-text h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.chi-hero-text h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: #146272;
+  margin-bottom: 20px;
+}
+
+.chi-hero-text p {
+  font-size: 18px;
+  max-width: 500px;
+}
+
+/* SEZIONI */
+.chi-section {
+  padding: 80px 20px;
+}
+
+.chi-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.chi-section h3 {
+  font-size: 30px;
+  margin-bottom: 30px;
+  color: #146272;
+}
+
+/* CARD */
+.chi-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.chi-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* VARIANTI */
+.chi-dark {
+  background: #f0f6f6;
+}
+
+.chi-light {
+  background: #fafafa;
+}
+
+/* CTA */
+.chi-cta {
+  padding: 80px 20px;
+  text-align: center;
+  background: #75dac7;
+  color: #146272;
+}
+
+.chi-cta p {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .chi-hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .chi-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .chi-hero-img {
+    width: 260px;
+  }
+}
