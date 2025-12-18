@@ -18,6 +18,7 @@ export default function HomePage() {
           <div className="chi-hero-content">
             <img
               src="/images/hero/dottore.jpeg"
+              loading="lazy"
               alt="Costantino Picciallo"
               className="chi-hero-img"
             />
@@ -154,15 +155,6 @@ export default function HomePage() {
               <span>WhatsApp</span>
             </a>
 
-            {/* EMAIL */}
-            <a
-              href={`mailto:${import.meta.env.VITE_EMAIL}`}
-              className="cta-btn email"
-            >
-              <FontAwesomeIcon icon={faEnvelope} />
-              <span>Email</span>
-            </a>
-
             {/* MAPS */}
             <a
               href={`${import.meta.env.VITE_MAPS}`}
@@ -172,6 +164,15 @@ export default function HomePage() {
             >
               <FontAwesomeIcon icon={faMapLocationDot} />
               <span>Maps</span>
+            </a>
+
+            {/* EMAIL */}
+            <a
+              href={`mailto:${import.meta.env.VITE_EMAIL}`}
+              className="cta-btn email"
+            >
+              <FontAwesomeIcon icon={faEnvelope} />
+              <span>Email</span>
             </a>
           </div>
         </section>

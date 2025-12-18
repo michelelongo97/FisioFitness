@@ -33,6 +33,7 @@ export default function HeroCarousel() {
         <p>Fisioterapia & Allenamento Personalizzato</p>
 
         <button
+          type="button"
           className="btn"
           onClick={() => {
             document

@@ -91,7 +91,7 @@ export default function Footer() {
               Dr. Costantino Picciallo
             </p>
             <p>P.IVA: 08494380721</p>
-            <p>Email: costantinopicciallo97@gmail.com</p>
+            <p>Email: {import.meta.env.VITE_EMAIL}</p>
             <p>
               Via Palermo, 26
               <br />
