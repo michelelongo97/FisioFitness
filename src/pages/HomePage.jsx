@@ -2,7 +2,11 @@ import HeroCarousel from "../components/HeroCarousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPhone,
+  faEnvelope,
+  faMapLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
   return (
@@ -19,7 +23,7 @@ export default function HomePage() {
             />
 
             <div className="chi-hero-text">
-              <h1>Costantino Picciallo</h1>
+              <h1>Dr. Costantino Picciallo</h1>
               <h2>
                 Fisioterapista specializzato <br />& Personal Trainer
                 certificato
@@ -157,6 +161,17 @@ export default function HomePage() {
             >
               <FontAwesomeIcon icon={faEnvelope} />
               <span>Email</span>
+            </a>
+
+            {/* MAPS */}
+            <a
+              href={`${import.meta.env.VITE_MAPS}`}
+              className="cta-btn maps"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faMapLocationDot} />
+              <span>Maps</span>
             </a>
           </div>
         </section>

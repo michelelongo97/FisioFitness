@@ -4,6 +4,7 @@ const images = [
   "/images/hero/carousel/studio-1.jpeg",
   "/images/hero/carousel/studio-2.jpeg",
   "/images/hero/carousel/studio-3.jpeg",
+  "/images/hero/carousel/studio-4.jpeg",
 ];
 
 export default function HeroCarousel() {

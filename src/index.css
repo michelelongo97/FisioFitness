@@ -281,10 +281,13 @@ header {
   margin: 20px 5px;
   border: none;
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 16px 16px;
   font-size: 16px;
   cursor: pointer;
   text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: absolute;
+  top: 530px;
 }
 
 .btn {
@@ -339,6 +342,11 @@ header {
 .cta-btn.email {
   background: #0d4a54;
   color: white;
+}
+
+.cta-btn.maps {
+  background: #75dac7;
+  color: #146272;
 }
 
 .cta-btn:hover {
