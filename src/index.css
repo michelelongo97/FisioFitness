@@ -227,6 +227,27 @@ body {
   font-size: 18px;
   max-width: 500px;
 }
+.chi-titles {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.chi-titles li {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 18px;
+}
+
+.chi-titles li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #146272;
+  font-weight: bold;
+}
 
 /* SEZIONI */
 .chi-section {
@@ -242,6 +263,32 @@ body {
   font-size: 30px;
   margin-bottom: 30px;
   color: #146272;
+}
+
+.chi-services {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.chi-service {
+  padding-left: 20px;
+  border-left: 4px solid #6fd3c3;
+}
+
+.chi-service h4 {
+  font-size: 17px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #146272;
+  margin-bottom: 6px;
+}
+
+.chi-service p {
+  font-size: 15px;
+  max-width: 520px;
+  color: #444;
 }
 
 /* CARD */

@@ -25,14 +25,16 @@ export default function HomePage() {
 
             <div className="chi-hero-text">
               <h1>Dr. Costantino Picciallo</h1>
-              <h2>
-                Fisioterapista specializzato <br />& Personal Trainer
-                certificato
-              </h2>
-              <p>
-                Riabilitazione muscolo-scheletrica, movimento consapevole e
-                performance duratura.
-              </p>
+
+              <h2>Fisioterapista & Personal Trainer</h2>
+
+              <ul className="chi-titles">
+                <li>Laurea in Fisioterapia</li>
+                <li>
+                  Master in Riabilitazione dei Disordini Muscolo-Scheletrici
+                </li>
+                <li>Personal Trainer Certificato Project Invictus</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -40,6 +42,8 @@ export default function HomePage() {
         {/* BIO */}
         <section className="chi-section">
           <div className="chi-container">
+            <h3>Chi Sono</h3>
+
             <p>
               Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e sono
               un fisioterapista specializzato in{" "}
@@ -48,15 +52,15 @@ export default function HomePage() {
 
             <p>
               Il mio obiettivo è aiutare le persone a recuperare il benessere
-              fisico e migliorare la qualità della vita attraverso terapie
-              scientifiche e percorsi personalizzati.
+              fisico e migliorare la qualità della vita attraverso percorsi
+              terapeutici basati su evidenze scientifiche.
             </p>
 
             <p>
-              Alla mia attività di fisioterapista affianco quella di{" "}
+              Affianco all’attività clinica quella di{" "}
               <strong>Personal Trainer certificato Project Invictus</strong>,
-              offrendo un approccio integrato che unisce riabilitazione e
-              allenamento per risultati duraturi.
+              per offrire un approccio completo che unisca riabilitazione e
+              allenamento.
             </p>
           </div>
         </section>
@@ -64,36 +68,44 @@ export default function HomePage() {
         {/* COMPETENZE */}
         <section className="chi-section chi-dark">
           <div className="chi-container">
-            <h3>Competenze Professionali</h3>
+            <h3>Servizi</h3>
 
-            <div className="chi-cards">
-              <div className="chi-card">
-                <h4>Fisioterapia</h4>
+            <div className="chi-services">
+              <div className="chi-service">
+                <h4>Terapia Manuale</h4>
                 <p>
-                  Valutazione funzionale, riabilitazione muscolo-scheletrica,
-                  recupero post-infortunio.
+                  Trattamenti mirati per ridurre il dolore e migliorare la
+                  mobilità articolare.
                 </p>
               </div>
 
-              <div className="chi-card">
-                <h4>Personal Training</h4>
+              <div className="chi-service">
+                <h4>Esercizio Terapeutico</h4>
                 <p>
-                  Allenamento personalizzato, forza, prevenzione infortuni,
-                  performance.
+                  Programmi di esercizio personalizzati per il recupero
+                  funzionale.
                 </p>
               </div>
 
-              <div className="chi-card">
-                <h4>Approccio Scientifico</h4>
+              <div className="chi-service">
+                <h4>Riabilitazione Ortopedica</h4>
+                <p>Percorsi post-infortunio e post-chirurgici su misura.</p>
+              </div>
+
+              <div className="chi-service">
+                <h4>Riabilitazione Neurologica</h4>
                 <p>
-                  Metodologie basate su evidenze scientifiche e adattate alla
-                  persona.
+                  Recupero motorio e funzionale con approccio individualizzato.
                 </p>
+              </div>
+
+              <div className="chi-service">
+                <h4>Allenamento Personalizzato</h4>
+                <p>Integrazione tra riabilitazione e performance fisica.</p>
               </div>
             </div>
           </div>
         </section>
-
         {/* METODO */}
         <section className="chi-section">
           <div className="chi-container">
