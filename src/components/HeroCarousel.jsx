@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const images = [
-  "/images/hero/carousel/studio-1.jpeg",
-  "/images/hero/carousel/studio-2.jpeg",
-  "/images/hero/carousel/studio-3.jpeg",
-  "/images/hero/carousel/studio-4.jpeg",
+  "/images/hero/carousel/studio-1.jpg",
+  "/images/hero/carousel/studio-2.jpg",
+  "/images/hero/carousel/studio-3.jpg",
+  "/images/hero/carousel/studio-4.jpg",
 ];
 
 export default function HeroCarousel() {
@@ -17,6 +17,11 @@ export default function HeroCarousel() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const scrollToCTA = () => {
+    const cta = document.querySelector(".chi-cta");
+    cta?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section className="hero-carousel">
@@ -35,11 +40,8 @@ export default function HeroCarousel() {
         <button
           type="button"
           className="btn"
-          onClick={() => {
-            document
-              .querySelector(".chi-cta")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }}
+          aria-label="scorri alla sezione prenota una consulenza"
+          onClick={scrollToCTA}
         >
           Prenota una consulenza
         </button>
