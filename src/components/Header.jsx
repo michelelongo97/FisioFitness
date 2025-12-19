@@ -12,9 +12,21 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <header className={`main-header ${scrolled ? "scrolled" : ""}`}>
-      <img src="/images/logos/logo.png" alt="FisioFitness" className="logo" />
+      <img
+        src="/images/logos/logo.png"
+        alt="FisioFitness"
+        className="logo"
+        onClick={scrollToTop}
+      />
     </header>
   );
 }

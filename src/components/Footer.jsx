@@ -1,9 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInstagram,
-  faFacebook,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+import { faInstagram, faFacebook } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
   return (
@@ -30,20 +26,12 @@ export default function Footer() {
               >
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
-
-              <a
-                href={import.meta.env.VITE_SOCIAL_YOUTUBE}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FontAwesomeIcon icon={faYoutube} />
-              </a>
             </div>
           </div>
 
           {/* SPONSOR */}
           <div className="footer-col footer-sponsor">
-            <h4>I Nostri Partner</h4>
+            <h4>Partners</h4>
             <div className="sponsor-logos">
               <a
                 href={import.meta.env.VITE_SPONSOR_MATERA_URL}
@@ -92,6 +80,7 @@ export default function Footer() {
             </p>
             <p>P.IVA: 08494380721</p>
             <p>Email: {import.meta.env.VITE_EMAIL}</p>
+            <p>Tel: {import.meta.env.VITE_TEL}</p>
             <p>
               Via Palermo, 26
               <br />
@@ -102,7 +91,8 @@ export default function Footer() {
 
         {/* FOOTER BOTTOM */}
         <div className="footer-bottom">
-          © {new Date().getFullYear()} FisioFitness – Tutti i diritti riservati
+          © 2024 - {new Date().getFullYear()} FisioFitness – Tutti i diritti
+          riservati
         </div>
       </div>
     </footer>

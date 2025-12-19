@@ -5,8 +5,11 @@
   padding: 0;
 }
 
+html,
 body {
   font-family: "Nunito", sans-serif;
+  background-color: #ffffff;
+  overscroll-behavior: none;
 }
 
 /* GENERAL */
@@ -35,7 +38,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -57,6 +60,7 @@ body {
   z-index: 1;
   width: 180px;
   height: auto;
+  cursor: pointer;
 }
 
 /* ======================= FOOTER ======================= */
@@ -145,7 +149,8 @@ body {
 /* ================= HERO CAROUSEL ================= */
 .hero-carousel {
   position: relative;
-  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .hero-slide {
@@ -166,7 +171,7 @@ body {
   position: relative;
   z-index: 2;
   height: 100%;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.18);
   color: white;
   display: flex;
   flex-direction: column;
@@ -466,6 +471,10 @@ body {
 }
 
 @media (max-width: 768px) {
+  .main-header::before {
+    background: rgba(0, 0, 0, 0.35);
+  }
+
   .chi-hero-content {
     flex-direction: column;
     text-align: center;
