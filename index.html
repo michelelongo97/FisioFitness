@@ -1,19 +1,57 @@
 <!DOCTYPE html>
 <html lang="it">
   <head>
+    <!-- Charset -->
     <meta charset="UTF-8" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/logos/logo.svg" />
+
+    <!-- Preconnect Google Fonts (performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Preload prima immagine hero (LCP) -->
     <link rel="preload" as="image" href="/images/hero/carousel/studio-1.jpg" />
+
+    <!-- Viewport (Safari iOS fix incluso) -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0 viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>FisioFitness</title>
+
+    <!-- SEO Title -->
+    <title>
+      FisioFitness | Fisioterapia e Allenamento Personalizzato a Gravina in
+      Puglia
+    </title>
+
+    <!-- SEO Description -->
+    <meta
+      name="description"
+      content="FisioFitness è lo studio di fisioterapia e allenamento personalizzato del Dr. Costantino Picciallo a Gravina in Puglia. Riabilitazione, prevenzione e performance."
+    />
+
+    <!-- Open Graph (social & WhatsApp preview) -->
+    <meta
+      property="og:title"
+      content="FisioFitness – Fisioterapia e Allenamento Personalizzato"
+    />
+    <meta
+      property="og:description"
+      content="Studio di fisioterapia e allenamento personalizzato a Gravina in Puglia."
+    />
+    <meta property="og:image" content="/images/hero/carousel/studio-1.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
