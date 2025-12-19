@@ -243,11 +243,11 @@ body {
   color: #444;
   margin-bottom: 8px;
   position: relative;
-  padding-left: 18px;
+  padding-left: 12px;
+  text-align: left;
 }
 
 .chi-titles li::before {
-  content: "•";
   position: absolute;
   left: 0;
   color: #146272;

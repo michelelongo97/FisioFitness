@@ -6,6 +6,9 @@ import {
   faPhone,
   faEnvelope,
   faMapLocationDot,
+  faGraduationCap,
+  faDumbbell,
+  faUserDoctor,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
@@ -29,11 +32,18 @@ export default function HomePage() {
               <h2>Fisioterapista & Personal Trainer</h2>
 
               <ul className="chi-titles">
-                <li>Laurea in Fisioterapia</li>
                 <li>
+                  <FontAwesomeIcon icon={faGraduationCap} />
+                  Laurea in Fisioterapia
+                </li>
+                <li>
+                  <FontAwesomeIcon icon={faUserDoctor} />
                   Master in Riabilitazione dei Disordini Muscolo-Scheletrici
                 </li>
-                <li>Personal Trainer Certificato Project Invictus</li>
+                <li>
+                  <FontAwesomeIcon icon={faDumbbell} />
+                  Personal Trainer Certificato Project Invictus
+                </li>
               </ul>
             </div>
           </div>
