@@ -1,31 +1,26 @@
-import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  const handleLogoClick = () => {
+    if (location.pathname === "/") {
+      // se siamo già in home scrolla in alto
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      // altrimenti se siamo in privacy / cookie allora torna alla home
+      navigate("/");
+    }
   };
 
   return (
-    <header className={`main-header ${scrolled ? "scrolled" : ""}`}>
+    <header className="main-header">
       <img
         src="/images/logos/logo.png"
         alt="FisioFitness"
         className="logo"
-        onClick={scrollToTop}
+        onClick={handleLogoClick}
       />
     </header>
   );

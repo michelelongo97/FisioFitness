@@ -135,10 +135,37 @@ body {
   margin: 6px 0;
   font-size: 15px;
 }
+.footer-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* LEGAL */
+
+.footer-legal {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.footer-legal a {
+  color: #e6f7f4;
+  text-decoration: none;
+}
+
+.footer-legal a:hover {
+  text-decoration: underline;
+}
 
 /* BOTTOM */
 .footer-bottom {
-  margin-top: 40px;
+  margin-top: 30px;
   padding-top: 15px;
   text-align: center;
   font-size: 14px;
@@ -430,6 +457,36 @@ body {
 .chi-siamo-premium {
   background: #fff;
   color: #1a1a1a;
+}
+
+.legal-page {
+  padding: 120px 20px 80px;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+.legal-page h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #146272;
+}
+
+.legal-page h2 {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 12px;
+  color: #146272;
+}
+
+.legal-page p,
+.legal-page li {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.legal-page ul {
+  padding-left: 20px;
 }
 
 /* ======================= DESKTOP ======================= */

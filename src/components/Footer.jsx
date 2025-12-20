@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -79,14 +80,38 @@ export default function Footer() {
               Dr. Costantino Picciallo
             </p>
             <p>P.IVA: 08494380721</p>
-            <p>Email: {import.meta.env.VITE_EMAIL}</p>
-            <p>Tel: {import.meta.env.VITE_TEL}</p>
+            <p>
+              Email:{" "}
+              <a
+                href={`mailto:${import.meta.env.VITE_EMAIL}`}
+                className="footer-link"
+              >
+                {import.meta.env.VITE_EMAIL}
+              </a>
+            </p>
+
+            <p>
+              Tel:{" "}
+              <a
+                href={`tel:${import.meta.env.VITE_TEL}`}
+                className="footer-link"
+              >
+                +39 {import.meta.env.VITE_TEL}
+              </a>
+            </p>
             <p>
               Via Palermo, 26
               <br />
               Gravina in Puglia (BA)
             </p>
           </div>
+        </div>
+
+        {/* FOOTER LEGAL */}
+        <div className="footer-legal">
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <span> | </span>
+          <Link to="/cookie-policy">Cookie Policy</Link>
         </div>
 
         {/* FOOTER BOTTOM */}
