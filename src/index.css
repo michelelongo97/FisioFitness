@@ -9,7 +9,6 @@ html,
 body {
   font-family: "Nunito", sans-serif;
   background-color: #ffffff;
-  overscroll-behavior: none;
 }
 
 /* GENERAL */
@@ -91,8 +90,9 @@ body {
 /* SOCIAL */
 .social-icons {
   position: relative;
-  z-index: 5;
+  z-index: 999;
   transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .social-icons a svg {
@@ -178,12 +178,12 @@ body {
 .hero-carousel {
   position: relative;
   height: 100dvh;
-  overflow: hidden;
 }
 
 .hero-slide {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   opacity: 0;
@@ -506,9 +506,9 @@ body {
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 2000;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  z-index: 9999;
 }
 
 .scroll-top-btn.show {
