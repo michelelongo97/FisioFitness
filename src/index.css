@@ -90,15 +90,16 @@ body {
 
 /* SOCIAL */
 .social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
+  position: relative;
+  z-index: 5;
+  transform: translateZ(0);
 }
 
 .social-icons a svg {
   font-size: 26px;
   color: #75dac7;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  padding: 0 8px;
 }
 
 .social-icons a:hover svg {
