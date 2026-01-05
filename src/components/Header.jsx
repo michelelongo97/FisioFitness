@@ -1,15 +1,28 @@
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector(".main-header");
+      const heroHeight = window.innerHeight;
+
+      if (window.scrollY > heroHeight - 100) {
+        header.classList.add("hidden");
+      } else {
+        header.classList.remove("hidden");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleLogoClick = () => {
-    if (location.pathname === "/") {
-      // se siamo già in home scrolla in alto
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      // altrimenti se siamo in privacy / cookie allora torna alla home
+    if (location.pathname !== "/") {
       navigate("/");
     }
   };
@@ -21,6 +34,7 @@ export default function Header() {
         alt="FisioFitness"
         className="logo"
         onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
     </header>
   );
