@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://costafisiofitness.it/</loc>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://costafisiofitness.it/privacy</loc>
+    <loc>https://costafisiofitness.it/privacy-policy</loc>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://costafisiofitness.it/cookie</loc>
+    <loc>https://costafisiofitness.it/cookie-policy</loc>
     <priority>0.4</priority>
   </url>
+
 </urlset>
