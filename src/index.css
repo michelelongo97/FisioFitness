@@ -583,3 +583,26 @@ body {
     width: 260px;
   }
 }
+
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+  background: #f4f8f8;
+}
+
+.notfound img {
+  max-width: 90%;
+  max-height: 360px;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.notfound h1 {
+  font-size: 28px;
+  color: #146272;
+}

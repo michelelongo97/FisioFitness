@@ -1,3 +1,8 @@
 export default function PageNotFound() {
-  return <h1>Pagina non trovata</h1>;
+  return (
+    <div className="notfound">
+      <img src="/images/logos/notfound.jpeg" alt="Pagina non trovata" />
+      <h1>Pagina non trovata</h1>
+    </div>
+  );
 }
