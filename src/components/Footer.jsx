@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import {
+  faInstagram,
+  faFacebook,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -26,6 +30,13 @@ export default function Footer() {
                 rel="noreferrer"
               >
                 <FontAwesomeIcon icon={faFacebook} />
+              </a>
+              <a
+                href={import.meta.env.VITE_SOCIAL_LINKEDIN}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
               </a>
             </div>
           </div>
