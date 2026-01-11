@@ -1,3 +1,21 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.costafisiofitness.it"
+        }
+      ],
+      "destination": "https://costafisiofitness.it/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!images|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
