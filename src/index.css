@@ -65,7 +65,7 @@ body {
 /* ======================= FOOTER ======================= */
 .footer {
   background: linear-gradient(to top, #2f8f8f, #3da9a9);
-  color: antiquewhite;
+  color: #e6f7f4;
   padding: 50px 15px 25px;
 }
 
@@ -98,7 +98,9 @@ body {
 .social-icons a svg {
   font-size: 26px;
   color: #75dac7;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   padding: 0 8px;
 }
 
@@ -123,7 +125,9 @@ body {
   object-fit: contain;
   opacity: 0.85;
   filter: brightness(0) invert(1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .sponsor-logos img:hover {
@@ -383,7 +387,9 @@ body {
   font-size: 16px;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .hero-overlay .btn {
@@ -422,7 +428,9 @@ body {
   text-decoration: none;
   font-weight: bold;
   justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .cta-btn svg {
