@@ -637,6 +637,10 @@ body {
   transition: background 0.2s ease;
 }
 
+.hero-carousel {
+  touch-action: pan-y;
+}
+
 .hero-arrow:hover {
   background: #0d4a54;
 }

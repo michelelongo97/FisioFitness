@@ -17,6 +17,7 @@ export default function HeroCarousel() {
 
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   const minSwipeDistance = 50;
 
@@ -36,23 +37,32 @@ export default function HeroCarousel() {
 
   // swipe
   const onTouchStart = (e) => {
-    setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(null);
+    setIsSwiping(true);
   };
 
   const onTouchMove = (e) => {
+    if (!isSwiping) return;
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (!touchStart || !touchEnd) {
+      setIsSwiping(false);
+      return;
+    }
 
     const distance = touchStart - touchEnd;
 
-    if (distance > minSwipeDistance) nextSlide();
-    if (distance < -minSwipeDistance) prevSlide();
-  };
+    if (distance > minSwipeDistance) {
+      nextSlide();
+    } else if (distance < -minSwipeDistance) {
+      prevSlide();
+    }
 
+    setIsSwiping(false);
+  };
   const scrollToCTA = () => {
     document.querySelector(".chi-cta")?.scrollIntoView({ behavior: "smooth" });
   };
