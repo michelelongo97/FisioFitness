@@ -614,3 +614,48 @@ body {
   font-size: 28px;
   color: #146272;
 }
+
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  background: #146272;
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background 0.2s ease;
+}
+
+.hero-arrow:hover {
+  background: #0d4a54;
+}
+
+.hero-arrow-left {
+  left: 20px;
+}
+
+.hero-arrow-right {
+  right: 20px;
+}
+
+.hero-arrow i {
+  font-size: 20px;
+  line-height: 1;
+}
+/* opzionale: nascondi frecce su mobile */
+@media (max-width: 768px) {
+  .hero-arrow {
+    display: none;
+  }
+}
