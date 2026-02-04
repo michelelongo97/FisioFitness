@@ -6,10 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const images = [
-  "/images/hero/carousel/studio-1.jpg",
-  "/images/hero/carousel/studio-2.jpg",
-  "/images/hero/carousel/studio-3.jpg",
-  "/images/hero/carousel/studio-4.jpg",
+  { src: "/images/hero/carousel/studio-1.jpg", position: "center " },
+  { src: "/images/hero/carousel/studio-2.jpg", position: "center" },
+  { src: "/images/hero/carousel/studio-3.jpg", position: "center" },
+  { src: "/images/hero/carousel/studio-4.jpg", position: "center 10%" },
 ];
 
 export default function HeroCarousel() {
@@ -79,7 +79,10 @@ export default function HeroCarousel() {
         <div
           key={i}
           className={`hero-slide ${i === index ? "active" : ""}`}
-          style={{ backgroundImage: `url(${img})` }}
+          style={{
+            backgroundImage: `url(${img.src})`,
+            backgroundPosition: img.position,
+          }}
         />
       ))}
 
