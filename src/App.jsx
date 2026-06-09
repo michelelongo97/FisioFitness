@@ -5,6 +5,8 @@ import PageNotFound from "./pages/PageNotFound";
 import CookiePolicy from "./pages/CookiePolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ScollToTop from "./components/ScrollToTop";
+import BlogPage from "./pages/BlogPage";
+import ArticlePage from "./pages/ArticlePage";
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<ArticlePage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
