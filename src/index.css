@@ -842,3 +842,170 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* REELS PAGE */
+.reels-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: #f4f8f8;
+}
+.reels-container {
+  max-width: 1100px;
+  margin: auto;
+}
+.reels-container h1 {
+  font-size: 36px;
+  color: #146272;
+  margin-bottom: 8px;
+}
+.reels-subtitle {
+  color: #666;
+  margin-bottom: 48px;
+}
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+.reel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reel-embed-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 177%;
+  background: #eee;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.reel-embed-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.reel-caption {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  padding: 0 8px;
+}
+.reels-cta {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+.reels-loading,
+.reels-empty {
+  color: #666;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .reels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ADMIN */
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f8f8;
+}
+.admin-login form {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 300px;
+}
+.admin-login h2 {
+  color: #146272;
+}
+.admin-login input {
+  padding: 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.admin-page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+.admin-page h1 {
+  color: #146272;
+  margin-bottom: 24px;
+}
+.admin-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.tab-btn {
+  padding: 10px 24px;
+  border: 2px solid #146272;
+  border-radius: 999px;
+  background: white;
+  color: #146272;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tab-btn.active {
+  background: #146272;
+  color: white;
+}
+.add-slot-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.add-slot-form h3 {
+  width: 100%;
+  color: #146272;
+}
+.add-slot-form input {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.slot-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+}
+.slot-item.inactive {
+  opacity: 0.4;
+}
+.slot-count {
+  margin-left: auto;
+  color: #666;
+  font-size: 14px;
+}

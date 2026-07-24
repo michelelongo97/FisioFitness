@@ -7,6 +7,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ScollToTop from "./components/ScrollToTop";
 import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
+import ReelsPage from "./pages/ReelsPage";
+import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   return (
@@ -19,8 +21,10 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
+          <Route path="/reel" element={<ReelsPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
   );
