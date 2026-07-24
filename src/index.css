@@ -890,19 +890,18 @@ body {
 .reel-embed-wrapper {
   position: relative;
   width: 100%;
-  height: 480px; /* altezza visibile finale */
+  height: 620px; /* aumentata per mostrare più video */
   background: #f0f0f0;
   border-radius: 14px;
   overflow: hidden;
 }
 .reel-embed-wrapper iframe {
   position: absolute;
-  top: -80px; /* taglia la fascia superiore (avatar + "Segui") */
+  top: -80px;
   left: 0;
   width: 100%;
-  height: 700px; /* altezza reale iframe, più alta del wrapper */
+  height: 700px;
   border: none;
-  pointer-events: auto;
 }
 
 .reel-caption {
