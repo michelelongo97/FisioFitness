@@ -842,42 +842,56 @@ body {
     grid-template-columns: 1fr;
   }
 }
-/* REELS PAGE */
+/* REELS PAGE — versione migliorata */
 .reels-page {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: #f4f8f8;
+  background: linear-gradient(180deg, #f4f8f8 0%, #ffffff 100%);
 }
 .reels-container {
   max-width: 1100px;
   margin: auto;
 }
 .reels-container h1 {
-  font-size: 36px;
+  font-size: 42px;
   color: #146272;
   margin-bottom: 8px;
+  text-align: center;
 }
 .reels-subtitle {
   color: #666;
-  margin-bottom: 48px;
+  margin-bottom: 56px;
+  text-align: center;
+  font-size: 17px;
 }
 .reels-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 .reel-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  background: white;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 6px 24px rgba(20, 98, 114, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.reel-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(20, 98, 114, 0.16);
 }
 .reel-embed-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 177%;
-  background: #eee;
-  border-radius: 16px;
+  height: 560px; /* altezza fissa: uniforma tutte le card */
+  background: #f0f0f0;
+  border-radius: 14px;
   overflow: hidden;
 }
 .reel-embed-wrapper iframe {
@@ -889,29 +903,39 @@ body {
 }
 .reel-caption {
   font-size: 14px;
-  color: #555;
+  font-weight: 600;
+  color: #146272;
   text-align: center;
-  padding: 0 8px;
+  padding: 0 8px 6px;
 }
 .reels-cta {
   display: block;
   width: fit-content;
   margin: 0 auto;
+  font-size: 16px;
+  padding: 16px 32px;
 }
 .reels-loading,
 .reels-empty {
   color: #666;
   font-size: 16px;
+  text-align: center;
 }
 
 @media (max-width: 900px) {
   .reels-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .reel-embed-wrapper {
+    height: 480px;
+  }
 }
 @media (max-width: 560px) {
   .reels-grid {
     grid-template-columns: 1fr;
+  }
+  .reel-embed-wrapper {
+    height: 560px;
   }
 }
 
