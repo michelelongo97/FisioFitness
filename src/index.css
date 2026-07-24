@@ -886,21 +886,25 @@ body {
   transform: translateY(-6px);
   box-shadow: 0 14px 36px rgba(20, 98, 114, 0.16);
 }
+
 .reel-embed-wrapper {
   position: relative;
   width: 100%;
-  height: 560px; /* altezza fissa: uniforma tutte le card */
+  height: 480px; /* altezza visibile finale */
   background: #f0f0f0;
   border-radius: 14px;
   overflow: hidden;
 }
 .reel-embed-wrapper iframe {
   position: absolute;
-  inset: 0;
+  top: -80px; /* taglia la fascia superiore (avatar + "Segui") */
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 700px; /* altezza reale iframe, più alta del wrapper */
   border: none;
+  pointer-events: auto;
 }
+
 .reel-caption {
   font-size: 14px;
   font-weight: 600;
