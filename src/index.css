@@ -1036,3 +1036,52 @@ body {
   color: #666;
   font-size: 14px;
 }
+/* AREA PERSONALE */
+.personal-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: #f4f8f8;
+}
+.personal-container {
+  max-width: 700px;
+  margin: auto;
+}
+.personal-container h1 {
+  font-size: 34px;
+  color: #146272;
+  margin-bottom: 6px;
+}
+.personal-subtitle {
+  color: #666;
+  margin-bottom: 32px;
+}
+.personal-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 6px 24px rgba(20, 98, 114, 0.08);
+  margin-bottom: 32px;
+}
+.personal-card p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.personal-card p:last-child {
+  margin-bottom: 0;
+}
+.personal-card strong {
+  color: #146272;
+}
+.personal-expired {
+  color: #c00;
+  font-weight: bold;
+}
+.personal-empty {
+  background: white;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 6px 24px rgba(20, 98, 114, 0.08);
+  color: #666;
+  margin-bottom: 32px;
+}

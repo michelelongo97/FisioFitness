@@ -32,20 +32,20 @@ export default function AreaPersonalePage() {
     : false;
 
   return (
-    <div className="booking-page">
-      <div className="booking-container">
+    <div className="personal-page">
+      <div className="personal-container">
         <h1>Ciao, {user?.name}</h1>
-        <p className="booking-subtitle">La tua area personale</p>
+        <p className="personal-subtitle">La tua area personale</p>
 
         {loading ? (
           <p className="booking-loading">Caricamento...</p>
         ) : !subscription ? (
-          <div className="booking-recap">
+          <div className="personal-empty">
             Non hai ancora un abbonamento attivo. Contatta lo studio per
             attivarlo.
           </div>
         ) : (
-          <div className="booking-recap" style={{ marginBottom: 32 }}>
+          <div className="personal-card">
             <p>
               <strong>Ingressi rimasti:</strong> {remaining} /{" "}
               {subscription.total_entries}
@@ -53,7 +53,9 @@ export default function AreaPersonalePage() {
             <p>
               <strong>Scadenza:</strong>{" "}
               {new Date(subscription.expires_at).toLocaleDateString("it-IT")}
-              {isExpired && <span style={{ color: "#c00" }}> (scaduto)</span>}
+              {isExpired && (
+                <span className="personal-expired"> (scaduto)</span>
+              )}
             </p>
           </div>
         )}
