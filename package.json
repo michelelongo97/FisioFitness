@@ -19,6 +19,8 @@
     "@sanity/client": "^7.22.1",
     "@sanity/image-url": "^2.1.1",
     "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router": "^7.10.1",

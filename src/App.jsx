@@ -9,6 +9,9 @@ import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
 import ReelsPage from "./pages/ReelsPage";
 import AdminPage from "./pages/AdminPage";
+import LoginPage from "./pages/LoginPage";
+import AreaPersonalePage from "./pages/AreaPersonalePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -22,6 +25,15 @@ export default function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<ArticlePage />} />
           <Route path="/reel" element={<ReelsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/area-personale"
+            element={
+              <ProtectedRoute>
+                <AreaPersonalePage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="/admin" element={<AdminPage />} />
