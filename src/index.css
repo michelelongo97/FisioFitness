@@ -1131,3 +1131,34 @@ body {
 .admin-table tr.cancelled {
   opacity: 0.5;
 }
+/* BOOKING PAGE */
+.booking-page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: #f4f8f8;
+}
+.booking-container {
+  max-width: 900px;
+  margin: auto;
+}
+.booking-container h1 {
+  font-size: 36px;
+  color: #146272;
+  margin-bottom: 8px;
+}
+.booking-subtitle {
+  color: #666;
+  margin-bottom: 40px;
+}
+.booking-loading,
+.booking-empty {
+  color: #666;
+  font-size: 16px;
+}
+.form-error {
+  background: #fdecea;
+  color: #c00;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+}
