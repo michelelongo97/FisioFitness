@@ -144,6 +144,30 @@ export default function AdminPage() {
     loadSlots();
   };
 
+  const generateSlots = async () => {
+    if (
+      !confirm(
+        "Generare gli slot standard per le prossime 4 settimane? (Lun-Ven 9-19, Sab 9-13, ogni 45 min)",
+      )
+    )
+      return;
+
+    const res = await fetch("/api/admin/generate-slots", {
+      method: "POST",
+      headers,
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error);
+      return;
+    }
+
+    alert(
+      `Generati ${data.created} nuovi slot (${data.skipped} già esistenti, saltati).`,
+    );
+    loadSlots();
+  };
+
   // BOOKINGS
   const loadBookings = async () => {
     const res = await fetch("/api/admin/bookings", { headers });
@@ -363,6 +387,12 @@ export default function AdminPage() {
       {/* TAB SLOT */}
       {tab === "slots" && (
         <div className="admin-slots">
+          <div style={{ marginBottom: 20 }}>
+            <button type="button" className="btn" onClick={generateSlots}>
+              📅 Genera slot standard (prossime 4 settimane)
+            </button>
+          </div>
+
           <div
             className="add-slot-form"
             style={{
@@ -380,6 +410,7 @@ export default function AdminPage() {
               value={closeDate}
               onChange={(e) => setCloseDate(e.target.value)}
             />
+
             <button type="button" className="btn-danger" onClick={closeDay}>
               Chiudi giorno
             </button>
