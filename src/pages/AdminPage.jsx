@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 
 function SlotsGrouped({ slots, onDelete }) {
+  const statusLabels = {
+    confirmed: "Confermata",
+    attended: "Presente",
+    absent: "Assente",
+    cancelled: "Cancellata",
+  };
   const [openDates, setOpenDates] = useState({});
 
   const grouped = slots.reduce((acc, s) => {
@@ -549,7 +555,7 @@ export default function AdminPage() {
                     <td>{b.time.slice(0, 5)}</td>
                     <td>{b.name}</td>
                     <td>{b.email}</td>
-                    <td>{b.status}</td>
+                    <td>{statusLabels[b.status] || b.status}</td>
                     <td>
                       {b.status === "confirmed" && (
                         <div style={{ display: "flex", gap: 6 }}>
