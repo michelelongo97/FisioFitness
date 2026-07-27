@@ -76,20 +76,40 @@ export default function AreaPersonalePage() {
                 attivarlo.
               </div>
             ) : (
-              <div className="personal-card">
-                <p>
-                  <strong>Ingressi rimasti:</strong> {remaining} /{" "}
-                  {subscription.total_entries}
-                </p>
-                <p>
-                  <strong>Scadenza:</strong>{" "}
-                  {new Date(subscription.expires_at).toLocaleDateString(
-                    "it-IT",
-                  )}
-                  {isExpired && (
-                    <span className="personal-expired"> (scaduto)</span>
-                  )}
-                </p>
+              <div className="membership-card">
+                <div className="membership-card-header">
+                  <img
+                    src="/images/logos/logo.png"
+                    alt="FisioFitness"
+                    className="membership-logo"
+                  />
+                </div>
+                <div className="membership-card-body">
+                  <div className="membership-field">
+                    <span className="membership-label">Ingressi rimasti</span>
+                    <span className="membership-value">
+                      {remaining}{" "}
+                      <span className="membership-total">
+                        / {subscription.total_entries}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="membership-divider"></div>
+                  <div className="membership-field">
+                    <span className="membership-label">Scadenza</span>
+                    <span
+                      className={`membership-value ${isExpired ? "personal-expired" : ""}`}
+                    >
+                      {new Date(subscription.expires_at).toLocaleDateString(
+                        "it-IT",
+                      )}
+                      {isExpired && " (scaduto)"}
+                    </span>
+                  </div>
+                </div>
+                <div className="membership-card-footer">
+                  <span className="membership-holder">{user?.name}</span>
+                </div>
               </div>
             )}
 

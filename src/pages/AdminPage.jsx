@@ -1,5 +1,76 @@
 import { useState, useEffect } from "react";
 
+function SlotsGrouped({ slots, onDelete }) {
+  const [openDates, setOpenDates] = useState({});
+
+  const grouped = slots.reduce((acc, s) => {
+    if (!acc[s.date]) acc[s.date] = [];
+    acc[s.date].push(s);
+    return acc;
+  }, {});
+
+  const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+  const toggleDate = (date) => {
+    setOpenDates((prev) => ({ ...prev, [date]: !prev[date] }));
+  };
+
+  return (
+    <div className="slots-grouped">
+      {sortedDates.map((date) => {
+        const daySlots = grouped[date];
+        const activeCount = daySlots.filter((s) => s.is_active).length;
+        const isOpen = openDates[date];
+
+        return (
+          <div key={date} className="slot-day-group">
+            <button
+              className="slot-day-header"
+              onClick={() => toggleDate(date)}
+              type="button"
+            >
+              <span>
+                {new Date(date + "T00:00:00").toLocaleDateString("it-IT", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                })}
+              </span>
+              <span className="slot-day-meta">
+                {activeCount}/{daySlots.length} attivi {isOpen ? "▲" : "▼"}
+              </span>
+            </button>
+
+            {isOpen && (
+              <div className="slot-day-content">
+                {daySlots.map((s) => (
+                  <div
+                    key={s.id}
+                    className={`slot-item ${!s.is_active ? "inactive" : ""}`}
+                  >
+                    <span>{s.time.slice(0, 5)}</span>
+                    <span className="slot-count">
+                      {s.booked_count}/{s.max_bookings} prenotati
+                    </span>
+                    {s.is_active && (
+                      <button
+                        className="btn-danger"
+                        onClick={() => onDelete(s.id)}
+                      >
+                        Disattiva
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
@@ -358,7 +429,11 @@ export default function AdminPage() {
           </form>
           {userMsg && (
             <p
-              style={{ marginBottom: 20, color: "#146272", fontWeight: "bold" }}
+              style={{
+                marginBottom: 20,
+                color: "#146272",
+                fontWeight: "bold",
+              }}
             >
               {userMsg}
             </p>
@@ -438,30 +513,8 @@ export default function AdminPage() {
               Aggiungi
             </button>
           </form>
-          <div className="slots-list">
-            {slots.map((s) => (
-              <div
-                key={s.id}
-                className={`slot-item ${!s.is_active ? "inactive" : ""}`}
-              >
-                <span>
-                  {new Date(s.date + "T00:00:00").toLocaleDateString("it-IT")} –{" "}
-                  {s.time.slice(0, 5)}
-                </span>
-                <span className="slot-count">
-                  {s.booked_count}/{s.max_bookings} prenotati
-                </span>
-                {s.is_active && (
-                  <button
-                    className="btn-danger"
-                    onClick={() => deleteSlot(s.id)}
-                  >
-                    Disattiva
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+
+          <SlotsGrouped slots={slots} onDelete={deleteSlot} />
         </div>
       )}
 

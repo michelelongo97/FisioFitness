@@ -43,6 +43,7 @@ export default function BookingPage() {
     if (!res.ok) {
       setMsg(data.error || "Errore nella prenotazione");
       setMsgType("error");
+      setTimeout(() => setMsg(""), 4000);
       return;
     }
 
@@ -50,6 +51,7 @@ export default function BookingPage() {
     setMsgType("success");
     setBooking(null);
     loadSlots();
+    setTimeout(() => setMsg(""), 4000);
   };
 
   return (
@@ -57,15 +59,6 @@ export default function BookingPage() {
       <div className="booking-container">
         <h1>Prenota uno slot</h1>
         <p className="booking-subtitle">Scegli data e orario disponibile</p>
-
-        {msg && (
-          <div
-            className={msgType === "success" ? "personal-card" : "form-error"}
-            style={{ marginBottom: 24 }}
-          >
-            {msg}
-          </div>
-        )}
 
         {loading ? (
           <p className="booking-loading">Caricamento...</p>
@@ -147,6 +140,9 @@ export default function BookingPage() {
           </div>
         </div>
       )}
+
+      {/* TOAST */}
+      {msg && <div className={`toast toast-${msgType}`}>{msg}</div>}
     </div>
   );
 }
