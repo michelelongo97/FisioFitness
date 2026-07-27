@@ -14,8 +14,8 @@ export default async function handler(req, res) {
       FROM slots s
       WHERE s.is_active = true 
         AND s.date >= CURRENT_DATE
-      HAVING (SELECT COUNT(*) FROM bookings b 
-              WHERE b.slot_id = s.id AND b.status = 'confirmed') < s.max_bookings
+        AND (SELECT COUNT(*) FROM bookings b 
+             WHERE b.slot_id = s.id AND b.status = 'confirmed') < s.max_bookings
       ORDER BY s.date, s.time
     `;
     res.status(200).json(rows);
