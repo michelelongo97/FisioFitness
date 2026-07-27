@@ -1085,3 +1085,49 @@ body {
   color: #666;
   margin-bottom: 32px;
 }
+.slot-day {
+  margin-bottom: 28px;
+}
+.slot-date {
+  font-size: 15px;
+  text-transform: capitalize;
+  color: #146272;
+  margin-bottom: 10px;
+}
+.slot-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.slot-btn {
+  padding: 10px 20px;
+  border: 2px solid #146272;
+  border-radius: 999px;
+  background: white;
+  color: #146272;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.slot-btn:hover {
+  background: #146272;
+  color: white;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.admin-table th {
+  background: #f0f6f6;
+  color: #146272;
+}
+.admin-table tr.cancelled {
+  opacity: 0.5;
+}

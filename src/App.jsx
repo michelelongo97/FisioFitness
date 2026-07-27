@@ -11,6 +11,7 @@ import ReelsPage from "./pages/ReelsPage";
 import AdminPage from "./pages/AdminPage";
 import LoginPage from "./pages/LoginPage";
 import AreaPersonalePage from "./pages/AreaPersonalePage";
+import BookingPage from "./pages/BookingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -31,6 +32,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <AreaPersonalePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/prenota"
+            element={
+              <ProtectedRoute>
+                <BookingPage />
               </ProtectedRoute>
             }
           />
