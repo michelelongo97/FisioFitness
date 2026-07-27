@@ -3,6 +3,11 @@ import { getUser, getToken, logout } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function AreaPersonalePage() {
+  const statusLabels = {
+    attended: "Presente",
+    absent: "Assente",
+    cancelled: "Cancellata",
+  };
   const navigate = useNavigate();
   const user = getUser();
   const [subscription, setSubscription] = useState(null);
@@ -158,7 +163,9 @@ export default function AreaPersonalePage() {
                         )}{" "}
                         alle {b.time.slice(0, 5)}
                       </span>
-                      <span className="slot-count">{b.status}</span>
+                      <span className="slot-count">
+                        {statusLabels[b.status] || b.status}
+                      </span>
                     </div>
                   ))}
                 </div>
