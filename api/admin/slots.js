@@ -13,14 +13,14 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     const { rows } = await sql`
-      SELECT s.*, 
-        EXISTS(
-          SELECT 1 FROM bookings b 
-          WHERE b.slot_id = s.id AND b.status = 'confirmed'
-        ) as is_booked
-      FROM slots s
-      ORDER BY s.date DESC, s.time DESC
-    `;
+  SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.is_active,
+    EXISTS(
+      SELECT 1 FROM bookings b 
+      WHERE b.slot_id = s.id AND b.status = 'confirmed'
+    ) as is_booked
+  FROM slots s
+  ORDER BY s.date DESC, s.time DESC
+`;
     return res.status(200).json(rows);
   }
 
