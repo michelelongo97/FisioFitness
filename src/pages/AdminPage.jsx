@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
+const statusLabels = {
+  confirmed: "Confermata",
+  attended: "Presente",
+  absent: "Assente",
+  cancelled: "Cancellata",
+};
+
 function SlotsGrouped({ slots, onDelete }) {
-  const statusLabels = {
-    confirmed: "Confermata",
-    attended: "Presente",
-    absent: "Assente",
-    cancelled: "Cancellata",
-  };
   const [openDates, setOpenDates] = useState({});
 
   const grouped = slots.reduce((acc, s) => {
