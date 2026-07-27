@@ -92,6 +92,15 @@ export default function BookingPage() {
                       onClick={() => setBooking(slot)}
                     >
                       {slot.time.slice(0, 5)}
+                      <span
+                        style={{
+                          fontSize: 11,
+                          display: "block",
+                          fontWeight: "normal",
+                        }}
+                      >
+                        {slot.max_bookings - slot.booked_count} posti
+                      </span>
                     </button>
                   ))}
                 </div>

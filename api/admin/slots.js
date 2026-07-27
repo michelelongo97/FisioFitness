@@ -13,14 +13,12 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     const { rows } = await sql`
-  SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.is_active,
-    EXISTS(
-      SELECT 1 FROM bookings b 
-      WHERE b.slot_id = s.id AND b.status = 'confirmed'
-    ) as is_booked
-  FROM slots s
-  ORDER BY s.date DESC, s.time DESC
-`;
+      SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.is_active, s.max_bookings,
+        (SELECT COUNT(*) FROM bookings b 
+         WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
+      FROM slots s
+      ORDER BY s.date DESC, s.time DESC
+    `;
     return res.status(200).json(rows);
   }
 
@@ -31,8 +29,8 @@ export default async function handler(req, res) {
 
     try {
       const { rows } = await sql`
-        INSERT INTO slots (date, time)
-        VALUES (${date}, ${time})
+        INSERT INTO slots (date, time, max_bookings)
+        VALUES (${date}, ${time}, 4)
         RETURNING *
       `;
       return res.status(201).json(rows[0]);

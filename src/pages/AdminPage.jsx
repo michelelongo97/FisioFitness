@@ -5,6 +5,8 @@ export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [tab, setTab] = useState("reels"); // "reels" | "users" | "slots" | "bookings"
 
+  const [closeDate, setCloseDate] = useState("");
+
   const [reels, setReels] = useState([]);
   const [newReel, setNewReel] = useState({ url: "", caption: "" });
 
@@ -114,6 +116,31 @@ export default function AdminPage() {
   const deleteSlot = async (id) => {
     if (!confirm("Disattivare questo slot?")) return;
     await fetch(`/api/admin/slots?id=${id}`, { method: "DELETE", headers });
+    loadSlots();
+  };
+
+  const closeDay = async () => {
+    if (!closeDate) return;
+    if (
+      !confirm(
+        `Chiudere tutti gli slot del ${closeDate}? Le prenotazioni confermate verranno cancellate e gli ingressi ripristinati.`,
+      )
+    )
+      return;
+
+    const res = await fetch("/api/admin/close-day", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ date: closeDate }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error);
+      return;
+    }
+
+    alert(`Giorno chiuso. ${data.cancelledBookings} prenotazioni cancellate.`);
+    setCloseDate("");
     loadSlots();
   };
 
@@ -336,6 +363,28 @@ export default function AdminPage() {
       {/* TAB SLOT */}
       {tab === "slots" && (
         <div className="admin-slots">
+          <div
+            className="add-slot-form"
+            style={{
+              background: "#fdecea",
+              padding: 16,
+              borderRadius: 12,
+              marginBottom: 20,
+            }}
+          >
+            <h3 style={{ color: "#c00" }}>
+              Chiudi giornata (es. ferie, imprevisto)
+            </h3>
+            <input
+              type="date"
+              value={closeDate}
+              onChange={(e) => setCloseDate(e.target.value)}
+            />
+            <button type="button" className="btn-danger" onClick={closeDay}>
+              Chiudi giorno
+            </button>
+          </div>
+
           <form className="add-slot-form" onSubmit={addSlot}>
             <h3>Aggiungi slot</h3>
             <input
@@ -369,7 +418,7 @@ export default function AdminPage() {
                   {s.time.slice(0, 5)}
                 </span>
                 <span className="slot-count">
-                  {s.is_booked ? "Prenotato" : "Libero"}
+                  {s.booked_count}/{s.max_bookings} prenotati
                 </span>
                 {s.is_active && (
                   <button

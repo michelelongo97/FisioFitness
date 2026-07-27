@@ -42,12 +42,18 @@ export default async function handler(req, res) {
       return res.status(403).json({ error: "Ingressi esauriti" });
     }
 
-    // Verifica che lo slot sia ancora libero
-    const { rows: existing } = await sql`
-      SELECT 1 FROM bookings WHERE slot_id = ${slotId} AND status = 'confirmed'
-    `;
-    if (existing.length > 0) {
-      return res.status(409).json({ error: "Slot già prenotato" });
+    // Verifica capienza slot
+    const { rows: slotRows } = await sql`
+  SELECT s.max_bookings,
+    (SELECT COUNT(*) FROM bookings b 
+     WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
+  FROM slots s WHERE s.id = ${slotId}
+`;
+    if (slotRows.length === 0) {
+      return res.status(404).json({ error: "Slot non trovato" });
+    }
+    if (parseInt(slotRows[0].booked_count) >= slotRows[0].max_bookings) {
+      return res.status(409).json({ error: "Slot al completo" });
     }
 
     // Crea la prenotazione e scala l'ingresso
