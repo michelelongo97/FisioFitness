@@ -470,6 +470,10 @@ export default function AdminPage() {
                     Nessun abbonamento
                   </span>
                 )}
+                <span style={{ color: "#666", fontSize: 13 }}>
+                  📊 {u.sessions_this_year} sedute quest'anno ·{" "}
+                  {u.total_sessions} totali
+                </span>
               </div>
             ))}
           </div>

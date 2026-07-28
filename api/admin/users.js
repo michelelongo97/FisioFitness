@@ -14,18 +14,30 @@ export default async function handler(req, res) {
 
   // GET — lista utenti con stato abbonamento
   if (req.method === "GET") {
+    const currentYear = new Date().getFullYear();
+
     const { rows } = await sql`
-      SELECT 
-        u.id, u.name, u.email, u.created_at,
-        s.id as subscription_id, s.total_entries, s.used_entries, 
-        s.starts_at, s.expires_at
-      FROM users u
-      LEFT JOIN subscriptions s ON s.user_id = u.id 
-        AND s.expires_at = (
-          SELECT MAX(expires_at) FROM subscriptions WHERE user_id = u.id
-        )
-      ORDER BY u.created_at DESC
-    `;
+    SELECT 
+      u.id, u.name, u.email, u.created_at,
+      s.id as subscription_id, s.total_entries, s.used_entries, 
+      s.starts_at, s.expires_at,
+      (
+        SELECT COUNT(*) FROM bookings b
+        WHERE b.user_id = u.id AND b.status IN ('attended', 'absent')
+      ) as total_sessions,
+      (
+        SELECT COUNT(*) FROM bookings b
+        JOIN slots sl ON b.slot_id = sl.id
+        WHERE b.user_id = u.id AND b.status IN ('attended', 'absent')
+          AND EXTRACT(YEAR FROM sl.date) = ${currentYear}
+      ) as sessions_this_year
+    FROM users u
+    LEFT JOIN subscriptions s ON s.user_id = u.id 
+      AND s.expires_at = (
+        SELECT MAX(expires_at) FROM subscriptions WHERE user_id = u.id
+      )
+    ORDER BY u.created_at DESC
+  `;
     return res.status(200).json(rows);
   }
 
