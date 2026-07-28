@@ -8,23 +8,30 @@ function checkAuth(req, res) {
   return true;
 }
 
-// Genera gli orari di un giorno, ogni 45 minuti, tra start e end
-function generateTimesForDay(startHour, startMin, endHour, endMin) {
-  const times = [];
-  let h = startHour,
-    m = startMin;
-  while (h < endHour || (h === endHour && m < endMin)) {
-    times.push(
-      `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00`,
-    );
-    m += 45;
-    if (m >= 60) {
-      h += Math.floor(m / 60);
-      m = m % 60;
-    }
-  }
-  return times;
-}
+const WEEKDAY_TIMES = [
+  "09:00:00",
+  "09:45:00",
+  "10:30:00",
+  "11:15:00",
+  "12:00:00",
+  "13:30:00",
+  "14:15:00",
+  "15:00:00",
+  "15:45:00",
+  "16:30:00",
+  "17:15:00",
+  "18:00:00",
+  "18:45:00",
+  "19:30:00",
+];
+
+const SATURDAY_TIMES = [
+  "09:00:00",
+  "09:45:00",
+  "10:30:00",
+  "11:15:00",
+  "12:00:00",
+];
 
 export default async function handler(req, res) {
   if (!checkAuth(req, res)) return;
@@ -44,10 +51,7 @@ export default async function handler(req, res) {
       if (dayOfWeek === 0) continue; // domenica chiuso
 
       const dateStr = date.toISOString().slice(0, 10);
-      const times =
-        dayOfWeek === 6
-          ? generateTimesForDay(9, 0, 13, 0) // sabato: 9-13
-          : generateTimesForDay(9, 0, 19, 0); // lun-ven: 9-19
+      const times = dayOfWeek === 6 ? SATURDAY_TIMES : WEEKDAY_TIMES;
 
       for (const time of times) {
         slotsToInsert.push({ date: dateStr, time });
@@ -66,7 +70,7 @@ export default async function handler(req, res) {
         created++;
       } catch (err) {
         if (err.code === "23505") {
-          skipped++; // già esisteva, salta
+          skipped++;
         } else {
           throw err;
         }
