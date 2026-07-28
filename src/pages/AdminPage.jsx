@@ -103,6 +103,13 @@ export default function AdminPage() {
 
   const [bookings, setBookings] = useState([]);
 
+  const [stats, setStats] = useState(null);
+
+  const loadStats = async () => {
+    const res = await fetch("/api/admin/stats", { headers });
+    setStats(await res.json());
+  };
+
   const headers = {
     "x-admin-password": password,
     "Content-Type": "application/json",
@@ -265,7 +272,10 @@ export default function AdminPage() {
     if (tab === "reels") loadReels();
     if (tab === "users") loadUsers();
     if (tab === "slots") loadSlots();
-    if (tab === "bookings") loadBookings();
+    if (tab === "bookings") {
+      loadBookings();
+      loadStats();
+    }
   }, [authed, tab]);
 
   if (!authed) {
@@ -528,6 +538,34 @@ export default function AdminPage() {
       {/* TAB PRENOTAZIONI */}
       {tab === "bookings" && (
         <div className="admin-bookings">
+          {stats && (
+            <div className="stats-panel">
+              <div className="stats-total">
+                <span className="stats-total-number">{stats.total}</span>
+                <span className="stats-total-label">Prenotazioni totali</span>
+              </div>
+              <div className="stats-monthly">
+                {stats.monthly.map((m) => {
+                  const [year, month] = m.month.split("-");
+                  const monthName = new Date(
+                    `${year}-${month}-01`,
+                  ).toLocaleDateString("it-IT", {
+                    month: "long",
+                    year: "numeric",
+                  });
+                  return (
+                    <div key={m.month} className="stats-month-item">
+                      <span className="stats-month-name">
+                        {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
+                      </span>
+                      <span className="stats-month-count">{m.count}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {bookings.length === 0 ? (
             <p>Nessuna prenotazione ancora.</p>
           ) : (
