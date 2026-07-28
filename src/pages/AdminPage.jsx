@@ -106,7 +106,7 @@ export default function AdminPage() {
   const [stats, setStats] = useState(null);
 
   const loadStats = async () => {
-    const res = await fetch("/api/admin/stats", { headers });
+    const res = await fetch("/api/admin/bookings?stats=1", { headers });
     setStats(await res.json());
   };
 
