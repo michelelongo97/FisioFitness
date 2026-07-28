@@ -1632,3 +1632,117 @@ body {
   border-radius: 999px;
   font-size: 13px;
 }
+/* SIMPLYMEET-STYLE SCHEDULER */
+.sm-scheduler {
+  max-width: 700px;
+}
+.sm-month-nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sm-month-label {
+  font-size: 20px;
+  font-weight: bold;
+  color: #146272;
+  text-transform: capitalize;
+}
+.sm-day-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  scrollbar-width: thin;
+}
+.sm-day-tab {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+  background: #eef4f4;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 64px;
+}
+.sm-day-tab:hover {
+  background: #dcebeb;
+}
+.sm-day-tab.active {
+  background: #146272;
+}
+.sm-day-weekday {
+  font-size: 11px;
+  font-weight: 600;
+  color: #146272;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.sm-day-tab.active .sm-day-weekday {
+  color: rgba(255, 255, 255, 0.8);
+}
+.sm-day-number {
+  font-size: 22px;
+  font-weight: bold;
+  color: #146272;
+}
+.sm-day-tab.active .sm-day-number {
+  color: white;
+}
+.sm-duration {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+.sm-duration strong {
+  color: #146272;
+}
+.sm-slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sm-slot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: white;
+  border: 1.5px solid #e0e8e8;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  text-align: left;
+}
+.sm-slot-row:hover {
+  border-color: #146272;
+  background: #f7fbfb;
+}
+.sm-slot-time {
+  font-size: 18px;
+  font-weight: bold;
+  color: #146272;
+}
+.sm-slot-badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: #146272;
+  background: #eef4f4;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+  .sm-day-tab {
+    min-width: 56px;
+    padding: 10px 14px;
+  }
+  .sm-slot-time {
+    font-size: 16px;
+  }
+}
