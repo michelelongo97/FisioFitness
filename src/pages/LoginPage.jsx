@@ -34,31 +34,41 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="admin-login">
-      <form onSubmit={handleSubmit}>
-        <h2>Accedi</h2>
-
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={form.email}
-          onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+    <div className="login-page">
+      <div className="login-card">
+        <img
+          src="/images/logos/logo.png"
+          alt="FisioFitness"
+          className="login-logo"
         />
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={form.password}
-          onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-        />
+        <h2>Bentornato</h2>
+        <p className="login-subtitle">Accedi alla tua area personale</p>
 
-        {error && <p className="form-error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={form.email}
+            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={form.password}
+            onChange={(e) =>
+              setForm((f) => ({ ...f, password: e.target.value }))
+            }
+          />
 
-        <button type="submit" className="btn" disabled={loading}>
-          {loading ? "Accesso in corso..." : "Accedi"}
-        </button>
-      </form>
+          {error && <p className="form-error">{error}</p>}
+
+          <button type="submit" className="btn login-btn" disabled={loading}>
+            {loading ? "Accesso in corso..." : "Accedi"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

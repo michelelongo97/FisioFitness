@@ -105,16 +105,8 @@ export default function BookingPage() {
 
       {/* MODALE CONFERMA */}
       {booking && (
-        <div className="admin-login" onClick={() => setBooking(null)}>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              background: "white",
-              padding: 32,
-              borderRadius: 16,
-              minWidth: 300,
-            }}
-          >
+        <div className="modal-overlay" onClick={() => setBooking(null)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               Confermi la prenotazione?
             </h3>

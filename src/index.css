@@ -1414,3 +1414,114 @@ body {
     transform: translate(-50%, 0);
   }
 }
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 98, 114, 0.35);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+}
+.modal-box {
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  min-width: 300px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modal-in 0.25s ease;
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* LOGIN PAGE */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px;
+  background: linear-gradient(160deg, #146272 0%, #1a7a8c 45%, #3da9a9 100%);
+  position: relative;
+  overflow: hidden;
+}
+.login-page::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  top: -150px;
+  right: -150px;
+}
+.login-page::after {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  bottom: -100px;
+  left: -100px;
+}
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 44px 36px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.login-logo {
+  height: 90px;
+  width: auto;
+  margin-bottom: 24px;
+}
+.login-card h2 {
+  color: #146272;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.login-subtitle {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.login-card input {
+  padding: 14px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+.login-card input:focus {
+  outline: none;
+  border-color: #146272;
+}
+.login-btn {
+  margin: 8px 0 0;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
