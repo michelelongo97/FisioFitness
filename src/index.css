@@ -1709,24 +1709,32 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 12px 16px;
   background: white;
   border: 1.5px solid #e0e8e8;
   border-radius: 12px;
   cursor: pointer;
   transition:
     border-color 0.2s,
-    background 0.2s;
+    background 0.2s,
+    transform 0.15s;
   text-align: left;
+  gap: 16px;
 }
 .sm-slot-row:hover {
   border-color: #146272;
   background: #f7fbfb;
+  transform: translateY(-1px);
 }
 .sm-slot-time {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #146272;
+  color: white;
+  background: #146272;
+  padding: 12px 22px;
+  border-radius: 10px;
+  min-width: 90px;
+  text-align: center;
 }
 .sm-slot-badge {
   font-size: 13px;
@@ -1735,6 +1743,7 @@ body {
   background: #eef4f4;
   padding: 4px 12px;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
