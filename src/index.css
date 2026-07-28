@@ -1525,3 +1525,59 @@ body {
   padding: 14px;
   font-size: 16px;
 }
+/* BOOKING CARDS (prossime prenotazioni) */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.booking-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(20, 98, 114, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  border: 1.5px solid #e8f0f0;
+}
+.booking-card-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.booking-card-weekday {
+  font-size: 13px;
+  color: #3da9a9;
+  font-weight: 600;
+}
+.booking-card-day {
+  font-size: 30px;
+  font-weight: bold;
+  color: #146272;
+  line-height: 1;
+}
+.booking-card-month {
+  font-size: 13px;
+  color: #888;
+}
+.booking-card-time {
+  font-size: 20px;
+  font-weight: bold;
+  color: #146272;
+  background: #f0f6f6;
+  padding: 6px 16px;
+  border-radius: 999px;
+}
+.booking-card-cancel {
+  width: 100%;
+  margin: 4px 0 0;
+}
+
+@media (max-width: 600px) {
+  .bookings-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,6 +2,20 @@ import { useEffect, useState } from "react";
 import { getUser, getToken, logout } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
 
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function formatBookingDate(dateStr) {
+  const date = new Date(dateStr + "T00:00:00");
+  const weekday = capitalize(
+    date.toLocaleDateString("it-IT", { weekday: "long" }),
+  );
+  const day = date.getDate();
+  const month = capitalize(date.toLocaleDateString("it-IT", { month: "long" }));
+  return { weekday, day, month };
+}
+
 export default function AreaPersonalePage() {
   const statusLabels = {
     attended: "Presente",
@@ -126,28 +140,28 @@ export default function AreaPersonalePage() {
                 Nessuna prenotazione futura.
               </p>
             ) : (
-              <div className="slots-list" style={{ marginBottom: 32 }}>
-                {upcoming.map((b) => (
-                  <div key={b.id} className="slot-item">
-                    <span>
-                      {new Date(b.date + "T00:00:00").toLocaleDateString(
-                        "it-IT",
-                        {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                        },
-                      )}{" "}
-                      alle {b.time.slice(0, 5)}
-                    </span>
-                    <button
-                      className="btn-danger"
-                      onClick={() => cancelBooking(b.id)}
-                    >
-                      Cancella
-                    </button>
-                  </div>
-                ))}
+              <div className="bookings-grid" style={{ marginBottom: 32 }}>
+                {upcoming.map((b) => {
+                  const { weekday, day, month } = formatBookingDate(b.date);
+                  return (
+                    <div key={b.id} className="booking-card">
+                      <div className="booking-card-date">
+                        <span className="booking-card-weekday">{weekday}</span>
+                        <span className="booking-card-day">{day}</span>
+                        <span className="booking-card-month">{month}</span>
+                      </div>
+                      <div className="booking-card-time">
+                        {b.time.slice(0, 5)}
+                      </div>
+                      <button
+                        className="btn-danger booking-card-cancel"
+                        onClick={() => cancelBooking(b.id)}
+                      >
+                        Cancella
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
