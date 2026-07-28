@@ -98,6 +98,8 @@ export default function AdminPage() {
   });
   const [userMsg, setUserMsg] = useState("");
 
+  const [userSort, setUserSort] = useState("name-asc");
+
   const [slots, setSlots] = useState([]);
   const [newSlot, setNewSlot] = useState({ date: "", time: "" });
 
@@ -152,6 +154,24 @@ export default function AdminPage() {
     const res = await fetch("/api/admin/users", { headers });
     setUsers(await res.json());
   };
+
+  const sortedUsers = [...users].sort((a, b) => {
+    switch (userSort) {
+      case "name-asc":
+        return a.name.localeCompare(b.name);
+      case "name-desc":
+        return b.name.localeCompare(a.name);
+      case "sessions-desc":
+        return b.total_sessions - a.total_sessions;
+      case "expiry-asc":
+        if (!a.expires_at) return 1;
+        if (!b.expires_at) return -1;
+        return new Date(a.expires_at) - new Date(b.expires_at);
+      default:
+        return 0;
+    }
+  });
+
   const addUser = async (e) => {
     e.preventDefault();
     setUserMsg("");
@@ -455,25 +475,44 @@ export default function AdminPage() {
               {userMsg}
             </p>
           )}
-          <div className="slots-list">
-            {users.map((u) => (
-              <div key={u.id} className="slot-item">
-                <span style={{ fontWeight: "bold" }}>{u.name}</span>
-                <span style={{ color: "#666", fontSize: 13 }}>{u.email}</span>
-                {u.subscription_id ? (
-                  <span style={{ color: "#146272", fontSize: 13 }}>
-                    {u.used_entries}/{u.total_entries} ingressi · scade{" "}
-                    {new Date(u.expires_at).toLocaleDateString("it-IT")}
+
+          <div className="user-list-toolbar">
+            <span className="user-list-count">{users.length} utenti</span>
+            <select
+              className="user-sort-select"
+              value={userSort}
+              onChange={(e) => setUserSort(e.target.value)}
+            >
+              <option value="name-asc">Nome A-Z</option>
+              <option value="name-desc">Nome Z-A</option>
+              <option value="sessions-desc">Più sedute totali</option>
+              <option value="expiry-asc">Scadenza più vicina</option>
+            </select>
+          </div>
+
+          <div className="user-cards">
+            {sortedUsers.map((u) => (
+              <div key={u.id} className="user-card">
+                <div className="user-card-header">
+                  <span className="user-card-name">{u.name}</span>
+                  <span className="user-card-email">{u.email}</span>
+                </div>
+                <div className="user-card-body">
+                  {u.subscription_id ? (
+                    <span className="user-card-badge badge-teal">
+                      {u.used_entries}/{u.total_entries} ingressi · scade{" "}
+                      {new Date(u.expires_at).toLocaleDateString("it-IT")}
+                    </span>
+                  ) : (
+                    <span className="user-card-badge badge-red">
+                      Nessun abbonamento
+                    </span>
+                  )}
+                  <span className="user-card-badge badge-grey">
+                    📊 {u.sessions_this_year} quest'anno · {u.total_sessions}{" "}
+                    totali
                   </span>
-                ) : (
-                  <span style={{ color: "#c00", fontSize: 13 }}>
-                    Nessun abbonamento
-                  </span>
-                )}
-                <span style={{ color: "#666", fontSize: 13 }}>
-                  📊 {u.sessions_this_year} sedute quest'anno ·{" "}
-                  {u.total_sessions} totali
-                </span>
+                </div>
               </div>
             ))}
           </div>

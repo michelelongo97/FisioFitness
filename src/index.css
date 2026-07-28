@@ -1755,3 +1755,76 @@ body {
     font-size: 16px;
   }
 }
+/* USER LIST */
+.user-list-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.user-list-count {
+  font-size: 14px;
+  color: #666;
+}
+.user-sort-select {
+  padding: 8px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #146272;
+  font-weight: 600;
+  background: white;
+  cursor: pointer;
+}
+
+.user-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.user-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f2;
+}
+.user-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.user-card-name {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+.user-card-email {
+  font-size: 13px;
+  color: #888;
+}
+.user-card-body {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.user-card-badge {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.badge-teal {
+  background: #e8f4f4;
+  color: #146272;
+}
+.badge-red {
+  background: #fdecea;
+  color: #c00;
+}
+.badge-grey {
+  background: #f2f2f2;
+  color: #555;
+}
