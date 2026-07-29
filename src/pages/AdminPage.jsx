@@ -46,10 +46,11 @@ function SlotsGrouped({ slots, onDelete }) {
           const { weekday, day } = dayLabel(date);
           const activeCount = grouped[date].filter((s) => s.is_active).length;
           const isActive = date === selectedDate;
+          const isPastDay = new Date(date + "T23:59:59") < new Date();
           return (
             <button
               key={date}
-              className={`sm-day-tab ${isActive ? "active" : ""}`}
+              className={`sm-day-tab ${isActive ? "active" : ""} ${isPastDay ? "sm-day-past" : ""}`}
               onClick={() => setSelectedDate(date)}
               type="button"
             >
@@ -64,24 +65,29 @@ function SlotsGrouped({ slots, onDelete }) {
       </div>
 
       <div className="slot-day-content agenda-content">
-        {currentSlots.map((s) => (
-          <div
-            key={s.id}
-            className={`booking-agenda-item ${!s.is_active ? "inactive" : ""}`}
-          >
-            <span className="booking-agenda-time">{s.time.slice(0, 5)}</span>
-            <div className="booking-agenda-info">
-              <span className="booking-agenda-name">
-                {s.booked_count}/{s.max_bookings} prenotati
-              </span>
+        {currentSlots.map((s) => {
+          const slotDateTime = new Date(`${s.date}T${s.time}`);
+          const isPast = slotDateTime < new Date();
+
+          return (
+            <div
+              key={s.id}
+              className={`booking-agenda-item ${!s.is_active || isPast ? "inactive" : ""}`}
+            >
+              <span className="booking-agenda-time">{s.time.slice(0, 5)}</span>
+              <div className="booking-agenda-info">
+                <span className="booking-agenda-name">
+                  {s.booked_count}/{s.max_bookings} prenotati
+                </span>
+              </div>
+              {s.is_active && !isPast && (
+                <button className="btn-danger" onClick={() => onDelete(s.id)}>
+                  Disattiva
+                </button>
+              )}
             </div>
-            {s.is_active && (
-              <button className="btn-danger" onClick={() => onDelete(s.id)}>
-                Disattiva
-              </button>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

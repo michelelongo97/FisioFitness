@@ -1986,3 +1986,9 @@ body {
   color: #146272;
   font-weight: 600;
 }
+.booking-agenda-item.inactive {
+  opacity: 0.4;
+}
+.sm-day-tab.sm-day-past:not(.active) {
+  opacity: 0.55;
+}
