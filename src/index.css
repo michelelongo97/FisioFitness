@@ -1992,28 +1992,22 @@ body {
 .sm-day-tab.sm-day-past:not(.active) {
   opacity: 0.55;
 }
-/* FIX SAFARI iOS - input date/time invisibili */
+/* FIX SAFARI iOS - testo invisibile nei campi data/ora */
 input[type="date"],
 input[type="time"] {
-  -webkit-appearance: none;
-  appearance: none;
   color: #333;
   -webkit-text-fill-color: #333;
-  background-color: white;
+  min-height: 44px;
 }
 
-input[type="date"]::-webkit-datetime-edit,
-input[type="time"]::-webkit-datetime-edit {
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="time"]::-webkit-datetime-edit-text,
+input[type="time"]::-webkit-datetime-edit-hour-field,
+input[type="time"]::-webkit-datetime-edit-minute-field,
+input[type="time"]::-webkit-datetime-edit-ampm-field {
   color: #333;
   -webkit-text-fill-color: #333;
-}
-
-input[type="date"]::-webkit-datetime-edit-fields-wrapper,
-input[type="time"]::-webkit-datetime-edit-fields-wrapper {
-  color: #333;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  opacity: 1;
 }
