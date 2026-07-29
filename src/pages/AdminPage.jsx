@@ -426,6 +426,13 @@ export default function AdminPage() {
   return (
     <div className="admin-page">
       <h1>Pannello Admin</h1>
+      <div style={{ padding: 20, background: "yellow" }}>
+        <p>TEST DIAGNOSTICO:</p>
+        <input type="date" />
+        <br />
+        <br />
+        <input type="time" />
+      </div>
 
       <div className="admin-tabs">
         <button
