@@ -79,8 +79,6 @@ function SlotsGrouped({ slots, onDelete }) {
 }
 
 function BookingsGrouped({ bookings, onMark }) {
-  const [openDates, setOpenDates] = useState({});
-
   const grouped = bookings.reduce((acc, b) => {
     if (!acc[b.date]) acc[b.date] = [];
     acc[b.date].push(b);
@@ -88,83 +86,85 @@ function BookingsGrouped({ bookings, onMark }) {
   }, {});
 
   const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+  const [selectedDate, setSelectedDate] = useState(sortedDates[0] || null);
 
-  const toggleDate = (date) => {
-    setOpenDates((prev) => ({ ...prev, [date]: !prev[date] }));
+  useEffect(() => {
+    if (sortedDates.length > 0 && !sortedDates.includes(selectedDate)) {
+      setSelectedDate(sortedDates[0]);
+    }
+  }, [bookings]);
+
+  const dayLabel = (dateStr) => {
+    const d = new Date(dateStr + "T00:00:00");
+    return {
+      weekday: d
+        .toLocaleDateString("it-IT", { weekday: "short" })
+        .toUpperCase(),
+      day: d.getDate(),
+    };
   };
 
-  return (
-    <div className="slots-grouped">
-      {sortedDates.map((date) => {
-        const dayBookings = grouped[date].sort((a, b) =>
-          a.time.localeCompare(b.time),
-        );
-        const activeCount = dayBookings.filter(
-          (b) => b.status === "confirmed",
-        ).length;
-        const isOpen = openDates[date];
+  const currentBookings = selectedDate
+    ? [...(grouped[selectedDate] || [])].sort((a, b) =>
+        a.time.localeCompare(b.time),
+      )
+    : [];
 
-        return (
-          <div key={date} className="slot-day-group">
+  return (
+    <div className="admin-agenda">
+      <div className="sm-day-tabs">
+        {sortedDates.map((date) => {
+          const { weekday, day } = dayLabel(date);
+          const count = grouped[date].length;
+          const isActive = date === selectedDate;
+          return (
             <button
-              className="slot-day-header"
-              onClick={() => toggleDate(date)}
+              key={date}
+              className={`sm-day-tab ${isActive ? "active" : ""}`}
+              onClick={() => setSelectedDate(date)}
               type="button"
             >
-              <span>
-                {new Date(date + "T00:00:00").toLocaleDateString("it-IT", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                })}
-              </span>
-              <span className="slot-day-meta">
-                {dayBookings.length} prenotazioni {isOpen ? "▲" : "▼"}
-              </span>
+              <span className="sm-day-weekday">{weekday}</span>
+              <span className="sm-day-number">{day}</span>
+              <span className="sm-day-badge">{count}</span>
             </button>
+          );
+        })}
+      </div>
 
-            {isOpen && (
-              <div className="slot-day-content">
-                {dayBookings.map((b) => (
-                  <div
-                    key={b.id}
-                    className={`booking-agenda-item ${b.status === "cancelled" ? "inactive" : ""}`}
-                  >
-                    <span className="booking-agenda-time">
-                      {b.time.slice(0, 5)}
-                    </span>
-                    <div className="booking-agenda-info">
-                      <span className="booking-agenda-name">{b.name}</span>
-                      <span className="booking-agenda-email">{b.email}</span>
-                    </div>
-                    <span
-                      className={`booking-agenda-status status-${b.status}`}
-                    >
-                      {statusLabels[b.status] || b.status}
-                    </span>
-                    {b.status === "confirmed" && (
-                      <div className="booking-agenda-actions">
-                        <button
-                          className="btn"
-                          onClick={() => onMark(b.id, "attended")}
-                        >
-                          Presente
-                        </button>
-                        <button
-                          className="btn-danger"
-                          onClick={() => onMark(b.id, "absent")}
-                        >
-                          Assente
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+      <div className="slot-day-content agenda-content">
+        {currentBookings.map((b) => (
+          <div
+            key={b.id}
+            className={`booking-agenda-item ${b.status === "cancelled" ? "inactive" : ""}`}
+          >
+            <span className="booking-agenda-time">{b.time.slice(0, 5)}</span>
+            <div className="booking-agenda-info">
+              <span className="booking-agenda-name">{b.name}</span>
+              <span className="booking-agenda-email">{b.email}</span>
+            </div>
+            <span className={`booking-agenda-status status-${b.status}`}>
+              {statusLabels[b.status] || b.status}
+            </span>
+            {b.status === "confirmed" && (
+              <div className="booking-agenda-actions">
+                <button
+                  className="btn"
+                  onClick={() => onMark(b.id, "attended")}
+                >
+                  Presente
+                </button>
+                <button
+                  className="btn-danger"
+                  onClick={() => onMark(b.id, "absent")}
+                >
+                  Assente
+                </button>
               </div>
             )}
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
