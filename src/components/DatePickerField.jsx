@@ -26,6 +26,7 @@ export default function DatePickerField({
       dateFormat="dd/MM/yyyy"
       placeholderText={placeholder}
       className="custom-date-input"
+      calendarStartDay={1}
     />
   );
 }
