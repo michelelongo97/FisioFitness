@@ -85,7 +85,7 @@ function BookingsGrouped({ bookings, onMark }) {
     return acc;
   }, {});
 
-  const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+  const sortedDates = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
   const [selectedDate, setSelectedDate] = useState(sortedDates[0] || null);
 
   useEffect(() => {
