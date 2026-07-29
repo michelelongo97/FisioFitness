@@ -41,7 +41,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* SPONSOR */}
+          {/* SPONSOR 
           <div className="footer-col footer-sponsor">
             <h4>Partners</h4>
             <div className="sponsor-logos">
@@ -80,17 +80,12 @@ export default function Footer() {
                 />
               </a>
             </div>
-          </div>
+          </div>*/}
 
           {/* INFO */}
           <div className="footer-col footer-info">
-            <h4>Informazioni</h4>
-            <p>
-              <strong>FisioFitness</strong>
-              <br />
-              Dr. Costantino Picciallo
-            </p>
-            <p>P.IVA: 08494380721</p>
+            <h4>Contatti</h4>
+
             <p>
               Email:{" "}
               <a
@@ -116,6 +111,16 @@ export default function Footer() {
               Gravina in Puglia (BA)
             </p>
           </div>
+
+          {/* INFO */}
+          <div className="footer-col footer-info">
+            <h4>Informazioni</h4>
+            <p>
+              <strong>FisioFitness</strong>
+            </p>
+            <p>Dr. Costantino Picciallo</p>
+            <p>P.IVA: 08494380721</p>
+          </div>
         </div>
 
         {/* FOOTER LEGAL */}
@@ -127,7 +132,7 @@ export default function Footer() {
 
         {/* FOOTER BOTTOM */}
         <div className="footer-bottom">
-          © 2024 - {new Date().getFullYear()} FisioFitness – Tutti i diritti
+          © 2024 - {new Date().getFullYear()} FisioFitness | Tutti i diritti
           riservati
         </div>
       </div>
