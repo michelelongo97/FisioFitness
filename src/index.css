@@ -2011,3 +2011,9 @@ input[type="time"]::-webkit-datetime-edit-ampm-field {
   color: #333;
   -webkit-text-fill-color: #333;
 }
+/* FIX SAFARI iOS - campi date/time compressi dal flex */
+.add-slot-form input[type="date"],
+.add-slot-form input[type="time"] {
+  min-width: 150px;
+  flex-shrink: 0;
+}
