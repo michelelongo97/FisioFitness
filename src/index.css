@@ -1828,3 +1828,88 @@ body {
   background: #f2f2f2;
   color: #555;
 }
+/* BOOKINGS AGENDA */
+.booking-agenda-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f9fafa;
+  border-radius: 10px;
+  padding: 14px 16px;
+  flex-wrap: wrap;
+}
+.booking-agenda-item.inactive {
+  opacity: 0.5;
+}
+.booking-agenda-time {
+  font-size: 16px;
+  font-weight: bold;
+  color: #146272;
+  background: #e8f0f0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  min-width: 66px;
+  text-align: center;
+}
+.booking-agenda-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 140px;
+}
+.booking-agenda-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 14px;
+}
+.booking-agenda-email {
+  font-size: 12px;
+  color: #888;
+}
+.booking-agenda-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-confirmed {
+  background: #e8f0f0;
+  color: #146272;
+}
+.status-attended {
+  background: #e3f5e9;
+  color: #1e8a4c;
+}
+.status-absent {
+  background: #fdecea;
+  color: #c00;
+}
+.status-cancelled {
+  background: #eee;
+  color: #888;
+}
+.booking-agenda-actions {
+  display: flex;
+  gap: 6px;
+}
+.booking-agenda-actions .btn,
+.booking-agenda-actions .btn-danger {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .booking-agenda-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .booking-agenda-actions {
+    width: 100%;
+  }
+  .booking-agenda-actions .btn,
+  .booking-agenda-actions .btn-danger {
+    flex: 1;
+  }
+}

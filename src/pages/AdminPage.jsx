@@ -78,6 +78,97 @@ function SlotsGrouped({ slots, onDelete }) {
   );
 }
 
+function BookingsGrouped({ bookings, onMark }) {
+  const [openDates, setOpenDates] = useState({});
+
+  const grouped = bookings.reduce((acc, b) => {
+    if (!acc[b.date]) acc[b.date] = [];
+    acc[b.date].push(b);
+    return acc;
+  }, {});
+
+  const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+  const toggleDate = (date) => {
+    setOpenDates((prev) => ({ ...prev, [date]: !prev[date] }));
+  };
+
+  return (
+    <div className="slots-grouped">
+      {sortedDates.map((date) => {
+        const dayBookings = grouped[date].sort((a, b) =>
+          a.time.localeCompare(b.time),
+        );
+        const activeCount = dayBookings.filter(
+          (b) => b.status === "confirmed",
+        ).length;
+        const isOpen = openDates[date];
+
+        return (
+          <div key={date} className="slot-day-group">
+            <button
+              className="slot-day-header"
+              onClick={() => toggleDate(date)}
+              type="button"
+            >
+              <span>
+                {new Date(date + "T00:00:00").toLocaleDateString("it-IT", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                })}
+              </span>
+              <span className="slot-day-meta">
+                {dayBookings.length} prenotazioni {isOpen ? "▲" : "▼"}
+              </span>
+            </button>
+
+            {isOpen && (
+              <div className="slot-day-content">
+                {dayBookings.map((b) => (
+                  <div
+                    key={b.id}
+                    className={`booking-agenda-item ${b.status === "cancelled" ? "inactive" : ""}`}
+                  >
+                    <span className="booking-agenda-time">
+                      {b.time.slice(0, 5)}
+                    </span>
+                    <div className="booking-agenda-info">
+                      <span className="booking-agenda-name">{b.name}</span>
+                      <span className="booking-agenda-email">{b.email}</span>
+                    </div>
+                    <span
+                      className={`booking-agenda-status status-${b.status}`}
+                    >
+                      {statusLabels[b.status] || b.status}
+                    </span>
+                    {b.status === "confirmed" && (
+                      <div className="booking-agenda-actions">
+                        <button
+                          className="btn"
+                          onClick={() => onMark(b.id, "attended")}
+                        >
+                          Presente
+                        </button>
+                        <button
+                          className="btn-danger"
+                          onClick={() => onMark(b.id, "absent")}
+                        >
+                          Assente
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
@@ -612,54 +703,7 @@ export default function AdminPage() {
           {bookings.length === 0 ? (
             <p>Nessuna prenotazione ancora.</p>
           ) : (
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Ora</th>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Stato</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((b) => (
-                  <tr
-                    key={b.id}
-                    className={b.status === "cancelled" ? "cancelled" : ""}
-                  >
-                    <td>
-                      {new Date(b.date + "T00:00:00").toLocaleDateString(
-                        "it-IT",
-                      )}
-                    </td>
-                    <td>{b.time.slice(0, 5)}</td>
-                    <td>{b.name}</td>
-                    <td>{b.email}</td>
-                    <td>{statusLabels[b.status] || b.status}</td>
-                    <td>
-                      {b.status === "confirmed" && (
-                        <div style={{ display: "flex", gap: 6 }}>
-                          <button
-                            className="btn"
-                            onClick={() => markBooking(b.id, "attended")}
-                          >
-                            Presente
-                          </button>
-                          <button
-                            className="btn-danger"
-                            onClick={() => markBooking(b.id, "absent")}
-                          >
-                            Assente
-                          </button>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <BookingsGrouped bookings={bookings} onMark={markBooking} />
           )}
         </div>
       )}
