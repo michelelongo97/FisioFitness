@@ -8,8 +8,6 @@ const statusLabels = {
 };
 
 function SlotsGrouped({ slots, onDelete }) {
-  const [openDates, setOpenDates] = useState({});
-
   const grouped = slots.reduce((acc, s) => {
     if (!acc[s.date]) acc[s.date] = [];
     acc[s.date].push(s);
@@ -17,63 +15,74 @@ function SlotsGrouped({ slots, onDelete }) {
   }, {});
 
   const sortedDates = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
+  const [selectedDate, setSelectedDate] = useState(sortedDates[0] || null);
 
-  const toggleDate = (date) => {
-    setOpenDates((prev) => ({ ...prev, [date]: !prev[date] }));
+  useEffect(() => {
+    if (sortedDates.length > 0 && !sortedDates.includes(selectedDate)) {
+      setSelectedDate(sortedDates[0]);
+    }
+  }, [slots]);
+
+  const dayLabel = (dateStr) => {
+    const d = new Date(dateStr + "T00:00:00");
+    return {
+      weekday: d
+        .toLocaleDateString("it-IT", { weekday: "short" })
+        .toUpperCase(),
+      day: d.getDate(),
+    };
   };
 
-  return (
-    <div className="slots-grouped">
-      {sortedDates.map((date) => {
-        const daySlots = grouped[date];
-        const activeCount = daySlots.filter((s) => s.is_active).length;
-        const isOpen = openDates[date];
+  const currentSlots = selectedDate
+    ? [...(grouped[selectedDate] || [])].sort((a, b) =>
+        a.time.localeCompare(b.time),
+      )
+    : [];
 
-        return (
-          <div key={date} className="slot-day-group">
+  return (
+    <div className="admin-agenda">
+      <div className="sm-day-tabs">
+        {sortedDates.map((date) => {
+          const { weekday, day } = dayLabel(date);
+          const activeCount = grouped[date].filter((s) => s.is_active).length;
+          const isActive = date === selectedDate;
+          return (
             <button
-              className="slot-day-header"
-              onClick={() => toggleDate(date)}
+              key={date}
+              className={`sm-day-tab ${isActive ? "active" : ""}`}
+              onClick={() => setSelectedDate(date)}
               type="button"
             >
-              <span>
-                {new Date(date + "T00:00:00").toLocaleDateString("it-IT", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                })}
-              </span>
-              <span className="slot-day-meta">
-                {activeCount}/{daySlots.length} attivi {isOpen ? "▲" : "▼"}
+              <span className="sm-day-weekday">{weekday}</span>
+              <span className="sm-day-number">{day}</span>
+              <span className="sm-day-badge">
+                {activeCount}/{grouped[date].length}
               </span>
             </button>
+          );
+        })}
+      </div>
 
-            {isOpen && (
-              <div className="slot-day-content">
-                {daySlots.map((s) => (
-                  <div
-                    key={s.id}
-                    className={`slot-item ${!s.is_active ? "inactive" : ""}`}
-                  >
-                    <span>{s.time.slice(0, 5)}</span>
-                    <span className="slot-count">
-                      {s.booked_count}/{s.max_bookings} prenotati
-                    </span>
-                    {s.is_active && (
-                      <button
-                        className="btn-danger"
-                        onClick={() => onDelete(s.id)}
-                      >
-                        Disattiva
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
+      <div className="slot-day-content agenda-content">
+        {currentSlots.map((s) => (
+          <div
+            key={s.id}
+            className={`booking-agenda-item ${!s.is_active ? "inactive" : ""}`}
+          >
+            <span className="booking-agenda-time">{s.time.slice(0, 5)}</span>
+            <div className="booking-agenda-info">
+              <span className="booking-agenda-name">
+                {s.booked_count}/{s.max_bookings} prenotati
+              </span>
+            </div>
+            {s.is_active && (
+              <button className="btn-danger" onClick={() => onDelete(s.id)}>
+                Disattiva
+              </button>
             )}
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
@@ -466,26 +475,18 @@ export default function AdminPage() {
               Aggiungi
             </button>
           </form>
-          <div className="slots-list">
+          <div className="reel-cards">
             {reels.map((r) => (
               <div
                 key={r.id}
-                className={`slot-item ${!r.is_active ? "inactive" : ""}`}
+                className={`reel-admin-card ${!r.is_active ? "inactive" : ""}`}
               >
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: "#555",
-                    wordBreak: "break-all",
-                  }}
-                >
-                  {r.url}
-                </span>
-                {r.caption && (
-                  <span style={{ color: "#888", fontSize: 13 }}>
-                    {r.caption}
-                  </span>
-                )}
+                <div className="reel-admin-info">
+                  <span className="reel-admin-url">{r.url}</span>
+                  {r.caption && (
+                    <span className="reel-admin-caption">{r.caption}</span>
+                  )}
+                </div>
                 {r.is_active && (
                   <button
                     className="btn-danger"

@@ -1949,3 +1949,40 @@ body {
   flex-direction: column;
   gap: 10px;
 }
+/* REEL ADMIN CARDS */
+.reel-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reel-admin-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+}
+.reel-admin-card.inactive {
+  opacity: 0.4;
+}
+.reel-admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 200px;
+}
+.reel-admin-url {
+  font-size: 13px;
+  color: #555;
+  word-break: break-all;
+}
+.reel-admin-caption {
+  font-size: 13px;
+  color: #146272;
+  font-weight: 600;
+}
