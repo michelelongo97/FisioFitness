@@ -122,20 +122,29 @@ export default function BookingPage() {
             </div>
 
             <div className="sm-slot-list">
-              {currentSlots.map((slot) => (
-                <button
-                  key={slot.id}
-                  className="sm-slot-row"
-                  onClick={() => setBooking(slot)}
-                  type="button"
-                >
-                  <span className="sm-slot-time">{slot.time.slice(0, 5)}</span>
-                  <span className="sm-slot-badge">
-                    {slot.max_bookings - slot.booked_count} /{" "}
-                    {slot.max_bookings}
-                  </span>
-                </button>
-              ))}
+              {currentSlots.map((slot) => {
+                const slotDateTime = new Date(`${slot.date}T${slot.time}`);
+                const isPast = slotDateTime < new Date();
+
+                return (
+                  <button
+                    key={slot.id}
+                    className={`sm-slot-row ${isPast ? "sm-slot-past" : ""}`}
+                    onClick={() => !isPast && setBooking(slot)}
+                    disabled={isPast}
+                    type="button"
+                  >
+                    <span className="sm-slot-time">
+                      {slot.time.slice(0, 5)}
+                    </span>
+                    <span className="sm-slot-badge">
+                      {isPast
+                        ? "Non disponibile"
+                        : `${slot.max_bookings - slot.booked_count} / ${slot.max_bookings}`}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

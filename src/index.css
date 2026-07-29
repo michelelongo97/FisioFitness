@@ -1913,3 +1913,16 @@ body {
     flex: 1;
   }
 }
+.sm-slot-row.sm-slot-past {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.sm-slot-row.sm-slot-past:hover {
+  border-color: #e0e8e8;
+  background: white;
+  transform: none;
+}
+.sm-slot-row.sm-slot-past .sm-slot-time {
+  background: #999;
+}
