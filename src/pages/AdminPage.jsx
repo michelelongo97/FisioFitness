@@ -16,7 +16,7 @@ function SlotsGrouped({ slots, onDelete }) {
     return acc;
   }, {});
 
-  const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+  const sortedDates = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
 
   const toggleDate = (date) => {
     setOpenDates((prev) => ({ ...prev, [date]: !prev[date] }));
