@@ -1992,3 +1992,12 @@ body {
 .sm-day-tab.sm-day-past:not(.active) {
   opacity: 0.55;
 }
+.custom-date-input {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import DatePickerField from "../components/DatePickerField";
+import TimePickerField from "../components/TimePickerField";
 
 const statusLabels = {
   confirmed: "Confermata",
@@ -426,13 +428,6 @@ export default function AdminPage() {
   return (
     <div className="admin-page">
       <h1>Pannello Admin</h1>
-      <div style={{ padding: 20, background: "yellow" }}>
-        <p>TEST DIAGNOSTICO:</p>
-        <input type="date" />
-        <br />
-        <br />
-        <input type="time" />
-      </div>
 
       <div className="admin-tabs">
         <button
@@ -557,13 +552,9 @@ export default function AdminPage() {
               }
               style={{ width: 100 }}
             />
-            <input
-              type="date"
-              required
+            <DatePickerField
               value={newUser.starts_at}
-              onChange={(e) =>
-                setNewUser((u) => ({ ...u, starts_at: e.target.value }))
-              }
+              onChange={(val) => setNewUser((u) => ({ ...u, starts_at: val }))}
             />
             <button type="submit" className="btn">
               Crea utente
@@ -645,11 +636,7 @@ export default function AdminPage() {
             <h3 style={{ color: "#c00" }}>
               Chiudi giornata (es. ferie, imprevisto)
             </h3>
-            <input
-              type="date"
-              value={closeDate}
-              onChange={(e) => setCloseDate(e.target.value)}
-            />
+            <DatePickerField value={closeDate} onChange={setCloseDate} />
 
             <button type="button" className="btn-danger" onClick={closeDay}>
               Chiudi giorno
@@ -658,21 +645,13 @@ export default function AdminPage() {
 
           <form className="add-slot-form" onSubmit={addSlot}>
             <h3>Aggiungi slot</h3>
-            <input
-              type="date"
-              required
+            <DatePickerField
               value={newSlot.date}
-              onChange={(e) =>
-                setNewSlot((s) => ({ ...s, date: e.target.value }))
-              }
+              onChange={(val) => setNewSlot((s) => ({ ...s, date: val }))}
             />
-            <input
-              type="time"
-              required
+            <TimePickerField
               value={newSlot.time}
-              onChange={(e) =>
-                setNewSlot((s) => ({ ...s, time: e.target.value }))
-              }
+              onChange={(val) => setNewSlot((s) => ({ ...s, time: val }))}
             />
             <button type="submit" className="btn">
               Aggiungi
