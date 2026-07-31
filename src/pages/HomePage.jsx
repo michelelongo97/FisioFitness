@@ -9,6 +9,7 @@ import {
   faGraduationCap,
   faDumbbell,
   faUserDoctor,
+  faStaffSnake,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
@@ -33,16 +34,21 @@ export default function HomePage() {
 
               <ul className="chi-titles">
                 <li>
-                  <FontAwesomeIcon icon={faGraduationCap} />
-                  Laurea in Fisioterapia
+                  <FontAwesomeIcon icon={faGraduationCap} /> Laurea in
+                  Fisioterapia
                 </li>
                 <li>
-                  <FontAwesomeIcon icon={faUserDoctor} />
-                  Master in Riabilitazione dei Disordini Muscolo-Scheletrici
+                  <FontAwesomeIcon icon={faUserDoctor} /> Master in
+                  Riabilitazione dei Disordini Muscolo-Scheletrici
                 </li>
                 <li>
-                  <FontAwesomeIcon icon={faDumbbell} />
-                  Personal Trainer Certificato Project Invictus
+                  <FontAwesomeIcon icon={faDumbbell} /> Personal Trainer
+                  Certificato Project Invictus
+                </li>
+
+                <li>
+                  <FontAwesomeIcon icon={faStaffSnake} /> Postural Trainer
+                  certificato Project Invicutus
                 </li>
               </ul>
             </div>
@@ -56,19 +62,16 @@ export default function HomePage() {
 
             <p>
               Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e sono
-              un fisioterapista specializzato in{" "}
-              <strong>Riabilitazione dei Disordini Muscolo-Scheletrici</strong>.
-            </p>
-
-            <p>
-              Il mio obiettivo è aiutare le persone a recuperare il benessere
-              fisico e migliorare la qualità della vita attraverso percorsi
-              terapeutici basati su evidenze scientifiche.
-            </p>
-
-            <p>
-              Affianco all’attività clinica quella di{" "}
-              <strong>Personal Trainer certificato Project Invictus</strong>,
+              un
+              <strong> FISIOTERAPISTA</strong> specializzato in
+              <strong> Riabilitazione dei Disordini Muscolo-Scheletrici</strong>
+              .
+              <br /> Il mio obiettivo è aiutare le persone a recuperare il
+              benessere fisico e migliorare la qualità della vita attraverso
+              percorsi terapeutici basati su evidenze scientifiche. <br />
+              Affianco all’attività clinica di <strong>Fisioterapista </strong>
+              quella di
+              <strong> Personal Trainer certificato Project Invictus</strong>,
               per offrire un approccio completo che unisca riabilitazione e
               allenamento.
             </p>
