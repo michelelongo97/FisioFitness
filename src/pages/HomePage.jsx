@@ -58,23 +58,29 @@ export default function HomePage() {
         {/* BIO */}
         <section className="chi-section">
           <div className="chi-container">
-            <h3>Chi Sono</h3>
-
-            <p>
-              Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e sono
-              un
-              <strong> FISIOTERAPISTA</strong> specializzato in
-              <strong> Riabilitazione dei Disordini Muscolo-Scheletrici</strong>
-              .
-              <br /> Il mio obiettivo è aiutare le persone a recuperare il
-              benessere fisico e migliorare la qualità della vita attraverso
-              percorsi terapeutici basati su evidenze scientifiche. <br />
-              Affianco all’attività clinica di <strong>Fisioterapista </strong>
-              quella di
-              <strong> Personal Trainer certificato Project Invictus</strong>,
-              per offrire un approccio completo che unisca riabilitazione e
-              allenamento.
-            </p>
+            <div className="chi-feature-card">
+              <span className="chi-feature-icon">👋</span>
+              <h3>Chi Sono</h3>
+              <p>
+                Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e
+                sono un
+                <strong> FISIOTERAPISTA</strong> specializzato in
+                <strong>
+                  {" "}
+                  Riabilitazione dei Disordini Muscolo-Scheletrici
+                </strong>
+                .
+                <br /> Il mio obiettivo è aiutare le persone a recuperare il
+                benessere fisico e migliorare la qualità della vita attraverso
+                percorsi terapeutici basati su evidenze scientifiche. <br />
+                Affianco all'attività clinica di{" "}
+                <strong>Fisioterapista </strong>
+                quella di
+                <strong> Personal Trainer certificato Project Invictus</strong>,
+                per offrire un approccio completo che unisca riabilitazione e
+                allenamento.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -119,44 +125,54 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
         {/* METODO */}
-        <section className="chi-section">
+        <section className="chi-section chi-method">
           <div className="chi-container">
-            <h3>Il Metodo</h3>
-            <p>
-              La fisioterapia qui NON è solo una sequenza di manovre o esercizi,
-              MA un processo educativo, relazionale e trasformativo che
-              coinvolge attivamente la persona. <br /> <br />
-              Il servizio è adatto a chiunque stia vivendo un percorso di dolore
-              o recupero che NON si aspetta qualcuno che “lo rimetta a posto”.
-              Il servizio è rivolto a chiunque pretenda di partecipare
-              attivamente, che cerchi spiegazioni, strumenti e consapevolezza:
-              <strong>
-                perchè il corpo cambia quando ci si sente parte del cambiamento
-              </strong>
-              <br /> <br />
-              Credo nel valore di un approccio individualizzato e nel movimento
-              come strumento di cura. <br />
-              Ogni percorso nasce da una valutazione accurata e si sviluppa
-              combinando riabilitazione e allenamento, con l’obiettivo di
-              costruire risultati solidi e sostenibili nel tempo.
-            </p>
+            <div className="chi-feature-card chi-feature-card-accent">
+              <span className="chi-feature-icon">🧭</span>
+              <h3>Il Metodo</h3>
+              <p>
+                La fisioterapia qui <em>non</em> è solo una sequenza di manovre
+                o esercizi, ma un processo educativo, relazionale e
+                trasformativo che coinvolge attivamente la persona.
+              </p>
+              <p>
+                Il servizio è adatto a chiunque stia vivendo un percorso di
+                dolore o recupero che non si aspetta qualcuno che "lo rimetta a
+                posto". È rivolto a chiunque pretenda di partecipare
+                attivamente, che cerchi spiegazioni, strumenti e consapevolezza:
+              </p>
+              <p className="chi-method-quote">
+                "Il corpo cambia quando ci si sente parte del cambiamento"
+              </p>
+              <p>
+                Credo nel valore di un approccio individualizzato e nel
+                movimento come strumento di cura. Ogni percorso nasce da una
+                valutazione accurata e si sviluppa combinando riabilitazione e
+                allenamento, con l'obiettivo di costruire risultati solidi e
+                sostenibili nel tempo.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* STUDIO */}
         <section className="chi-section chi-light">
           <div className="chi-container">
-            <h3>Studio & Palestra</h3>
-            <p>
-              Lo studio è uno spazio dedicato alla fisioterapia e
-              all’allenamento personalizzato, dove il movimento diventa parte
-              integrante del percorso di recupero.
-            </p>
-            <p>
-              Un ambiente professionale pensato per offrire continuità tra cura,
-              prevenzione e performance fisica.
-            </p>
+            <div className="chi-feature-card">
+              <span className="chi-feature-icon">🏋️</span>
+              <h3>Studio & Palestra</h3>
+              <p>
+                Lo studio è uno spazio dedicato alla fisioterapia e
+                all'allenamento personalizzato, dove il movimento diventa parte
+                integrante del percorso di recupero.
+              </p>
+              <p>
+                Un ambiente professionale pensato per offrire continuità tra
+                cura, prevenzione e performance fisica.
+              </p>
+            </div>
           </div>
         </section>
 

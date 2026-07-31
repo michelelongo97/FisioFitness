@@ -478,6 +478,62 @@ body {
   align-items: center;
 }
 
+/* CHI-FEATURE CARDS (Chi Sono / Metodo / Studio) */
+.chi-feature-card {
+  background: white;
+  border-radius: 20px;
+  padding: 48px 44px;
+  box-shadow: 0 10px 30px rgba(20, 98, 114, 0.08);
+  position: relative;
+}
+.chi-feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  font-size: 26px;
+  background: #f0f6f6;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.chi-feature-card h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.chi-feature-card p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 16px;
+}
+.chi-feature-card p:last-child {
+  margin-bottom: 0;
+}
+.chi-feature-card strong {
+  color: #146272;
+}
+
+.chi-feature-card-accent {
+  border-left: 5px solid #3da9a9;
+}
+
+.chi-method-quote {
+  font-size: 20px;
+  font-style: italic;
+  color: #146272;
+  font-weight: 600;
+  padding: 20px 24px;
+  background: #f0f6f6;
+  border-radius: 14px;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.chi-method {
+  background: #fafcfc;
+}
+
 /* BUTTONS */
 .btn,
 .btn-danger {
@@ -496,6 +552,24 @@ body {
 .hero-overlay .btn {
   position: absolute;
   bottom: 60px;
+  background: linear-gradient(135deg, #146272, #3da9a9);
+  padding: 18px 42px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 30px rgba(20, 98, 114, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.hero-overlay .btn:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 14px 36px rgba(20, 98, 114, 0.5);
+  background: linear-gradient(135deg, #0d4a54, #2f8f8f);
+}
+.hero-overlay .btn:active {
+  transform: scale(0.98);
 }
 
 .btn {
