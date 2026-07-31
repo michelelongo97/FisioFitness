@@ -121,10 +121,19 @@ export default function HomePage() {
           <div className="chi-container">
             <h3>Il Metodo</h3>
             <p>
+              La fisioterapia qui NON è solo una sequenza di manovre o esercizi,
+              MA un processo educativo, relazionale e trasformativo che
+              coinvolge attivamente la persona. <br /> <br />
+              Il servizio è adatto a chiunque stia vivendo un percorso di dolore
+              o recupero che NON si aspetta qualcuno che “lo rimetta a posto”.
+              Il servizio è rivolto a chiunque pretenda di partecipare
+              attivamente, che cerchi spiegazioni, strumenti e consapevolezza:
+              <strong>
+                perchè il corpo cambia quando ci si sente parte del cambiamento
+              </strong>
+              <br /> <br />
               Credo nel valore di un approccio individualizzato e nel movimento
-              come strumento di cura.
-            </p>
-            <p>
+              come strumento di cura. <br />
               Ogni percorso nasce da una valutazione accurata e si sviluppa
               combinando riabilitazione e allenamento, con l’obiettivo di
               costruire risultati solidi e sostenibili nel tempo.
