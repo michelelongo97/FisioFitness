@@ -499,17 +499,7 @@ body {
   box-shadow: 0 10px 30px rgba(20, 98, 114, 0.08);
   position: relative;
 }
-.chi-feature-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  font-size: 26px;
-  background: #f0f6f6;
-  border-radius: 16px;
-  margin-bottom: 20px;
-}
+
 .chi-feature-card h3 {
   font-size: 28px;
   margin-bottom: 20px;
@@ -525,10 +515,6 @@ body {
 }
 .chi-feature-card strong {
   color: #146272;
-}
-
-.chi-feature-card-accent {
-  border-left: 5px solid #3da9a9;
 }
 
 .chi-method-quote {

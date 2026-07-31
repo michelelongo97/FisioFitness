@@ -59,7 +59,6 @@ export default function HomePage() {
         <section className="chi-section">
           <div className="chi-container">
             <div className="chi-feature-card">
-              <span className="chi-feature-icon">👋</span>
               <h3>Chi Sono</h3>
               <p>
                 Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e
@@ -130,7 +129,6 @@ export default function HomePage() {
         <section className="chi-section chi-method">
           <div className="chi-container">
             <div className="chi-feature-card chi-feature-card-accent">
-              <span className="chi-feature-icon">🧭</span>
               <h3>Il Metodo</h3>
               <p>
                 La fisioterapia qui <em>non</em> è solo una sequenza di manovre
@@ -161,7 +159,6 @@ export default function HomePage() {
         <section className="chi-section chi-light">
           <div className="chi-container">
             <div className="chi-feature-card">
-              <span className="chi-feature-icon">🏋️</span>
               <h3>Studio & Palestra</h3>
               <p>
                 Lo studio è uno spazio dedicato alla fisioterapia e
