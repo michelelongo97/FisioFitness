@@ -189,7 +189,7 @@ function BookingsGrouped({ bookings, onMark }) {
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
-  const [tab, setTab] = useState("prenotazioni"); // "prenotazioni" | "slots" | "users" | "reels"
+  const [tab, setTab] = useState("bookings"); // "prenotazioni" | "slots" | "users" | "reels"
 
   const [closeDate, setCloseDate] = useState("");
 
