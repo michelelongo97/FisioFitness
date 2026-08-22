@@ -548,9 +548,7 @@ body {
     box-shadow 0.2s;
 }
 
-.hero-overlay .btn {
-  position: absolute;
-  bottom: 60px;
+.hero-book-btn {
   background: linear-gradient(135deg, #146272, #3da9a9);
   padding: 18px 42px;
   font-size: 17px;
@@ -562,13 +560,18 @@ body {
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
-.hero-overlay .btn:hover {
+.hero-book-btn:hover {
   transform: scale(1.05) translateY(-2px);
   box-shadow: 0 14px 36px rgba(20, 98, 114, 0.5);
   background: linear-gradient(135deg, #0d4a54, #2f8f8f);
 }
-.hero-overlay .btn:active {
+.hero-book-btn:active {
   transform: scale(0.98);
+}
+
+.hero-overlay .btn {
+  position: absolute;
+  bottom: 60px;
 }
 
 .btn {

@@ -108,7 +108,11 @@ export default function HeroCarousel() {
         <h1>FisioFitness</h1>
         <p>Fisioterapia & Allenamento Personalizzato</p>
 
-        <button type="button" className="btn" onClick={scrollToCTA}>
+        <button
+          type="button"
+          className="btn hero-book-btn"
+          onClick={scrollToCTA}
+        >
           <strong>Prenota consulenza</strong>
         </button>
       </div>

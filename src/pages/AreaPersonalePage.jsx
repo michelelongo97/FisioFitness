@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUser, getToken, logout } from "../lib/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -132,9 +132,23 @@ export default function AreaPersonalePage() {
               </div>
             )}
 
-            <h3 style={{ color: "#146272", marginBottom: 16 }}>
-              Prossime prenotazioni
-            </h3>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 16,
+                flexWrap: "wrap",
+                gap: 12,
+              }}
+            >
+              <h3 style={{ color: "#146272", margin: 0 }}>
+                Prossime prenotazioni
+              </h3>
+              <Link to="/prenota" className="btn hero-book-btn">
+                <strong>Prenota Consulenza</strong>
+              </Link>
+            </div>
             {upcoming.length === 0 ? (
               <p style={{ color: "#666", marginBottom: 32 }}>
                 Nessuna prenotazione futura.
