@@ -189,7 +189,7 @@ function BookingsGrouped({ bookings, onMark }) {
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
-  const [tab, setTab] = useState("users"); // "users" | "slots" | "bookings" | "reels"
+  const [tab, setTab] = useState("slots"); // "slots" | "slots" | "users" | "reels"
 
   const [closeDate, setCloseDate] = useState("");
 
@@ -431,10 +431,10 @@ export default function AdminPage() {
 
       <div className="admin-tabs">
         <button
-          className={`tab-btn ${tab === "users" ? "active" : ""}`}
-          onClick={() => setTab("users")}
+          className={`tab-btn ${tab === "bookings" ? "active" : ""}`}
+          onClick={() => setTab("bookings")}
         >
-          Utenti
+          Prenotazioni
         </button>
         <button
           className={`tab-btn ${tab === "slots" ? "active" : ""}`}
@@ -443,11 +443,12 @@ export default function AdminPage() {
           Slot
         </button>
         <button
-          className={`tab-btn ${tab === "bookings" ? "active" : ""}`}
-          onClick={() => setTab("bookings")}
+          className={`tab-btn ${tab === "users" ? "active" : ""}`}
+          onClick={() => setTab("users")}
         >
-          Prenotazioni
+          Utenti
         </button>
+
         <button
           className={`tab-btn ${tab === "reels" ? "active" : ""}`}
           onClick={() => setTab("reels")}

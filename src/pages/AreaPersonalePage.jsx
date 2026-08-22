@@ -146,7 +146,7 @@ export default function AreaPersonalePage() {
                 Prossime prenotazioni
               </h3>
               <Link to="/prenota" className="btn hero-book-btn">
-                <strong>Prenota Consulenza</strong>
+                <strong>Prenota</strong>
               </Link>
             </div>
             {upcoming.length === 0 ? (
