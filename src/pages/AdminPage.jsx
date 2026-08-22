@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DatePickerField from "../components/DatePickerField";
 import TimePickerField from "../components/TimePickerField";
 
@@ -43,6 +43,19 @@ function SlotsGrouped({ slots, onDelete }) {
     };
   };
 
+  const tabRefs = {};
+  const tabsContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedDate && tabRefs[selectedDate]) {
+      tabRefs[selectedDate].scrollIntoView({
+        inline: "start",
+        block: "nearest",
+        behavior: "auto",
+      });
+    }
+  }, [selectedDate]);
+
   const currentSlots = selectedDate
     ? [...(grouped[selectedDate] || [])].sort((a, b) =>
         a.time.localeCompare(b.time),
@@ -60,6 +73,7 @@ function SlotsGrouped({ slots, onDelete }) {
           return (
             <button
               key={date}
+              ref={(el) => (tabRefs[date] = el)}
               className={`sm-day-tab ${isActive ? "active" : ""} ${isPastDay ? "sm-day-past" : ""}`}
               onClick={() => setSelectedDate(date)}
               type="button"
@@ -137,6 +151,18 @@ function BookingsGrouped({ bookings, onMark }) {
     };
   };
 
+  const tabRefs = {};
+
+  useEffect(() => {
+    if (selectedDate && tabRefs[selectedDate]) {
+      tabRefs[selectedDate].scrollIntoView({
+        inline: "start",
+        block: "nearest",
+        behavior: "auto",
+      });
+    }
+  }, [selectedDate]);
+
   const currentBookings = selectedDate
     ? [...(grouped[selectedDate] || [])].sort((a, b) =>
         a.time.localeCompare(b.time),
@@ -153,6 +179,7 @@ function BookingsGrouped({ bookings, onMark }) {
           return (
             <button
               key={date}
+              ref={(el) => (tabRefs[date] = el)}
               className={`sm-day-tab ${isActive ? "active" : ""}`}
               onClick={() => setSelectedDate(date)}
               type="button"
