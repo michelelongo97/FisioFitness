@@ -17,11 +17,19 @@ function SlotsGrouped({ slots, onDelete }) {
   }, {});
 
   const sortedDates = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
-  const [selectedDate, setSelectedDate] = useState(sortedDates[0] || null);
+
+  const getDefaultDate = () => {
+    const todayStr = new Date().toLocaleDateString("sv-SE");
+    if (sortedDates.includes(todayStr)) return todayStr;
+    const nextDate = sortedDates.find((d) => d >= todayStr);
+    return nextDate || sortedDates[0] || null;
+  };
+
+  const [selectedDate, setSelectedDate] = useState(getDefaultDate());
 
   useEffect(() => {
     if (sortedDates.length > 0 && !sortedDates.includes(selectedDate)) {
-      setSelectedDate(sortedDates[0]);
+      setSelectedDate(getDefaultDate());
     }
   }, [slots]);
 
