@@ -93,7 +93,7 @@ export default async function handler(req, res) {
         await resend.emails.send({
           from: "FisioFitness <noreply@costafisiofitness.it>",
           to: process.env.VITE_EMAIL_RESEND,
-          subject: `Nuova prenotazione — ${user.name}`,
+          subject: `${dateFormatted}, ${timeFormatted} | ${user.name}`,
           html: `
         <p>Nuova prenotazione ricevuta:</p>
         <ul>
