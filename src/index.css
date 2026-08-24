@@ -593,7 +593,13 @@ body {
 .btn-danger {
   background: linear-gradient(135deg, #c0392b, #e74c3c);
   color: white;
-  box-shadow: 0 6px 18px rgba(192, 57, 43, 0.3);
+  padding: 18px 42px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(192, 57, 43, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
@@ -601,8 +607,11 @@ body {
 }
 .btn-danger:hover {
   background: linear-gradient(135deg, #922b21, #c0392b);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(192, 57, 43, 0.4);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 14px 36px rgba(192, 57, 43, 0.5);
+}
+.btn-danger:active {
+  transform: scale(0.98);
 }
 
 .btn:active,
