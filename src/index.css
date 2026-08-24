@@ -560,6 +560,13 @@ body {
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
+
+.login-btn.hero-book-btn {
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+}
+
 .hero-book-btn:hover {
   transform: scale(1.05) translateY(-2px);
   box-shadow: 0 14px 36px rgba(20, 98, 114, 0.5);

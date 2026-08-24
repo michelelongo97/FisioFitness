@@ -64,8 +64,12 @@ export default function LoginPage() {
 
           {error && <p className="form-error">{error}</p>}
 
-          <button type="submit" className="btn login-btn" disabled={loading}>
-            {loading ? "Accesso in corso..." : "Accedi"}
+          <button
+            type="submit"
+            className="btn hero-book-btn login-btn"
+            disabled={loading}
+          >
+            <strong>{loading ? "Accesso in corso..." : "Accedi"}</strong>
           </button>
         </form>
       </div>
