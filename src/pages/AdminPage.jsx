@@ -234,6 +234,7 @@ export default function AdminPage() {
     () => localStorage.getItem("admin_password") || "",
   );
   const [authed, setAuthed] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [tab, setTab] = useState("bookings"); // "prenotazioni" | "slots" | "users" | "reels"
 
   const [closeDate, setCloseDate] = useState("");
@@ -273,6 +274,8 @@ export default function AdminPage() {
   useEffect(() => {
     if (password) {
       login();
+    } else {
+      setCheckingAuth(false);
     }
   }, []);
 
@@ -284,9 +287,11 @@ export default function AdminPage() {
       localStorage.setItem("admin_password", password);
       setReels(await res.json());
     } else {
-      alert("Password errata");
+      if (e) alert("Password errata"); // mostra l'alert solo se è un tentativo manuale, non al check automatico
       localStorage.removeItem("admin_password");
+      setPassword("");
     }
+    setCheckingAuth(false);
   };
 
   // REELS
@@ -495,6 +500,10 @@ export default function AdminPage() {
       loadStats();
     }
   }, [authed, tab]);
+
+  if (checkingAuth) {
+    return <div className="admin-login" />;
+  }
 
   if (!authed) {
     return (
