@@ -591,11 +591,18 @@ body {
 }
 
 .btn-danger {
-  background-color: rgb(155, 9, 9);
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
   color: white;
+  box-shadow: 0 6px 18px rgba(192, 57, 43, 0.3);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 .btn-danger:hover {
-  background-color: rgb(120, 0, 0);
+  background: linear-gradient(135deg, #922b21, #c0392b);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(192, 57, 43, 0.4);
 }
 
 .btn:active,
@@ -645,11 +652,6 @@ body {
 .cta-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-}
-
-.chi-siamo-premium {
-  background: #fff;
-  color: #1a1a1a;
 }
 
 .legal-page {
@@ -712,11 +714,6 @@ body {
 .scroll-top-btn:hover {
   background: #0d4a54;
   transform: scale(1.05);
-}
-
-.main-header.hidden {
-  transform: translateY(-100%);
-  transition: transform 0.4s ease;
 }
 
 /* ======================= DESKTOP ======================= */
@@ -1921,9 +1918,7 @@ body {
   padding: 14px 16px;
   flex-wrap: wrap;
 }
-.booking-agenda-item.inactive {
-  opacity: 0.5;
-}
+
 .booking-agenda-time {
   font-size: 16px;
   font-weight: bold;
