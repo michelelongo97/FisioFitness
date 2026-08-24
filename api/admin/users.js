@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     const { rows } = await sql`
     SELECT 
-      u.id, u.name, u.email, u.created_at,
+      u.id, u.name, u.email, u.created_at, u.is_active,
       s.id as subscription_id, s.total_entries, s.used_entries, 
       s.starts_at, s.expires_at,
       (
@@ -36,6 +36,7 @@ export default async function handler(req, res) {
       AND s.expires_at = (
         SELECT MAX(expires_at) FROM subscriptions WHERE user_id = u.id
       )
+    WHERE u.is_active = true
     ORDER BY u.created_at DESC
   `;
     return res.status(200).json(rows);
@@ -78,5 +79,30 @@ export default async function handler(req, res) {
       console.error(err);
       res.status(500).json({ error: "Errore nella creazione utente" });
     }
+  }
+  // PATCH — modifica ingressi o disattiva user
+  if (req.method === "PATCH") {
+    const { id } = req.query;
+    const { action, total_entries, used_entries } = req.body;
+
+    if (action === "update_entries") {
+      if (total_entries === undefined || used_entries === undefined) {
+        return res.status(400).json({ error: "Dati mancanti" });
+      }
+      await sql`
+      UPDATE subscriptions 
+      SET total_entries = ${total_entries}, used_entries = ${used_entries}
+      WHERE user_id = ${id} 
+        AND expires_at = (SELECT MAX(expires_at) FROM subscriptions WHERE user_id = ${id})
+    `;
+      return res.status(200).json({ success: true });
+    }
+
+    if (action === "deactivate") {
+      await sql`UPDATE users SET is_active = false WHERE id = ${id}`;
+      return res.status(200).json({ success: true });
+    }
+
+    return res.status(400).json({ error: "Azione non valida" });
   }
 }

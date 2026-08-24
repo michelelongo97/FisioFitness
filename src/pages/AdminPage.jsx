@@ -230,7 +230,9 @@ function BookingsGrouped({ bookings, onMark }) {
 }
 
 export default function AdminPage() {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(
+    () => localStorage.getItem("admin_password") || "",
+  );
   const [authed, setAuthed] = useState(false);
   const [tab, setTab] = useState("bookings"); // "prenotazioni" | "slots" | "users" | "reels"
 
@@ -268,14 +270,22 @@ export default function AdminPage() {
     "Content-Type": "application/json",
   };
 
+  useEffect(() => {
+    if (password) {
+      login();
+    }
+  }, []);
+
   const login = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const res = await fetch("/api/admin/reels", { headers });
     if (res.ok) {
       setAuthed(true);
+      localStorage.setItem("admin_password", password);
       setReels(await res.json());
     } else {
       alert("Password errata");
+      localStorage.removeItem("admin_password");
     }
   };
 
@@ -345,6 +355,43 @@ export default function AdminPage() {
       password: "",
       total_entries: 10,
       starts_at: "",
+    });
+    loadUsers();
+  };
+
+  const [editingUser, setEditingUser] = useState(null);
+  const [editEntries, setEditEntries] = useState({ total: 0, used: 0 });
+
+  const openEditUser = (u) => {
+    setEditingUser(u);
+    setEditEntries({ total: u.total_entries || 0, used: u.used_entries || 0 });
+  };
+
+  const saveEditUser = async () => {
+    await fetch(`/api/admin/users?id=${editingUser.id}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({
+        action: "update_entries",
+        total_entries: editEntries.total,
+        used_entries: editEntries.used,
+      }),
+    });
+    setEditingUser(null);
+    loadUsers();
+  };
+
+  const deactivateUser = async (id, name) => {
+    if (
+      !confirm(
+        `Disattivare ${name}? Non sarà più visibile in lista, ma lo storico resta salvato.`,
+      )
+    )
+      return;
+    await fetch(`/api/admin/users?id=${id}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({ action: "deactivate" }),
     });
     loadUsers();
   };
@@ -470,7 +517,28 @@ export default function AdminPage() {
 
   return (
     <div className="admin-page">
-      <h1>Pannello Admin</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 24,
+          flexWrap: "wrap",
+          gap: 12,
+        }}
+      >
+        <h1 style={{ margin: 0 }}>Pannello Admin</h1>
+        <button
+          className="btn-danger"
+          onClick={() => {
+            localStorage.removeItem("admin_password");
+            setAuthed(false);
+            setPassword("");
+          }}
+        >
+          Esci
+        </button>
+      </div>
 
       <div className="admin-tabs">
         <button
@@ -653,9 +721,99 @@ export default function AdminPage() {
                     totali
                   </span>
                 </div>
+                <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                  {u.subscription_id && (
+                    <button
+                      className="btn"
+                      style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
+                      onClick={() => openEditUser(u)}
+                    >
+                      Modifica ingressi
+                    </button>
+                  )}
+                  <button
+                    className="btn-danger"
+                    style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
+                    onClick={() => deactivateUser(u.id, u.name)}
+                  >
+                    Disattiva
+                  </button>
+                </div>
               </div>
             ))}
           </div>
+
+          {editingUser && (
+            <div className="modal-overlay" onClick={() => setEditingUser(null)}>
+              <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <h3 style={{ color: "#146272", marginBottom: 16 }}>
+                  Modifica ingressi — {editingUser.name}
+                </h3>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 14,
+                    marginBottom: 20,
+                  }}
+                >
+                  <label>
+                    Ingressi totali
+                    <input
+                      type="number"
+                      min="0"
+                      value={editEntries.total}
+                      onChange={(e) =>
+                        setEditEntries((s) => ({
+                          ...s,
+                          total: Number(e.target.value),
+                        }))
+                      }
+                      style={{
+                        width: "100%",
+                        padding: 10,
+                        marginTop: 4,
+                        border: "1.5px solid #ddd",
+                        borderRadius: 8,
+                      }}
+                    />
+                  </label>
+                  <label>
+                    Ingressi usati
+                    <input
+                      type="number"
+                      min="0"
+                      value={editEntries.used}
+                      onChange={(e) =>
+                        setEditEntries((s) => ({
+                          ...s,
+                          used: Number(e.target.value),
+                        }))
+                      }
+                      style={{
+                        width: "100%",
+                        padding: 10,
+                        marginTop: 4,
+                        border: "1.5px solid #ddd",
+                        borderRadius: 8,
+                      }}
+                    />
+                  </label>
+                </div>
+                <div style={{ display: "flex", gap: 12 }}>
+                  <button className="btn" onClick={saveEditUser}>
+                    Salva
+                  </button>
+                  <button
+                    className="btn-danger"
+                    onClick={() => setEditingUser(null)}
+                  >
+                    Annulla
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
