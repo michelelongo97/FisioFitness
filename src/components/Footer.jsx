@@ -47,7 +47,7 @@ export default function Footer() {
             <h4>Contatti</h4>
 
             <p>
-              Email:{" "}
+              E-Mail:{" "}
               <a
                 href={`mailto:${import.meta.env.VITE_EMAIL}`}
                 className="footer-link"

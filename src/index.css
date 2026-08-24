@@ -1050,16 +1050,20 @@ body {
 .reel-embed-wrapper {
   position: relative;
   width: 100%;
-  height: 620px; /* aumentata per mostrare più video */
-  background: #f0f0f0;
+  height: 620px;
+  background: white;
   border-radius: 14px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 .reel-embed-wrapper iframe {
   position: absolute;
   top: -80px;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 328px;
+  max-width: 100%;
   height: 700px;
   border: none;
 }
