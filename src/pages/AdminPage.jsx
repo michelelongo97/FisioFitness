@@ -365,11 +365,19 @@ export default function AdminPage() {
   };
 
   const [editingUser, setEditingUser] = useState(null);
-  const [editEntries, setEditEntries] = useState({ total: 0, used: 0 });
+  const [editEntries, setEditEntries] = useState({
+    total: 0,
+    used: 0,
+    expiresAt: "",
+  });
 
   const openEditUser = (u) => {
     setEditingUser(u);
-    setEditEntries({ total: u.total_entries || 0, used: u.used_entries || 0 });
+    setEditEntries({
+      total: u.total_entries || 0,
+      used: u.used_entries || 0,
+      expiresAt: u.expires_at ? u.expires_at.slice(0, 10) : "",
+    });
   };
 
   const saveEditUser = async () => {
@@ -380,6 +388,7 @@ export default function AdminPage() {
         action: "update_entries",
         total_entries: editEntries.total,
         used_entries: editEntries.used,
+        expires_at: editEntries.expiresAt,
       }),
     });
     setEditingUser(null);
@@ -807,6 +816,17 @@ export default function AdminPage() {
                         borderRadius: 8,
                       }}
                     />
+                  </label>
+                  <label>
+                    Data di scadenza
+                    <div style={{ marginTop: 4 }}>
+                      <DatePickerField
+                        value={editEntries.expiresAt}
+                        onChange={(val) =>
+                          setEditEntries((s) => ({ ...s, expiresAt: val }))
+                        }
+                      />
+                    </div>
                   </label>
                 </div>
                 <div style={{ display: "flex", gap: 12 }}>

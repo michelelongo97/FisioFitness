@@ -86,15 +86,20 @@ export default async function handler(req, res) {
     const { action, total_entries, used_entries } = req.body;
 
     if (action === "update_entries") {
-      if (total_entries === undefined || used_entries === undefined) {
+      const { expires_at } = req.body;
+      if (
+        total_entries === undefined ||
+        used_entries === undefined ||
+        !expires_at
+      ) {
         return res.status(400).json({ error: "Dati mancanti" });
       }
       await sql`
-      UPDATE subscriptions 
-      SET total_entries = ${total_entries}, used_entries = ${used_entries}
-      WHERE user_id = ${id} 
-        AND expires_at = (SELECT MAX(expires_at) FROM subscriptions WHERE user_id = ${id})
-    `;
+    UPDATE subscriptions 
+    SET total_entries = ${total_entries}, used_entries = ${used_entries}, expires_at = ${expires_at}
+    WHERE user_id = ${id} 
+      AND expires_at = (SELECT MAX(expires_at) FROM subscriptions WHERE user_id = ${id})
+  `;
       return res.status(200).json({ success: true });
     }
 
