@@ -58,14 +58,57 @@ export default async function handler(req, res) {
 
     // Crea la prenotazione e scala l'ingresso
     const { rows } = await sql`
-      INSERT INTO bookings (user_id, slot_id, subscription_id, status)
-      VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
-      RETURNING *
-    `;
+  INSERT INTO bookings (user_id, slot_id, subscription_id, status)
+  VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
+  RETURNING *
+`;
     await sql`
-      UPDATE subscriptions SET used_entries = used_entries + 1 
-      WHERE id = ${subscription.id}
-    `;
+  UPDATE subscriptions SET used_entries = used_entries + 1 
+  WHERE id = ${subscription.id}
+`;
+
+    // Recupera dati utente e slot per la notifica email
+    try {
+      const { rows: userRows } =
+        await sql`SELECT name, email FROM users WHERE id = ${userId}`;
+      const { rows: slotRows2 } =
+        await sql`SELECT date, time FROM slots WHERE id = ${slotId}`;
+
+      if (userRows.length > 0 && slotRows2.length > 0) {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
+        const user = userRows[0];
+        const slotInfo = slotRows2[0];
+        const dateFormatted = new Date(slotInfo.date).toLocaleDateString(
+          "it-IT",
+          {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          },
+        );
+        const timeFormatted = slotInfo.time.slice(0, 5);
+
+        await resend.emails.send({
+          from: "FisioFitness <noreply@costafisiofitness.it>",
+          to: process.env.VITE_EMAIL_RESEND,
+          subject: `Nuova prenotazione — ${user.name}`,
+          html: `
+        <p>Nuova prenotazione ricevuta:</p>
+        <ul>
+          <li><strong>Cliente:</strong> ${user.name}</li>
+          <li><strong>Email:</strong> ${user.email}</li>
+          <li><strong>Data:</strong> ${dateFormatted}</li>
+          <li><strong>Ora:</strong> ${timeFormatted}</li>
+        </ul>
+      `,
+        });
+      }
+    } catch (emailErr) {
+      // La prenotazione è comunque riuscita anche se l'email fallisce
+      console.error("Errore invio email notifica:", emailErr);
+    }
 
     res.status(201).json(rows[0]);
   } catch (err) {
