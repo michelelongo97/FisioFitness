@@ -2064,3 +2064,67 @@ body {
   box-sizing: border-box;
   font-family: inherit;
 }
+/* EXERCISES */
+.exercises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.exercise-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(20, 98, 114, 0.08);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.exercise-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(20, 98, 114, 0.15);
+}
+.exercise-card-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.exercise-card-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.exercise-card-name {
+  font-weight: 700;
+  color: #146272;
+  font-size: 14px;
+}
+.exercise-card-best {
+  font-size: 13px;
+  color: #444;
+  font-weight: 600;
+}
+.exercise-card-empty {
+  font-size: 12px;
+  color: #999;
+}
+
+.lift-history-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f9fafa;
+  border-radius: 8px;
+  font-size: 13px;
+  gap: 12px;
+}
+.lift-delete-btn {
+  background: none;
+  border: none;
+  color: #c00;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+}

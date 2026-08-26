@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUser, getToken, logout } from "../lib/auth";
+import { EXERCISES } from "../lib/exercises";
 import { useNavigate, Link } from "react-router-dom";
 
 function capitalize(s) {
@@ -28,16 +29,22 @@ export default function AreaPersonalePage() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [maxLifts, setMaxLifts] = useState([]);
+  const [selectedExercise, setSelectedExercise] = useState(null);
+  const [liftForm, setLiftForm] = useState({ weight: "", reps: "" });
+
   const loadData = async () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
 
-    const [subRes, bookRes] = await Promise.all([
+    const [subRes, bookRes, liftsRes] = await Promise.all([
       fetch("/api/user/subscription", { headers }).then((r) => r.json()),
       fetch("/api/user/bookings", { headers }).then((r) => r.json()),
+      fetch("/api/user/max-lifts", { headers }).then((r) => r.json()),
     ]);
 
     setSubscription(subRes);
     setBookings(bookRes);
+    setMaxLifts(liftsRes);
     setLoading(false);
   };
 
@@ -62,6 +69,46 @@ export default function AreaPersonalePage() {
       return;
     }
     loadData();
+  };
+
+  const openLiftForm = (exerciseKey) => {
+    setSelectedExercise(exerciseKey);
+    setLiftForm({ weight: "", reps: "" });
+  };
+
+  const saveLift = async () => {
+    if (!liftForm.weight || !liftForm.reps) return;
+    await fetch("/api/user/max-lifts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({
+        exercise_key: selectedExercise,
+        weight: Number(liftForm.weight),
+        reps: Number(liftForm.reps),
+      }),
+    });
+    setSelectedExercise(null);
+    loadData();
+  };
+
+  const deleteLift = async (id) => {
+    if (!confirm("Eliminare questa registrazione?")) return;
+    await fetch(`/api/user/max-lifts?id=${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
+    loadData();
+  };
+
+  const getLastLift = (exerciseKey) => {
+    return maxLifts.find((l) => l.exercise_key === exerciseKey);
+  };
+
+  const getHistoryForExercise = (exerciseKey) => {
+    return maxLifts.filter((l) => l.exercise_key === exerciseKey);
   };
 
   const remaining = subscription
@@ -198,6 +245,136 @@ export default function AreaPersonalePage() {
                   ))}
                 </div>
               </>
+            )}
+
+            <h3 style={{ color: "#146272", marginBottom: 16 }}>
+              I tuoi massimali
+            </h3>
+            <div className="exercises-grid" style={{ marginBottom: 32 }}>
+              {EXERCISES.map((ex) => {
+                const last = getLastLift(ex.key);
+                return (
+                  <div
+                    key={ex.key}
+                    className="exercise-card"
+                    onClick={() => openLiftForm(ex.key)}
+                  >
+                    <img
+                      src={ex.image}
+                      alt={ex.name}
+                      className="exercise-card-img"
+                    />
+                    <div className="exercise-card-body">
+                      <span className="exercise-card-name">{ex.name}</span>
+                      {last ? (
+                        <span className="exercise-card-best">
+                          {last.weight} kg × {last.reps}
+                        </span>
+                      ) : (
+                        <span className="exercise-card-empty">Nessun dato</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {selectedExercise && (
+              <div
+                className="modal-overlay"
+                onClick={() => setSelectedExercise(null)}
+              >
+                <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                  <h3 style={{ color: "#146272", marginBottom: 16 }}>
+                    {EXERCISES.find((e) => e.key === selectedExercise)?.name}
+                  </h3>
+
+                  <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+                    <input
+                      type="number"
+                      placeholder="Kg"
+                      value={liftForm.weight}
+                      onChange={(e) =>
+                        setLiftForm((f) => ({ ...f, weight: e.target.value }))
+                      }
+                      style={{
+                        flex: 1,
+                        padding: 10,
+                        border: "1.5px solid #ddd",
+                        borderRadius: 8,
+                      }}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Ripetizioni"
+                      value={liftForm.reps}
+                      onChange={(e) =>
+                        setLiftForm((f) => ({ ...f, reps: e.target.value }))
+                      }
+                      style={{
+                        flex: 1,
+                        padding: 10,
+                        border: "1.5px solid #ddd",
+                        borderRadius: 8,
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+                    <button className="btn" onClick={saveLift}>
+                      Salva
+                    </button>
+                    <button
+                      className="btn-danger"
+                      onClick={() => setSelectedExercise(null)}
+                    >
+                      Chiudi
+                    </button>
+                  </div>
+
+                  {getHistoryForExercise(selectedExercise).length > 0 && (
+                    <>
+                      <h4
+                        style={{
+                          color: "#146272",
+                          marginBottom: 12,
+                          fontSize: 15,
+                        }}
+                      >
+                        Storico
+                      </h4>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 8,
+                          maxHeight: 200,
+                          overflowY: "auto",
+                        }}
+                      >
+                        {getHistoryForExercise(selectedExercise).map((l) => (
+                          <div key={l.id} className="lift-history-row">
+                            <span>
+                              {new Date(
+                                l.recorded_at + "T00:00:00",
+                              ).toLocaleDateString("it-IT")}
+                            </span>
+                            <span>
+                              {l.weight} kg × {l.reps}
+                            </span>
+                            <button
+                              className="lift-delete-btn"
+                              onClick={() => deleteLift(l.id)}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             )}
           </>
         )}
