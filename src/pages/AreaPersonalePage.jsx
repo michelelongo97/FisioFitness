@@ -39,7 +39,9 @@ export default function AreaPersonalePage() {
     const [subRes, bookRes, liftsRes] = await Promise.all([
       fetch("/api/user/subscription", { headers }).then((r) => r.json()),
       fetch("/api/user/bookings", { headers }).then((r) => r.json()),
-      fetch("/api/user/max-lifts", { headers }).then((r) => r.json()),
+      fetch("/api/user/bookings?resource=lifts", { headers }).then((r) =>
+        r.json(),
+      ),
     ]);
 
     setSubscription(subRes);
@@ -78,7 +80,7 @@ export default function AreaPersonalePage() {
 
   const saveLift = async () => {
     if (!liftForm.weight || !liftForm.reps) return;
-    await fetch("/api/user/max-lifts", {
+    await fetch("/api/user/bookings?resource=lifts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +98,7 @@ export default function AreaPersonalePage() {
 
   const deleteLift = async (id) => {
     if (!confirm("Eliminare questa registrazione?")) return;
-    await fetch(`/api/user/max-lifts?id=${id}`, {
+    await fetch(`/api/user/bookings?resource=lifts&id=${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${getToken()}` },
     });
