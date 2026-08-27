@@ -301,9 +301,12 @@ export default function AreaPersonalePage() {
                       }
                       style={{
                         flex: 1,
+                        minWidth: 0,
+                        width: "100%",
                         padding: 10,
                         border: "1.5px solid #ddd",
                         borderRadius: 8,
+                        boxSizing: "border-box",
                       }}
                     />
                     <input
@@ -315,9 +318,12 @@ export default function AreaPersonalePage() {
                       }
                       style={{
                         flex: 1,
+                        minWidth: 0,
+                        width: "100%",
                         padding: 10,
                         border: "1.5px solid #ddd",
                         borderRadius: 8,
+                        boxSizing: "border-box",
                       }}
                     />
                   </div>
