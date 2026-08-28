@@ -36,17 +36,30 @@ export default function AreaPersonalePage() {
   const loadData = async () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
 
-    const [subRes, bookRes, liftsRes] = await Promise.all([
-      fetch("/api/user/subscription", { headers }).then((r) => r.json()),
-      fetch("/api/user/bookings", { headers }).then((r) => r.json()),
-      fetch("/api/user/bookings?resource=lifts", { headers }).then((r) =>
-        r.json(),
-      ),
+    const [subResRaw, bookResRaw, liftsResRaw] = await Promise.all([
+      fetch("/api/user/subscription", { headers }),
+      fetch("/api/user/bookings", { headers }),
+      fetch("/api/user/bookings?resource=lifts", { headers }),
     ]);
 
+    // Se una qualsiasi richiesta torna 401, la sessione non è più valida
+    if (
+      subResRaw.status === 401 ||
+      bookResRaw.status === 401 ||
+      liftsResRaw.status === 401
+    ) {
+      logout();
+      navigate("/login");
+      return;
+    }
+
+    const subRes = await subResRaw.json();
+    const bookRes = await bookResRaw.json();
+    const liftsRes = await liftsResRaw.json();
+
     setSubscription(subRes);
-    setBookings(bookRes);
-    setMaxLifts(liftsRes);
+    setBookings(Array.isArray(bookRes) ? bookRes : []);
+    setMaxLifts(Array.isArray(liftsRes) ? liftsRes : []);
     setLoading(false);
   };
 
