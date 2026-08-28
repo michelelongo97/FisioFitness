@@ -26,6 +26,12 @@ export const EXERCISES = [
     image: "/images/exercises/chest-press.jpg",
   },
   {
+    key: "croci-manubri-panca-inclinata",
+    name: "Croci Manubri Panca Inclinata",
+    image: "/images/exercises/croci-manubri-panca-inclinata.jpg",
+  },
+
+  {
     key: "military-press",
     name: "Military Press",
     image: "/images/exercises/military-press.jpg",
@@ -35,6 +41,12 @@ export const EXERCISES = [
     key: "alazate-testa-manubri-panca",
     name: "Alzate sulla Testa Manubri su Panca",
     image: "/images/exercises/alzate-testa-manubri-panca.jpg",
+  },
+
+  {
+    key: "alazate-laterali",
+    name: "Alzate Laterali",
+    image: "/images/exercises/alzate-laterali.jpg",
   },
   {
     key: "trazioni",
