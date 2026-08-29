@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUser, getToken, logout } from "../lib/auth";
-import { EXERCISES } from "../lib/exercises";
+import { EXERCISES, CATEGORIES } from "../lib/exercises";
 import { useNavigate, Link } from "react-router-dom";
 
 function capitalize(s) {
@@ -32,6 +32,7 @@ export default function AreaPersonalePage() {
   const [maxLifts, setMaxLifts] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [liftForm, setLiftForm] = useState({ weight: "", reps: "" });
+  const [selectedCategory, setSelectedCategory] = useState("gambe");
 
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwordForm, setPasswordForm] = useState({
@@ -309,33 +310,51 @@ export default function AreaPersonalePage() {
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               I tuoi massimali
             </h3>
+
+            <div className="admin-tabs" style={{ flexWrap: "wrap" }}>
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  className={`tab-btn ${selectedCategory === cat ? "active" : ""}`}
+                  onClick={() => setSelectedCategory(cat)}
+                  type="button"
+                >
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </button>
+              ))}
+            </div>
+
             <div className="exercises-grid" style={{ marginBottom: 32 }}>
-              {EXERCISES.map((ex) => {
-                const last = getLastLift(ex.key);
-                return (
-                  <div
-                    key={ex.key}
-                    className="exercise-card"
-                    onClick={() => openLiftForm(ex.key)}
-                  >
-                    <img
-                      src={ex.image}
-                      alt={ex.name}
-                      className="exercise-card-img"
-                    />
-                    <div className="exercise-card-body">
-                      <span className="exercise-card-name">{ex.name}</span>
-                      {last ? (
-                        <span className="exercise-card-best">
-                          {last.weight} kg × {last.reps}
-                        </span>
-                      ) : (
-                        <span className="exercise-card-empty">Nessun dato</span>
-                      )}
+              {EXERCISES.filter((ex) => ex.category === selectedCategory).map(
+                (ex) => {
+                  const last = getLastLift(ex.key);
+                  return (
+                    <div
+                      key={ex.key}
+                      className="exercise-card"
+                      onClick={() => openLiftForm(ex.key)}
+                    >
+                      <img
+                        src={ex.image}
+                        alt={ex.name}
+                        className="exercise-card-img"
+                      />
+                      <div className="exercise-card-body">
+                        <span className="exercise-card-name">{ex.name}</span>
+                        {last ? (
+                          <span className="exercise-card-best">
+                            {last.weight} kg × {last.reps}
+                          </span>
+                        ) : (
+                          <span className="exercise-card-empty">
+                            Nessun dato
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                },
+              )}
             </div>
 
             {selectedExercise && (
