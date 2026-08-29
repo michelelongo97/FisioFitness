@@ -33,6 +33,15 @@ export default function AreaPersonalePage() {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [liftForm, setLiftForm] = useState({ weight: "", reps: "" });
 
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    current: "",
+    newPass: "",
+    confirm: "",
+  });
+  const [passwordMsg, setPasswordMsg] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const loadData = async () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
 
@@ -70,6 +79,41 @@ export default function AreaPersonalePage() {
   const handleLogout = () => {
     logout();
     navigate("/");
+  };
+
+  const changePassword = async (e) => {
+    e.preventDefault();
+    setPasswordMsg("");
+    setPasswordError("");
+
+    if (passwordForm.newPass !== passwordForm.confirm) {
+      setPasswordError("Le password non coincidono");
+      return;
+    }
+
+    const res = await fetch("/api/auth/login?action=change-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({
+        currentPassword: passwordForm.current,
+        newPassword: passwordForm.newPass,
+      }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      setPasswordError(data.error || "Errore");
+      return;
+    }
+
+    setPasswordMsg("Password aggiornata! Effettua di nuovo l'accesso.");
+    setTimeout(() => {
+      logout();
+      navigate("/login");
+    }, 2000);
   };
 
   const cancelBooking = async (id) => {
@@ -398,6 +442,103 @@ export default function AreaPersonalePage() {
               </div>
             )}
           </>
+        )}
+
+        <div style={{ marginBottom: 20 }}>
+          <button
+            className="btn"
+            style={{ padding: "10px 24px", fontSize: 14 }}
+            onClick={() => setShowPasswordForm((s) => !s)}
+          >
+            {showPasswordForm ? "Annulla" : "Cambia password"}
+          </button>
+        </div>
+
+        {showPasswordForm && (
+          <form
+            onSubmit={changePassword}
+            className="personal-card"
+            style={{ background: "white", color: "#333", marginBottom: 24 }}
+          >
+            <h3 style={{ color: "#146272", marginBottom: 16 }}>
+              Cambia password
+            </h3>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                marginBottom: 16,
+              }}
+            >
+              <input
+                type="password"
+                placeholder="Password attuale"
+                value={passwordForm.current}
+                onChange={(e) =>
+                  setPasswordForm((f) => ({ ...f, current: e.target.value }))
+                }
+                required
+                style={{
+                  padding: 10,
+                  border: "1.5px solid #ddd",
+                  borderRadius: 8,
+                  minWidth: 0,
+                  boxSizing: "border-box",
+                }}
+              />
+              <input
+                type="password"
+                placeholder="Nuova password"
+                value={passwordForm.newPass}
+                onChange={(e) =>
+                  setPasswordForm((f) => ({ ...f, newPass: e.target.value }))
+                }
+                required
+                style={{
+                  padding: 10,
+                  border: "1.5px solid #ddd",
+                  borderRadius: 8,
+                  minWidth: 0,
+                  boxSizing: "border-box",
+                }}
+              />
+              <input
+                type="password"
+                placeholder="Conferma nuova password"
+                value={passwordForm.confirm}
+                onChange={(e) =>
+                  setPasswordForm((f) => ({ ...f, confirm: e.target.value }))
+                }
+                required
+                style={{
+                  padding: 10,
+                  border: "1.5px solid #ddd",
+                  borderRadius: 8,
+                  minWidth: 0,
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            {passwordError && (
+              <p className="form-error" style={{ marginBottom: 12 }}>
+                {passwordError}
+              </p>
+            )}
+            {passwordMsg && (
+              <p
+                style={{ color: "#1e8a4c", marginBottom: 12, fontWeight: 600 }}
+              >
+                {passwordMsg}
+              </p>
+            )}
+
+            <button type="submit" className="btn">
+              Salva nuova password
+            </button>
+          </form>
         )}
 
         <button className="btn-danger" onClick={handleLogout}>
