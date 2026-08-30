@@ -140,6 +140,18 @@ export const EXERCISES = [
     category: "spalle",
     image: "/images/exercises/alzate-laterali.jpg",
   },
+  {
+    key: "alazate-testa-manubri-panca",
+    name: "Alzate sulla Testa Manubri su Panca",
+    category: "spalle",
+    image: "/images/exercises/alzate-testa-manubri-panca.jpg",
+  },
+  {
+    key: "tirate-petto",
+    name: "Tirate al Petto",
+    category: "spalle",
+    image: "/images/exercises/tirate-petto.jpg",
+  },
 
   // BRACCIA
   {
@@ -148,12 +160,7 @@ export const EXERCISES = [
     category: "braccia",
     image: "/images/exercises/push-down-corda.jpg",
   },
-  {
-    key: "alazate-testa-manubri-panca",
-    name: "Alzate sulla Testa Manubri su Panca",
-    category: "braccia",
-    image: "/images/exercises/alzate-testa-manubri-panca.jpg",
-  },
+
   {
     key: "curl-panca-scott-bilanciere",
     name: "Curl Panca Scott Bilanciere",
