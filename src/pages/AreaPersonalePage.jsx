@@ -255,10 +255,10 @@ export default function AreaPersonalePage() {
               </h3>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <Link to="/prenota" className="btn hero-book-btn">
-                  <strong>Prenota</strong>
+                  <strong>Prenota SALA</strong>
                 </Link>
                 <Link to="/prenota-corso" className="btn hero-book-btn">
-                  <strong>Prenota corso</strong>
+                  <strong>Prenota CORSO</strong>
                 </Link>
               </div>
             </div>
@@ -280,14 +280,12 @@ export default function AreaPersonalePage() {
                       <div className="booking-card-time">
                         {b.time.slice(0, 5)}
                       </div>
-                      {b.type === "course" && (
-                        <span
-                          className="user-card-badge badge-teal"
-                          style={{ fontSize: 12 }}
-                        >
-                          Corso
-                        </span>
-                      )}
+                      <span
+                        className={`user-card-badge ${b.type === "course" ? "badge-teal" : "badge-grey"}`}
+                        style={{ fontSize: 12 }}
+                      >
+                        {b.type === "course" ? "CORSO" : "SALA"}
+                      </span>
                       <button
                         className="btn-danger booking-card-cancel"
                         onClick={() => cancelBooking(b.id)}
