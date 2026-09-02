@@ -118,7 +118,14 @@ function SlotsGrouped({ slots, onDelete }) {
 }
 
 function BookingsGrouped({ bookings, onMark }) {
-  const grouped = bookings.reduce((acc, b) => {
+  const [typeFilter, setTypeFilter] = useState("all");
+
+  const filteredBookings =
+    typeFilter === "all"
+      ? bookings
+      : bookings.filter((b) => (b.type || "normal") === typeFilter);
+
+  const grouped = filteredBookings.reduce((acc, b) => {
     if (!acc[b.date]) acc[b.date] = [];
     acc[b.date].push(b);
     return acc;
@@ -171,6 +178,33 @@ function BookingsGrouped({ bookings, onMark }) {
 
   return (
     <div className="admin-agenda">
+      <div
+        className="admin-tabs"
+        style={{ marginBottom: 16, flexWrap: "wrap" }}
+      >
+        <button
+          className={`tab-btn ${typeFilter === "all" ? "active" : ""}`}
+          onClick={() => setTypeFilter("all")}
+          type="button"
+        >
+          Tutte
+        </button>
+        <button
+          className={`tab-btn ${typeFilter === "normal" ? "active" : ""}`}
+          onClick={() => setTypeFilter("normal")}
+          type="button"
+        >
+          Sedute
+        </button>
+        <button
+          className={`tab-btn ${typeFilter === "course" ? "active" : ""}`}
+          onClick={() => setTypeFilter("course")}
+          type="button"
+        >
+          Corso
+        </button>
+      </div>
+
       <div className="sm-day-tabs">
         {sortedDates.map((date) => {
           const { weekday, day } = dayLabel(date);
@@ -203,6 +237,14 @@ function BookingsGrouped({ bookings, onMark }) {
               <span className="booking-agenda-name">{b.name}</span>
               <span className="booking-agenda-email">{b.email}</span>
             </div>
+            {b.type === "course" && (
+              <span
+                className="user-card-badge badge-teal"
+                style={{ fontSize: 11 }}
+              >
+                Corso
+              </span>
+            )}
             <span className={`booking-agenda-status status-${b.status}`}>
               {statusLabels[b.status] || b.status}
             </span>

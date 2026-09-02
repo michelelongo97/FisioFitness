@@ -35,12 +35,12 @@ export default async function handler(req, res) {
     }
 
     const { rows } = await sql`
-      SELECT b.id, b.status, to_char(s.date, 'YYYY-MM-DD') as date, s.time, u.name, u.email
-      FROM bookings b
-      JOIN slots s ON b.slot_id = s.id
-      JOIN users u ON b.user_id = u.id
-      ORDER BY s.date DESC, s.time DESC
-    `;
+  SELECT b.id, b.status, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.type, u.name, u.email
+  FROM bookings b
+  JOIN slots s ON b.slot_id = s.id
+  JOIN users u ON b.user_id = u.id
+  ORDER BY s.date DESC, s.time DESC
+`;
     return res.status(200).json(rows);
   }
 
