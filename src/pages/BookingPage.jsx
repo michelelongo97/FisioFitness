@@ -19,9 +19,7 @@ export default function BookingPage({
       .then((data) => {
         setSlots(data);
         setLoading(false);
-        if (data.length > 0 && !selectedDate) {
-          setSelectedDate(data[0].date.slice(0, 10));
-        }
+        setSelectedDate(data.length > 0 ? data[0].date.slice(0, 10) : null);
       });
   };
 
