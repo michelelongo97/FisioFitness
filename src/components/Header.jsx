@@ -61,7 +61,8 @@ export default function Header() {
         <Link to="/reel">Video</Link>
         {loggedIn ? (
           <>
-            <Link to="/prenota">Prenota</Link>
+            <Link to="/prenota">Prenota SALA</Link>
+            <Link to="/prenota-corso">Prenota CORSO</Link>
             <Link to="/area-personale">Area personale</Link>
           </>
         ) : (
