@@ -13,26 +13,28 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     const { rows } = await sql`
-      SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.is_active, s.max_bookings,
-        (SELECT COUNT(*) FROM bookings b 
-         WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
-      FROM slots s
-      ORDER BY s.date DESC, s.time DESC
-    `;
+    SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.is_active, s.max_bookings, s.type,
+      (SELECT COUNT(*) FROM bookings b 
+       WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
+    FROM slots s
+    ORDER BY s.date DESC, s.time DESC
+  `;
     return res.status(200).json(rows);
   }
 
   if (req.method === "POST") {
-    const { date, time } = req.body;
+    const { date, time, type } = req.body;
     if (!date || !time)
       return res.status(400).json({ error: "date e time obbligatori" });
 
+    const slotType = type === "course" ? "course" : "normal";
+
     try {
       const { rows } = await sql`
-        INSERT INTO slots (date, time, max_bookings)
-        VALUES (${date}, ${time}, 4)
-        RETURNING *
-      `;
+      INSERT INTO slots (date, time, max_bookings, type)
+      VALUES (${date}, ${time}, 4, ${slotType})
+      RETURNING *
+    `;
       return res.status(201).json(rows[0]);
     } catch (err) {
       if (err.code === "23505") {

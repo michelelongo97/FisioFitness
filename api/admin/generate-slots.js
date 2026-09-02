@@ -34,10 +34,16 @@ const SATURDAY_TIMES = [
   "12:00:00",
 ];
 
+// Corso: lunedì(1), martedì(2), giovedì(4), venerdì(5)
+const COURSE_DAYS = [1, 2, 4, 5];
+const COURSE_TIMES = ["08:30:00", "17:30:00", "18:30:00"];
+
 export default async function handler(req, res) {
   if (!checkAuth(req, res)) return;
   if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
+
+  const isCourse = req.query.type === "course";
 
   try {
     const today = new Date();
@@ -48,25 +54,31 @@ export default async function handler(req, res) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       const dayOfWeek = date.getDay(); // 0 = domenica, 6 = sabato
-
-      if (dayOfWeek === 0) continue; // domenica chiuso
-
       const dateStr = date.toISOString().slice(0, 10);
-      const times = dayOfWeek === 6 ? SATURDAY_TIMES : WEEKDAY_TIMES;
 
-      for (const time of times) {
-        slotsToInsert.push({ date: dateStr, time });
+      if (isCourse) {
+        if (!COURSE_DAYS.includes(dayOfWeek)) continue;
+        for (const time of COURSE_TIMES) {
+          slotsToInsert.push({ date: dateStr, time });
+        }
+      } else {
+        if (dayOfWeek === 0) continue; // domenica chiuso
+        const times = dayOfWeek === 6 ? SATURDAY_TIMES : WEEKDAY_TIMES;
+        for (const time of times) {
+          slotsToInsert.push({ date: dateStr, time });
+        }
       }
     }
 
     let created = 0;
     let skipped = 0;
+    const slotType = isCourse ? "course" : "normal";
 
     for (const slot of slotsToInsert) {
       try {
         await sql`
-          INSERT INTO slots (date, time, max_bookings)
-          VALUES (${slot.date}, ${slot.time}, 4)
+          INSERT INTO slots (date, time, max_bookings, type)
+          VALUES (${slot.date}, ${slot.time}, 4, ${slotType})
         `;
         created++;
       } catch (err) {

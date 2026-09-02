@@ -255,7 +255,11 @@ export default function AdminPage() {
   const [userSort, setUserSort] = useState("name-asc");
 
   const [slots, setSlots] = useState([]);
-  const [newSlot, setNewSlot] = useState({ date: "", time: "" });
+  const [newSlot, setNewSlot] = useState({
+    date: "",
+    time: "",
+    type: "normal",
+  });
 
   const [bookings, setBookings] = useState([]);
 
@@ -427,7 +431,7 @@ export default function AdminPage() {
       alert(data.error);
       return;
     }
-    setNewSlot({ date: "", time: "" });
+    setNewSlot({ date: "", time: "", type: "normal" });
     loadSlots();
   };
   const deleteSlot = async (id) => {
@@ -461,15 +465,15 @@ export default function AdminPage() {
     loadSlots();
   };
 
-  const generateSlots = async () => {
-    if (
-      !confirm(
-        "Generare gli slot standard per le prossime 4 settimane? (Lun-Ven 9-19, Sab 9-13, ogni 45 min)",
-      )
-    )
-      return;
+  const generateSlots = async (type = "normal") => {
+    const confirmMsg =
+      type === "course"
+        ? "Generare gli slot del corso per le prossime 4 settimane? (Lun/Mar/Gio/Ven — 8:30, 17:30, 18:30)"
+        : "Generare gli slot standard per le prossime 4 settimane? (Lun-Ven 9-19, Sab 9-13, ogni 45 min)";
 
-    const res = await fetch("/api/admin/generate-slots", {
+    if (!confirm(confirmMsg)) return;
+
+    const res = await fetch(`/api/admin/generate-slots?type=${type}`, {
       method: "POST",
       headers,
     });
@@ -849,9 +853,27 @@ export default function AdminPage() {
       {/* TAB SLOT */}
       {tab === "slots" && (
         <div className="admin-slots">
-          <div style={{ marginBottom: 20 }}>
-            <button type="button" className="btn" onClick={generateSlots}>
+          <div
+            style={{
+              marginBottom: 20,
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              type="button"
+              className="btn"
+              onClick={() => generateSlots("normal")}
+            >
               📅 Genera slot standard (prossime 4 settimane)
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => generateSlots("course")}
+            >
+              🏋️ Genera slot corso (Lun/Mar/Gio/Ven — prossime 4 settimane)
             </button>
           </div>
 
@@ -884,6 +906,21 @@ export default function AdminPage() {
               value={newSlot.time}
               onChange={(val) => setNewSlot((s) => ({ ...s, time: val }))}
             />
+            <select
+              value={newSlot.type}
+              onChange={(e) =>
+                setNewSlot((s) => ({ ...s, type: e.target.value }))
+              }
+              style={{
+                padding: "10px 14px",
+                border: "1.5px solid #ddd",
+                borderRadius: 8,
+                fontSize: 15,
+              }}
+            >
+              <option value="normal">Seduta normale</option>
+              <option value="course">Corso</option>
+            </select>
             <button type="submit" className="btn">
               Aggiungi
             </button>

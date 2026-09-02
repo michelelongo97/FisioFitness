@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { getToken } from "../lib/auth";
 
-export default function BookingPage() {
+export default function BookingPage({
+  type = "normal",
+  title = "Prenota uno slot",
+  subtitle = "Scegli data e orario disponibile",
+}) {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -10,7 +14,7 @@ export default function BookingPage() {
   const [msgType, setMsgType] = useState("");
 
   const loadSlots = () => {
-    fetch("/api/slots")
+    fetch(`/api/slots?type=${type}`)
       .then((r) => r.json())
       .then((data) => {
         setSlots(data);
@@ -82,8 +86,8 @@ export default function BookingPage() {
   return (
     <div className="booking-page">
       <div className="booking-container">
-        <h1>Prenota uno slot</h1>
-        <p className="booking-subtitle">Scegli data e orario disponibile</p>
+        <h1>{title}</h1>
+        <p className="booking-subtitle">{subtitle}</p>
 
         {loading ? (
           <p className="booking-loading">Caricamento...</p>

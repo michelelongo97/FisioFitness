@@ -43,6 +43,18 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/prenota-corso"
+            element={
+              <ProtectedRoute>
+                <BookingPage
+                  type="course"
+                  title="Prenota il corso"
+                  subtitle="Scegli data e orario del corso"
+                />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="/admin" element={<AdminPage />} />

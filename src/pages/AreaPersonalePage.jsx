@@ -253,9 +253,14 @@ export default function AreaPersonalePage() {
               <h3 style={{ color: "#146272", margin: 0 }}>
                 Prossime prenotazioni
               </h3>
-              <Link to="/prenota" className="btn hero-book-btn">
-                <strong>Prenota</strong>
-              </Link>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link to="/prenota" className="btn hero-book-btn">
+                  <strong>Prenota</strong>
+                </Link>
+                <Link to="/prenota-corso" className="btn hero-book-btn">
+                  <strong>Prenota corso</strong>
+                </Link>
+              </div>
             </div>
             {upcoming.length === 0 ? (
               <p style={{ color: "#666", marginBottom: 32 }}>

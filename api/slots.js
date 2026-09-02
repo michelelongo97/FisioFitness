@@ -5,6 +5,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const type = req.query.type === "course" ? "course" : "normal";
+
   try {
     const { rows } = await sql`
       SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, 
@@ -14,6 +16,7 @@ export default async function handler(req, res) {
       FROM slots s
       WHERE s.is_active = true 
         AND s.date >= CURRENT_DATE
+        AND s.type = ${type}
         AND (SELECT COUNT(*) FROM bookings b 
              WHERE b.slot_id = s.id AND b.status = 'confirmed') < s.max_bookings
       ORDER BY s.date, s.time
