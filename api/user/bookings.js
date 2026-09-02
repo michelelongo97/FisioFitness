@@ -71,11 +71,11 @@ export default async function handler(req, res) {
     const { id } = req.query;
 
     const { rows } = await sql`
-  SELECT b.*, to_char(s.date, 'YYYY-MM-DD') as date, s.time
-  FROM bookings b
-  JOIN slots s ON b.slot_id = s.id
-  WHERE b.id = ${id} AND b.user_id = ${userId}
-`;
+      SELECT b.*, to_char(s.date, 'YYYY-MM-DD') as date, s.time, s.type
+      FROM bookings b
+      JOIN slots s ON b.slot_id = s.id
+      WHERE b.id = ${id} AND b.user_id = ${userId}
+    `;
     if (rows.length === 0)
       return res.status(404).json({ error: "Prenotazione non trovata" });
 
@@ -118,7 +118,7 @@ export default async function handler(req, res) {
         await resend.emails.send({
           from: "FisioFitness <noreply@costafisiofitness.it>",
           to: process.env.VITE_EMAIL_RESEND,
-          subject: `Cancellazione: ${dateFormatted}, ${timeFormatted} | ${user.name}`,
+          subject: `Cancellazione${booking.type === "course" ? " [Corso]" : ""}: ${dateFormatted}, ${timeFormatted} | ${user.name}`,
           html: `
         <p>Prenotazione cancellata:</p>
         <ul>

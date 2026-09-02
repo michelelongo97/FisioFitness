@@ -72,7 +72,7 @@ export default async function handler(req, res) {
       const { rows: userRows } =
         await sql`SELECT name, email FROM users WHERE id = ${userId}`;
       const { rows: slotRows2 } =
-        await sql`SELECT date, time FROM slots WHERE id = ${slotId}`;
+        await sql`SELECT date, time, type FROM slots WHERE id = ${slotId}`;
 
       if (userRows.length > 0 && slotRows2.length > 0) {
         const { Resend } = await import("resend");
@@ -93,7 +93,7 @@ export default async function handler(req, res) {
         await resend.emails.send({
           from: "FisioFitness <noreply@costafisiofitness.it>",
           to: process.env.VITE_EMAIL_RESEND,
-          subject: `${dateFormatted}, ${timeFormatted} | ${user.name}`,
+          subject: `${slotInfo.type === "course" ? "[Corso] " : ""}${dateFormatted}, ${timeFormatted} | ${user.name}`,
           html: `
         <p>Nuova prenotazione ricevuta:</p>
         <ul>
