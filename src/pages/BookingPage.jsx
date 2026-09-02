@@ -26,8 +26,10 @@ export default function BookingPage({
   };
 
   useEffect(() => {
+    setLoading(true);
+    setSelectedDate(null);
     loadSlots();
-  }, []);
+  }, [type]);
 
   const slotsByDate = slots.reduce((acc, slot) => {
     const d = slot.date.slice(0, 10);
