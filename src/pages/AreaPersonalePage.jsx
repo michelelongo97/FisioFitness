@@ -280,6 +280,14 @@ export default function AreaPersonalePage() {
                       <div className="booking-card-time">
                         {b.time.slice(0, 5)}
                       </div>
+                      {b.type === "course" && (
+                        <span
+                          className="user-card-badge badge-teal"
+                          style={{ fontSize: 12 }}
+                        >
+                          Corso
+                        </span>
+                      )}
                       <button
                         className="btn-danger booking-card-cancel"
                         onClick={() => cancelBooking(b.id)}
