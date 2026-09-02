@@ -92,9 +92,47 @@ export default async function handler(req, res) {
 
     await sql`UPDATE bookings SET status = 'cancelled' WHERE id = ${id}`;
     await sql`
-      UPDATE subscriptions SET used_entries = used_entries - 1 
-      WHERE id = ${booking.subscription_id}
-    `;
+  UPDATE subscriptions SET used_entries = used_entries - 1 
+  WHERE id = ${booking.subscription_id}
+`;
+
+    // Notifica email al dottore
+    try {
+      const { rows: userRows } =
+        await sql`SELECT name, email FROM users WHERE id = ${userId}`;
+      if (userRows.length > 0) {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
+        const user = userRows[0];
+        const dateFormatted = new Date(booking.date).toLocaleDateString(
+          "it-IT",
+          {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          },
+        );
+        const timeFormatted = booking.time.slice(0, 5);
+
+        await resend.emails.send({
+          from: "FisioFitness <noreply@costafisiofitness.it>",
+          to: process.env.VITE_EMAIL_RESEND,
+          subject: `Cancellazione — ${dateFormatted}, ${timeFormatted} | ${user.name}`,
+          html: `
+        <p>Prenotazione cancellata:</p>
+        <ul>
+          <li><strong>Cliente:</strong> ${user.name}</li>
+          <li><strong>Email:</strong> ${user.email}</li>
+          <li><strong>Data:</strong> ${dateFormatted}</li>
+          <li><strong>Ora:</strong> ${timeFormatted}</li>
+        </ul>
+      `,
+        });
+      }
+    } catch (emailErr) {
+      console.error("Errore invio email notifica cancellazione:", emailErr);
+    }
 
     return res.status(200).json({ success: true });
   }

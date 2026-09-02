@@ -42,6 +42,7 @@ export default function AreaPersonalePage() {
   });
   const [passwordMsg, setPasswordMsg] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
 
   const loadData = async () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
@@ -491,8 +492,26 @@ export default function AreaPersonalePage() {
                 marginBottom: 16,
               }}
             >
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontSize: 13,
+                  color: "#666",
+                  cursor: "pointer",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={showPasswords}
+                  onChange={(e) => setShowPasswords(e.target.checked)}
+                />
+                Mostra password
+              </label>
+
               <input
-                type="password"
+                type={showPasswords ? "text" : "password"}
                 placeholder="Password attuale"
                 value={passwordForm.current}
                 onChange={(e) =>
@@ -508,7 +527,7 @@ export default function AreaPersonalePage() {
                 }}
               />
               <input
-                type="password"
+                type={showPasswords ? "text" : "password"}
                 placeholder="Nuova password"
                 value={passwordForm.newPass}
                 onChange={(e) =>
@@ -524,7 +543,7 @@ export default function AreaPersonalePage() {
                 }}
               />
               <input
-                type="password"
+                type={showPasswords ? "text" : "password"}
                 placeholder="Conferma nuova password"
                 value={passwordForm.confirm}
                 onChange={(e) =>

@@ -9,6 +9,7 @@ function checkAuth(req, res) {
 }
 
 const WEEKDAY_TIMES = [
+  "08:15:00",
   "09:00:00",
   "09:45:00",
   "10:30:00",
