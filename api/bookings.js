@@ -57,11 +57,22 @@ export default async function handler(req, res) {
     }
 
     // Crea la prenotazione e scala l'ingresso
-    const { rows } = await sql`
-  INSERT INTO bookings (user_id, slot_id, subscription_id, status)
-  VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
-  RETURNING *
-`;
+    let rows;
+    try {
+      const result = await sql`
+    INSERT INTO bookings (user_id, slot_id, subscription_id, status)
+    VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
+    RETURNING *
+  `;
+      rows = result.rows;
+    } catch (err) {
+      if (err.code === "23505") {
+        return res
+          .status(409)
+          .json({ error: "Hai già una prenotazione per questo slot" });
+      }
+      throw err;
+    }
     await sql`
   UPDATE subscriptions SET used_entries = used_entries + 1 
   WHERE id = ${subscription.id}

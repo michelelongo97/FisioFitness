@@ -81,10 +81,14 @@ export default async function handler(req, res) {
 
     const booking = rows[0];
     const slotDateTime = new Date(`${booking.date}T${booking.time}`);
-    if (slotDateTime < new Date()) {
+    const minutesUntilSlot = (slotDateTime - new Date()) / 60000;
+    if (minutesUntilSlot < 15) {
       return res
         .status(400)
-        .json({ error: "Non puoi cancellare uno slot già passato" });
+        .json({
+          error:
+            "Non puoi cancellare a meno di 15 minuti dall'inizio della seduta",
+        });
     }
     if (booking.status !== "confirmed") {
       return res.status(400).json({ error: "Prenotazione già cancellata" });

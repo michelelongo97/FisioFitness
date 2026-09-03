@@ -38,7 +38,11 @@ export default function BookingPage({
 
   const sortedDates = Object.keys(slotsByDate).sort();
 
+  const [submitting, setSubmitting] = useState(false);
+
   const confirmBooking = async () => {
+    if (submitting) return;
+    setSubmitting(true);
     setMsg("");
     const res = await fetch("/api/bookings", {
       method: "POST",
@@ -53,6 +57,7 @@ export default function BookingPage({
     if (!res.ok) {
       setMsg(data.error || "Errore nella prenotazione");
       setMsgType("error");
+      setSubmitting(false);
       setTimeout(() => setMsg(""), 4000);
       return;
     }
@@ -61,6 +66,7 @@ export default function BookingPage({
     setMsgType("success");
     setBooking(null);
     loadSlots();
+    setSubmitting(false);
     setTimeout(() => setMsg(""), 4000);
   };
 
@@ -173,8 +179,12 @@ export default function BookingPage({
               alle {booking.time.slice(0, 5)}
             </p>
             <div style={{ display: "flex", gap: 12 }}>
-              <button className="btn hero-book-btn" onClick={confirmBooking}>
-                <strong>Conferma</strong>
+              <button
+                className="btn hero-book-btn"
+                onClick={confirmBooking}
+                disabled={submitting}
+              >
+                <strong>{submitting ? "Attendere..." : "Conferma"}</strong>
               </button>
               <button className="btn-danger" onClick={() => setBooking(null)}>
                 Annulla
