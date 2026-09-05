@@ -56,13 +56,21 @@ export default async function handler(req, res) {
       return res.status(409).json({ error: "Slot al completo" });
     }
 
-    // Crea la prenotazione e scala l'ingresso
+    // Crea la prenotazione e scala l'ingresso in un'unica operazione atomica
     let rows;
     try {
       const result = await sql`
-    INSERT INTO bookings (user_id, slot_id, subscription_id, status)
-    VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
-    RETURNING *
+    WITH inserted AS (
+      INSERT INTO bookings (user_id, slot_id, subscription_id, status)
+      VALUES (${userId}, ${slotId}, ${subscription.id}, 'confirmed')
+      RETURNING *
+    ),
+    updated AS (
+      UPDATE subscriptions SET used_entries = used_entries + 1
+      WHERE id = ${subscription.id}
+      RETURNING id
+    )
+    SELECT * FROM inserted
   `;
       rows = result.rows;
     } catch (err) {
@@ -73,10 +81,6 @@ export default async function handler(req, res) {
       }
       throw err;
     }
-    await sql`
-  UPDATE subscriptions SET used_entries = used_entries + 1 
-  WHERE id = ${subscription.id}
-`;
 
     // Recupera dati utente e slot per la notifica email
     try {
