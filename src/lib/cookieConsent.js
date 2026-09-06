@@ -8,3 +8,7 @@ export function setConsent(value) {
   localStorage.setItem(KEY, value);
   window.dispatchEvent(new Event("cookie-consent-change"));
 }
+
+export function reopenBanner() {
+  window.dispatchEvent(new Event("cookie-banner-reopen"));
+}

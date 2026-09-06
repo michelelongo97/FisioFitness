@@ -5,6 +5,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
+import { reopenBanner } from "../lib/cookieConsent";
 
 export default function Footer() {
   return (
@@ -93,6 +94,19 @@ export default function Footer() {
             <Link to="/cookie-policy" className="footer-link">
               Cookie Policy
             </Link>
+            <span> | </span>
+            <button
+              className="footer-link"
+              onClick={reopenBanner}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                font: "inherit",
+              }}
+            >
+              Gestisci cookie
+            </button>
           </div>
           <div className="footer-bottom-copy">
             © 2024 - {new Date().getFullYear()} FisioFitness | Tutti i diritti

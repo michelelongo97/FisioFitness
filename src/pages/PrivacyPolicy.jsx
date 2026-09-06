@@ -41,9 +41,15 @@ export default function PrivacyPolicy() {
             date e orari delle sedute prenotate, stato di presenza alle sedute
           </li>
           <li>
+            <strong>Dati di allenamento</strong>: carichi, ripetizioni ed
+            esercizi registrati facoltativamente dall'utente nella propria area
+            personale
+          </li>
+          <li>
             <strong>Dati tecnici di sessione</strong>: un token di
             autenticazione (JWT) salvato nel browser dell'utente per mantenere
-            l'accesso all'area personale
+            l'accesso all'area personale, e una preferenza salvata localmente
+            relativa al consenso sui cookie di terze parti
           </li>
         </ul>
 
@@ -56,6 +62,10 @@ export default function PrivacyPolicy() {
             gestire l'accesso all'area personale e il conteggio degli ingressi
             dell'abbonamento
           </li>
+          <li>
+            permettere all'utente di tenere traccia facoltativamente dei propri
+            progressi negli esercizi
+          </li>
           <li>comunicazioni dirette con il professionista</li>
         </ul>
 
@@ -64,7 +74,9 @@ export default function PrivacyPolicy() {
           Il trattamento si basa sul consenso dell'utente (contatto diretto) e,
           per gli utenti registrati, sull'esecuzione del rapporto contrattuale
           relativo all'abbonamento e ai servizi di fisioterapia/allenamento
-          richiesti.
+          richiesti. Per i cookie di terze parti, il trattamento si basa sul
+          consenso esplicito raccolto tramite l'apposito banner, revocabile in
+          ogni momento come indicato nella Cookie Policy.
         </p>
 
         <h2>Servizi di terze parti utilizzati</h2>
@@ -86,8 +98,13 @@ export default function PrivacyPolicy() {
             <strong>Sanity.io</strong> — gestione dei contenuti del blog
           </li>
           <li>
+            <strong>Resend</strong> — invio di notifiche email al Titolare
+            relative a nuove prenotazioni o cancellazioni
+          </li>
+          <li>
             <strong>Meta/Instagram</strong> — visualizzazione di contenuti video
-            incorporati (reel) nella pagina "Video"
+            incorporati (reel) nella pagina "Video", caricati solo previo
+            consenso dell'utente
           </li>
         </ul>
 
@@ -104,10 +121,10 @@ export default function PrivacyPolicy() {
         <p>
           I dati di contatto vengono conservati per il tempo necessario a
           soddisfare la richiesta dell'utente. I dati degli account registrati
-          (utenti, abbonamenti, prenotazioni) sono conservati per la durata del
-          rapporto con lo studio e per il tempo necessario ad adempiere a
-          eventuali obblighi di legge. I dati non vengono ceduti a terzi per
-          finalità commerciali.
+          (utenti, abbonamenti, prenotazioni, dati di allenamento) sono
+          conservati per la durata del rapporto con lo studio e per il tempo
+          necessario ad adempiere a eventuali obblighi di legge. I dati non
+          vengono ceduti a terzi per finalità commerciali.
         </p>
 
         <h2>Diritti dell'utente</h2>
@@ -118,6 +135,11 @@ export default function PrivacyPolicy() {
           <li>limitare o opporsi al trattamento</li>
           <li>
             richiedere la cancellazione del proprio account e dei dati associati
+          </li>
+          <li>
+            revocare in qualsiasi momento il consenso prestato per i cookie di
+            terze parti, tramite l'apposito link "Gestisci cookie" nel footer
+            del sito
           </li>
         </ul>
 

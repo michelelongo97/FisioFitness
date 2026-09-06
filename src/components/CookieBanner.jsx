@@ -7,6 +7,10 @@ export default function CookieBanner() {
 
   useEffect(() => {
     if (!getConsent()) setVisible(true);
+
+    const handler = () => setVisible(true);
+    window.addEventListener("cookie-banner-reopen", handler);
+    return () => window.removeEventListener("cookie-banner-reopen", handler);
   }, []);
 
   const handleChoice = (value) => {
