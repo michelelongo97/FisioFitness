@@ -173,4 +173,16 @@ export const EXERCISES = [
     category: "braccia",
     image: "/images/exercises/curl-manubri-braccia.jpg",
   },
+  {
+    key: "curl-bilanciere",
+    name: "Curl Bilanciere",
+    category: "braccia",
+    image: "/images/exercises/curl-bilanciere.jpg",
+  },
+  {
+    key: "french-press-bilanciere-panca",
+    name: "French Press Bilanciere Panca",
+    category: "braccia",
+    image: "/images/exercises/french-press-bilanciere-panca.jpg",
+  },
 ];
