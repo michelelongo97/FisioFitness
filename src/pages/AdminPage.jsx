@@ -367,12 +367,17 @@ export default function AdminPage() {
     setUsers(await res.json());
   };
 
+  const getSurname = (fullName) => {
+    const parts = fullName.trim().split(/\s+/);
+    return parts[parts.length - 1];
+  };
+
   const sortedUsers = [...users].sort((a, b) => {
     switch (userSort) {
       case "name-asc":
-        return a.name.localeCompare(b.name);
+        return getSurname(a.name).localeCompare(getSurname(b.name));
       case "name-desc":
-        return b.name.localeCompare(a.name);
+        return getSurname(b.name).localeCompare(getSurname(a.name));
       case "sessions-desc":
         return b.total_sessions - a.total_sessions;
       case "expiry-asc":
