@@ -1,4 +1,11 @@
-export const CATEGORIES = ["gambe", "dorso", "petto", "spalle", "braccia"];
+export const CATEGORIES = [
+  "gambe",
+  "dorso",
+  "petto",
+  "spalle",
+  "braccia",
+  "addominali",
+];
 
 export const EXERCISES = [
   // GAMBE
