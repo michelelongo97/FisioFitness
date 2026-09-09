@@ -185,4 +185,25 @@ export const EXERCISES = [
     category: "braccia",
     image: "/images/exercises/french-press-bilanciere-panca.jpg",
   },
+
+  // ADDOMINALI
+  {
+    key: "plank",
+    name: "Plank",
+    category: "addominali",
+    image: "/images/exercises/plank.jpg",
+  },
+
+  {
+    key: "dragon-flag",
+    name: "Dragon Flag",
+    category: "addominali",
+    image: "/images/exercises/dragon-flag.jpg",
+  },
+  {
+    key: "reverse-crunch",
+    name: "Reverse Crunch",
+    category: "addominali",
+    image: "/images/exercises/reverse-crunch.jpg",
+  },
 ];
