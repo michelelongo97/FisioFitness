@@ -178,7 +178,7 @@ export default function BookingPage({
               )}{" "}
               alle {booking.time.slice(0, 5)}
             </p>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div className="modal-actions">
               <button
                 className="btn hero-book-btn"
                 onClick={confirmBooking}
