@@ -416,7 +416,7 @@ export default function AreaPersonalePage() {
                     />
                   </div>
 
-                  <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+                  <div className="modal-actions" style={{ marginBottom: 24 }}>
                     <button className="btn" onClick={saveLift}>
                       Salva
                     </button>
