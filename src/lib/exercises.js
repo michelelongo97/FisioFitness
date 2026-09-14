@@ -192,6 +192,12 @@ export const EXERCISES = [
     category: "braccia",
     image: "/images/exercises/french-press-bilanciere-panca.jpg",
   },
+  {
+    key: "dip-su-box",
+    name: "Dip su Box",
+    category: "braccia",
+    image: "/images/exercises/dip-su-box.jpg",
+  },
 
   // ADDOMINALI
   {
