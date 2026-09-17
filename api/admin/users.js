@@ -2,15 +2,20 @@ import { sql } from "@vercel/postgres";
 import bcrypt from "bcryptjs";
 
 function checkAuth(req, res) {
-  if (req.headers["x-admin-password"] !== process.env.ADMIN_PASSWORD) {
-    res.status(401).json({ error: "Non autorizzato" });
-    return false;
-  }
-  return true;
+  const pwd = req.headers["x-admin-password"];
+  if (pwd === process.env.ADMIN_PASSWORD) return "full";
+  if (pwd === process.env.ADMIN_READONLY_PASSWORD) return "readonly";
+  res.status(401).json({ error: "Non autorizzato" });
+  return null;
 }
 
 export default async function handler(req, res) {
-  if (!checkAuth(req, res)) return;
+  const role = checkAuth(req, res);
+  if (!role) return;
+
+  if (role === "readonly" && req.method !== "GET") {
+    return res.status(403).json({ error: "Accesso in sola lettura" });
+  }
 
   // GET — lista utenti con stato abbonamento
   if (req.method === "GET") {

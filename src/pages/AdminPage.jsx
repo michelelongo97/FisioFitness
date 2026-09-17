@@ -9,7 +9,7 @@ const statusLabels = {
   cancelled: "Cancellata",
 };
 
-function SlotsGrouped({ slots, onDelete }) {
+function SlotsGrouped({ slots, onDelete, role }) {
   const grouped = slots.reduce((acc, s) => {
     if (!acc[s.date]) acc[s.date] = [];
     acc[s.date].push(s);
@@ -104,7 +104,7 @@ function SlotsGrouped({ slots, onDelete }) {
                   {s.booked_count}/{s.max_bookings} prenotati
                 </span>
               </div>
-              {s.is_active && !isPast && (
+              {s.is_active && !isPast && role === "full" && (
                 <button className="btn-danger" onClick={() => onDelete(s.id)}>
                   Disattiva
                 </button>
@@ -117,7 +117,7 @@ function SlotsGrouped({ slots, onDelete }) {
   );
 }
 
-function BookingsGrouped({ bookings, onMark }) {
+function BookingsGrouped({ bookings, onMark, role }) {
   const [typeFilter, setTypeFilter] = useState("all");
 
   const filteredBookings =
@@ -248,7 +248,7 @@ function BookingsGrouped({ bookings, onMark }) {
             <span className={`booking-agenda-status status-${b.status}`}>
               {statusLabels[b.status] || b.status}
             </span>
-            {b.status === "confirmed" && (
+            {b.status === "confirmed" && role === "full" && (
               <div className="booking-agenda-actions">
                 <button
                   className="btn"
@@ -325,16 +325,24 @@ export default function AdminPage() {
     }
   }, []);
 
+  const [role, setRole] = useState(
+    () => localStorage.getItem("admin_role") || null,
+  );
+
   const login = async (e) => {
     if (e) e.preventDefault();
     const res = await fetch("/api/admin/reels", { headers });
     if (res.ok) {
+      const userRole = res.headers.get("X-Admin-Role") || "full";
       setAuthed(true);
+      setRole(userRole);
       localStorage.setItem("admin_password", password);
+      localStorage.setItem("admin_role", userRole);
       setReels(await res.json());
     } else {
-      if (e) alert("Password errata"); // mostra l'alert solo se è un tentativo manuale, non al check automatico
+      if (e) alert("Password errata");
       localStorage.removeItem("admin_password");
+      localStorage.removeItem("admin_role");
       setPassword("");
     }
     setCheckingAuth(false);
@@ -601,8 +609,10 @@ export default function AdminPage() {
           className="btn-danger"
           onClick={() => {
             localStorage.removeItem("admin_password");
+            localStorage.removeItem("admin_role");
             setAuthed(false);
             setPassword("");
+            setRole(null);
           }}
         >
           Esci
@@ -640,30 +650,32 @@ export default function AdminPage() {
       {/* TAB REELS */}
       {tab === "reels" && (
         <div className="admin-reels">
-          <form className="add-slot-form" onSubmit={addReel}>
-            <h3>Aggiungi Reel</h3>
-            <input
-              type="url"
-              required
-              placeholder="https://www.instagram.com/reel/ABC123/"
-              value={newReel.url}
-              onChange={(e) =>
-                setNewReel((r) => ({ ...r, url: e.target.value }))
-              }
-              style={{ minWidth: 320 }}
-            />
-            <input
-              type="text"
-              placeholder="Didascalia (opzionale)"
-              value={newReel.caption}
-              onChange={(e) =>
-                setNewReel((r) => ({ ...r, caption: e.target.value }))
-              }
-            />
-            <button type="submit" className="btn">
-              Aggiungi
-            </button>
-          </form>
+          {role === "full" && (
+            <form className="add-slot-form" onSubmit={addReel}>
+              <h3>Aggiungi Reel</h3>
+              <input
+                type="url"
+                required
+                placeholder="https://www.instagram.com/reel/ABC123/"
+                value={newReel.url}
+                onChange={(e) =>
+                  setNewReel((r) => ({ ...r, url: e.target.value }))
+                }
+                style={{ minWidth: 320 }}
+              />
+              <input
+                type="text"
+                placeholder="Didascalia (opzionale)"
+                value={newReel.caption}
+                onChange={(e) =>
+                  setNewReel((r) => ({ ...r, caption: e.target.value }))
+                }
+              />
+              <button type="submit" className="btn">
+                Aggiungi
+              </button>
+            </form>
+          )}
           <div className="reel-cards">
             {reels.map((r) => (
               <div
@@ -676,7 +688,7 @@ export default function AdminPage() {
                     <span className="reel-admin-caption">{r.caption}</span>
                   )}
                 </div>
-                {r.is_active && (
+                {r.is_active && role === "full" && (
                   <button
                     className="btn-danger"
                     onClick={() => deleteReel(r.id)}
@@ -693,54 +705,58 @@ export default function AdminPage() {
       {/* TAB UTENTI */}
       {tab === "users" && (
         <div className="admin-users">
-          <form className="add-slot-form" onSubmit={addUser}>
-            <h3>Nuovo utente + abbonamento</h3>
-            <input
-              type="text"
-              required
-              placeholder="Nome e cognome"
-              value={newUser.name}
-              onChange={(e) =>
-                setNewUser((u) => ({ ...u, name: e.target.value }))
-              }
-            />
-            <input
-              type="email"
-              required
-              placeholder="Email"
-              value={newUser.email}
-              onChange={(e) =>
-                setNewUser((u) => ({ ...u, email: e.target.value }))
-              }
-            />
-            <input
-              type="text"
-              required
-              placeholder="Password"
-              value={newUser.password}
-              onChange={(e) =>
-                setNewUser((u) => ({ ...u, password: e.target.value }))
-              }
-            />
-            <input
-              type="number"
-              required
-              min="1"
-              placeholder="Ingressi"
-              value={newUser.total_entries}
-              onChange={(e) =>
-                setNewUser((u) => ({ ...u, total_entries: e.target.value }))
-              }
-              style={{ width: 100 }}
-            />
-            <DatePickerField
-              value={newUser.starts_at}
-              onChange={(val) => setNewUser((u) => ({ ...u, starts_at: val }))}
-            />
-            <button type="submit" className="btn">
-              Crea utente
-            </button>
-          </form>
+          {role === "full" && (
+            <form className="add-slot-form" onSubmit={addUser}>
+              <h3>Nuovo utente + abbonamento</h3>
+              <input
+                type="text"
+                required
+                placeholder="Nome e cognome"
+                value={newUser.name}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, name: e.target.value }))
+                }
+              />
+              <input
+                type="email"
+                required
+                placeholder="Email"
+                value={newUser.email}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, email: e.target.value }))
+                }
+              />
+              <input
+                type="text"
+                required
+                placeholder="Password"
+                value={newUser.password}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, password: e.target.value }))
+                }
+              />
+              <input
+                type="number"
+                required
+                min="1"
+                placeholder="Ingressi"
+                value={newUser.total_entries}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, total_entries: e.target.value }))
+                }
+                style={{ width: 100 }}
+              />
+              <DatePickerField
+                value={newUser.starts_at}
+                onChange={(val) =>
+                  setNewUser((u) => ({ ...u, starts_at: val }))
+                }
+              />
+              <button type="submit" className="btn">
+                Crea utente
+              </button>
+            </form>
+          )}
           {userMsg && (
             <p
               style={{
@@ -790,24 +806,30 @@ export default function AdminPage() {
                     totali
                   </span>
                 </div>
-                <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-                  {u.subscription_id && (
+                {role === "full" && (
+                  <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                    {u.subscription_id && (
+                      <button
+                        className="btn"
+                        style={{
+                          margin: 0,
+                          padding: "8px 16px",
+                          fontSize: 13,
+                        }}
+                        onClick={() => openEditUser(u)}
+                      >
+                        Modifica ingressi
+                      </button>
+                    )}
                     <button
-                      className="btn"
+                      className="btn-danger"
                       style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
-                      onClick={() => openEditUser(u)}
+                      onClick={() => deactivateUser(u.id, u.name)}
                     >
-                      Modifica ingressi
+                      Disattiva
                     </button>
-                  )}
-                  <button
-                    className="btn-danger"
-                    style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
-                    onClick={() => deactivateUser(u.id, u.name)}
-                  >
-                    Disattiva
-                  </button>
-                </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -900,80 +922,86 @@ export default function AdminPage() {
       {/* TAB SLOT */}
       {tab === "slots" && (
         <div className="admin-slots">
-          <div
-            style={{
-              marginBottom: 20,
-              display: "flex",
-              gap: 12,
-              flexWrap: "wrap",
-            }}
-          >
-            <button
-              type="button"
-              className="btn"
-              onClick={() => generateSlots("normal")}
-            >
-              📅 Genera slot standard (prossime 4 settimane)
-            </button>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => generateSlots("course")}
-            >
-              🏋️ Genera slot corso (Lun/Mar/Gio/Ven — prossime 4 settimane)
-            </button>
-          </div>
-
-          <div
-            className="add-slot-form"
-            style={{
-              background: "#fdecea",
-              padding: 16,
-              borderRadius: 12,
-              marginBottom: 20,
-            }}
-          >
-            <h3 style={{ color: "#c00" }}>
-              Chiudi giornata (es. ferie, imprevisto)
-            </h3>
-            <DatePickerField value={closeDate} onChange={setCloseDate} />
-
-            <button type="button" className="btn-danger" onClick={closeDay}>
-              Chiudi giorno
-            </button>
-          </div>
-
-          <form className="add-slot-form" onSubmit={addSlot}>
-            <h3>Aggiungi slot</h3>
-            <DatePickerField
-              value={newSlot.date}
-              onChange={(val) => setNewSlot((s) => ({ ...s, date: val }))}
-            />
-            <TimePickerField
-              value={newSlot.time}
-              onChange={(val) => setNewSlot((s) => ({ ...s, time: val }))}
-            />
-            <select
-              value={newSlot.type}
-              onChange={(e) =>
-                setNewSlot((s) => ({ ...s, type: e.target.value }))
-              }
+          {role === "full" && (
+            <div
               style={{
-                padding: "10px 14px",
-                border: "1.5px solid #ddd",
-                borderRadius: 8,
-                fontSize: 15,
+                marginBottom: 20,
+                display: "flex",
+                gap: 12,
+                flexWrap: "wrap",
               }}
             >
-              <option value="normal">Seduta normale</option>
-              <option value="course">Corso</option>
-            </select>
-            <button type="submit" className="btn">
-              Aggiungi
-            </button>
-          </form>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => generateSlots("normal")}
+              >
+                📅 Genera slot standard (prossime 4 settimane)
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => generateSlots("course")}
+              >
+                🏋️ Genera slot corso (Lun/Mar/Gio/Ven — prossime 4 settimane)
+              </button>
+            </div>
+          )}
 
-          <SlotsGrouped slots={slots} onDelete={deleteSlot} />
+          {role === "full" && (
+            <div
+              className="add-slot-form"
+              style={{
+                background: "#fdecea",
+                padding: 16,
+                borderRadius: 12,
+                marginBottom: 20,
+              }}
+            >
+              <h3 style={{ color: "#c00" }}>
+                Chiudi giornata (es. ferie, imprevisto)
+              </h3>
+              <DatePickerField value={closeDate} onChange={setCloseDate} />
+
+              <button type="button" className="btn-danger" onClick={closeDay}>
+                Chiudi giorno
+              </button>
+            </div>
+          )}
+
+          {role === "full" && (
+            <form className="add-slot-form" onSubmit={addSlot}>
+              <h3>Aggiungi slot</h3>
+              <DatePickerField
+                value={newSlot.date}
+                onChange={(val) => setNewSlot((s) => ({ ...s, date: val }))}
+              />
+              <TimePickerField
+                value={newSlot.time}
+                onChange={(val) => setNewSlot((s) => ({ ...s, time: val }))}
+              />
+              <select
+                value={newSlot.type}
+                onChange={(e) =>
+                  setNewSlot((s) => ({ ...s, type: e.target.value }))
+                }
+                style={{
+                  padding: "10px 14px",
+                  border: "1.5px solid #ddd",
+                  borderRadius: 8,
+                  fontSize: 15,
+                }}
+              >
+                <option value="normal">Seduta normale</option>
+                <option value="course">Corso</option>
+              </select>
+              <button type="submit" className="btn">
+                Aggiungi
+              </button>
+            </form>
+          )}
+
+          <SlotsGrouped slots={slots} onDelete={deleteSlot} role={role} />
         </div>
       )}
 
@@ -1011,7 +1039,11 @@ export default function AdminPage() {
           {bookings.length === 0 ? (
             <p>Nessuna prenotazione ancora.</p>
           ) : (
-            <BookingsGrouped bookings={bookings} onMark={markBooking} />
+            <BookingsGrouped
+              bookings={bookings}
+              onMark={markBooking}
+              role={role}
+            />
           )}
         </div>
       )}
