@@ -308,8 +308,19 @@ export default function AdminPage() {
   const [stats, setStats] = useState(null);
 
   const loadStats = async () => {
-    const res = await fetch("/api/admin/bookings?stats=1", { headers });
-    setStats(await res.json());
+    try {
+      const res = await fetch("/api/admin/bookings?stats=1", { headers });
+      const data = await res.json();
+      if (res.ok && data && typeof data.total === "number") {
+        setStats(data);
+      } else {
+        console.error("Statistiche non valide:", data);
+        setStats(null);
+      }
+    } catch (err) {
+      console.error("Errore caricamento statistiche:", err);
+      setStats(null);
+    }
   };
 
   const headers = {
@@ -565,7 +576,7 @@ export default function AdminPage() {
     if (tab === "slots") loadSlots();
     if (tab === "bookings") {
       loadBookings();
-      loadStats();
+      if (role === "full") loadStats();
     }
   }, [authed, tab]);
 
@@ -626,12 +637,14 @@ export default function AdminPage() {
         >
           Prenotazioni
         </button>
-        <button
-          className={`tab-btn ${tab === "slots" ? "active" : ""}`}
-          onClick={() => setTab("slots")}
-        >
-          Slot
-        </button>
+        {role === "full" && (
+          <button
+            className={`tab-btn ${tab === "slots" ? "active" : ""}`}
+            onClick={() => setTab("slots")}
+          >
+            Slot
+          </button>
+        )}
         <button
           className={`tab-btn ${tab === "users" ? "active" : ""}`}
           onClick={() => setTab("users")}
@@ -639,12 +652,14 @@ export default function AdminPage() {
           Utenti
         </button>
 
-        <button
-          className={`tab-btn ${tab === "reels" ? "active" : ""}`}
-          onClick={() => setTab("reels")}
-        >
-          Reel
-        </button>
+        {role === "full" && (
+          <button
+            className={`tab-btn ${tab === "reels" ? "active" : ""}`}
+            onClick={() => setTab("reels")}
+          >
+            Reel
+          </button>
+        )}
       </div>
 
       {/* TAB REELS */}
@@ -1008,7 +1023,7 @@ export default function AdminPage() {
       {/* TAB PRENOTAZIONI */}
       {tab === "bookings" && (
         <div className="admin-bookings">
-          {stats && (
+          {stats && role === "full" && (
             <div className="stats-panel">
               <div className="stats-total">
                 <span className="stats-total-number">{stats.total}</span>
