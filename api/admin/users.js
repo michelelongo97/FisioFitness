@@ -44,6 +44,15 @@ export default async function handler(req, res) {
     WHERE u.is_active = true
     ORDER BY u.created_at DESC
   `;
+
+    if (role === "readonly") {
+      const filtered = rows.map((u) => ({
+        id: u.id,
+        name: u.name,
+      }));
+      return res.status(200).json(filtered);
+    }
+
     return res.status(200).json(rows);
   }
 

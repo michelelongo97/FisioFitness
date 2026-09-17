@@ -803,24 +803,28 @@ export default function AdminPage() {
               <div key={u.id} className="user-card">
                 <div className="user-card-header">
                   <span className="user-card-name">{u.name}</span>
-                  <span className="user-card-email">{u.email}</span>
-                </div>
-                <div className="user-card-body">
-                  {u.subscription_id ? (
-                    <span className="user-card-badge badge-teal">
-                      {u.used_entries}/{u.total_entries} ingressi · scade{" "}
-                      {new Date(u.expires_at).toLocaleDateString("it-IT")}
-                    </span>
-                  ) : (
-                    <span className="user-card-badge badge-red">
-                      Nessun abbonamento
-                    </span>
+                  {role === "full" && (
+                    <span className="user-card-email">{u.email}</span>
                   )}
-                  <span className="user-card-badge badge-grey">
-                    📊 {u.sessions_this_year} quest'anno · {u.total_sessions}{" "}
-                    totali
-                  </span>
                 </div>
+                {role === "full" && (
+                  <div className="user-card-body">
+                    {u.subscription_id ? (
+                      <span className="user-card-badge badge-teal">
+                        {u.used_entries}/{u.total_entries} ingressi · scade{" "}
+                        {new Date(u.expires_at).toLocaleDateString("it-IT")}
+                      </span>
+                    ) : (
+                      <span className="user-card-badge badge-red">
+                        Nessun abbonamento
+                      </span>
+                    )}
+                    <span className="user-card-badge badge-grey">
+                      📊 {u.sessions_this_year} quest'anno · {u.total_sessions}{" "}
+                      totali
+                    </span>
+                  </div>
+                )}
                 {role === "full" && (
                   <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
                     {u.subscription_id && (
