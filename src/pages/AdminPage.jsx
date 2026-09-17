@@ -877,6 +877,7 @@ export default function AdminPage() {
                         setEditEntries((s) => ({
                           ...s,
                           total: Number(e.target.value),
+                          used: 0,
                         }))
                       }
                       style={{
