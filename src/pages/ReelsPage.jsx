@@ -1,21 +1,8 @@
 import { useEffect, useState } from "react";
-import { getConsent, setConsent } from "../lib/cookieConsent";
-
-function toEmbedUrl(url) {
-  return url.replace(/\/(reel|p)\/([^/]+)\/.*/, "/p/$2/embed");
-}
 
 export default function ReelsPage() {
   const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [consent, setConsentState] = useState(getConsent());
-
-  useEffect(() => {
-    const handler = () => setConsentState(getConsent());
-    window.addEventListener("cookie-consent-change", handler);
-    return () => window.removeEventListener("cookie-consent-change", handler);
-  }, []);
 
   useEffect(() => {
     fetch("/api/reels")
@@ -40,38 +27,26 @@ export default function ReelsPage() {
           <p className="reels-empty">Nessun video disponibile al momento.</p>
         ) : (
           <div className="reels-grid">
-            {reels.map((reel) => (
+            {reels.map((reel, index) => (
               <div key={reel.id} className="reel-card">
-                <div className="reel-embed-wrapper">
-                  {consent === "accepted" ? (
-                    <iframe
-                      src={toEmbedUrl(reel.url)}
-                      allowFullScreen
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                      loading="lazy"
-                      title={reel.caption || `Reel ${reel.id}`}
-                    />
-                  ) : (
-                    <div className="reel-consent-placeholder">
-                      <p>Contenuto Instagram non caricato.</p>
-                      <button
-                        className="btn"
-                        style={{
-                          margin: 0,
-                          padding: "10px 20px",
-                          fontSize: 13,
-                        }}
-                        onClick={() => {
-                          setConsent("accepted");
-                          setConsentState("accepted");
-                        }}
-                      >
-                        Carica il video
-                      </button>
-                    </div>
-                  )}
+                <div className="reel-video-wrapper">
+                  <video
+                    src={`/videos/reel${index + 1}.mp4`}
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
                 </div>
                 {reel.caption && <p className="reel-caption">{reel.caption}</p>}
+
+                <a
+                  href={reel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="reel-instagram-link"
+                >
+                  Vedi su Instagram
+                </a>
               </div>
             ))}
           </div>

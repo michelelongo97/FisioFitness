@@ -1047,25 +1047,31 @@ body {
   box-shadow: 0 14px 36px rgba(20, 98, 114, 0.16);
 }
 
-.reel-embed-wrapper {
-  position: relative;
+.reel-video-wrapper {
   width: 100%;
-  height: 620px;
-  background: white;
+  aspect-ratio: 9 / 16;
+  background: #000;
   border-radius: 14px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
 }
-.reel-embed-wrapper iframe {
-  position: absolute;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 328px;
-  max-width: 100%;
-  height: 700px;
-  border: none;
+.reel-video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reel-instagram-link {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #146272;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.reel-instagram-link:hover {
+  text-decoration: underline;
 }
 
 .reel-caption {
