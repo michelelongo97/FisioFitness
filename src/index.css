@@ -2214,3 +2214,13 @@ body {
     width: 100%;
   }
 }
+.footer-bottom-copy a {
+  color: #e6f7f4;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s;
+}
+.footer-bottom-copy a:hover {
+  opacity: 0.8;
+}

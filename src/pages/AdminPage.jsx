@@ -1034,6 +1034,15 @@ export default function AdminPage() {
                 <span className="stats-total-number">{stats.total}</span>
                 <span className="stats-total-label">Prenotazioni totali</span>
               </div>
+              <div
+                className="stats-total"
+                style={{ marginBottom: 20, paddingBottom: 20 }}
+              >
+                <span className="stats-total-number">{stats.confirmed}</span>
+                <span className="stats-total-label">
+                  Prenotazioni confermate
+                </span>
+              </div>
               <div className="stats-monthly">
                 {stats.monthly.map((m) => {
                   const [year, month] = m.month.split("-");

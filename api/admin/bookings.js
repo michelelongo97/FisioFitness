@@ -20,18 +20,22 @@ export default async function handler(req, res) {
     // Se richiesto ?stats=1, restituisce le statistiche invece della lista
     if (req.query.stats === "1") {
       const { rows: totalRows } = await sql`
-        SELECT COUNT(*) as total FROM bookings WHERE status != 'cancelled'
-      `;
+    SELECT COUNT(*) as total FROM bookings WHERE status != 'cancelled'
+  `;
+      const { rows: confirmedRows } = await sql`
+    SELECT COUNT(*) as confirmed FROM bookings WHERE status = 'confirmed'
+  `;
       const { rows: monthlyRows } = await sql`
-        SELECT to_char(s.date, 'YYYY-MM') as month, COUNT(*) as count
-        FROM bookings b
-        JOIN slots s ON b.slot_id = s.id
-        WHERE b.status != 'cancelled'
-        GROUP BY to_char(s.date, 'YYYY-MM')
-        ORDER BY month DESC
-      `;
+    SELECT to_char(s.date, 'YYYY-MM') as month, COUNT(*) as count
+    FROM bookings b
+    JOIN slots s ON b.slot_id = s.id
+    WHERE b.status != 'cancelled'
+    GROUP BY to_char(s.date, 'YYYY-MM')
+    ORDER BY month DESC
+  `;
       return res.status(200).json({
         total: parseInt(totalRows[0].total),
+        confirmed: parseInt(confirmedRows[0].confirmed),
         monthly: monthlyRows.map((r) => ({
           month: r.month,
           count: parseInt(r.count),
