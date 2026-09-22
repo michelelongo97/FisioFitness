@@ -6,7 +6,8 @@ export default function CookiePolicy() {
         <p>
           Il sito <strong>costafisiofitness.it</strong> utilizza cookie tecnici
           necessari al corretto funzionamento del sito e, solo previo consenso,
-          contenuti di terze parti che possono impostare propri cookie.
+          eventuali contenuti di terze parti che potrebbero impostare propri
+          cookie.
         </p>
         <h2>Cosa sono i cookie</h2>
         <p>
@@ -29,32 +30,31 @@ export default function CookiePolicy() {
             rifiutati)
           </li>
         </ul>
+        <h2>Video e contenuti multimediali</h2>
+        <p>
+          Nella pagina "Video" il sito mostra video ospitati direttamente sui
+          propri server (nessun contenuto incorporato da piattaforme esterne).
+          Ogni video riporta un link che rimanda al reel originale pubblicato su
+          Instagram: si tratta di un semplice collegamento ipertestuale, che non
+          imposta alcun cookie né trasmette dati a Meta finché l'utente non
+          decide volontariamente di cliccarlo.
+        </p>
         <h2>Cookie di terze parti</h2>
         <p>
-          Nella pagina "Video" il sito può incorporare contenuti (reel) ospitati
-          su Instagram tramite iframe. Questi contenuti vengono caricati solo se
-          l'utente ha espresso consenso tramite il banner cookie o l'apposito
-          pulsante "Carica il video" presente su ogni contenuto. Una volta
-          caricati, possono impostare autonomamente cookie di terze parti
-          riconducibili a Meta/Instagram, secondo la loro informativa, non
-          controllata dal Titolare di questo sito. Si consiglia di consultare la{" "}
-          <a
-            href="https://privacycenter.instagram.com/policy/cookies/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            cookie policy di Instagram
-          </a>{" "}
-          per maggiori informazioni.
+          Il sito non incorpora attualmente contenuti di terze parti che
+          impostano cookie in autonomia. Qualora in futuro venissero
+          reintrodotti contenuti embeddati (ad esempio video o mappe di
+          fornitori esterni), il relativo caricamento avverrà solo previo
+          consenso esplicito dell'utente, raccolto tramite l'apposito banner o
+          pulsante di attivazione presente sul contenuto.
         </p>
         <h2>Consenso all'uso dei cookie</h2>
         <p>
           I cookie tecnici e il token di autenticazione non richiedono consenso,
           in quanto strettamente necessari al funzionamento del sito e dell'area
-          personale. I cookie di terze parti (Instagram) vengono impostati solo
+          personale. Eventuali cookie di terze parti verrebbero impostati solo
           dopo consenso esplicito dell'utente, raccolto tramite il banner
-          mostrato alla prima visita o, per il singolo contenuto, tramite il
-          pulsante di caricamento presente nella pagina "Video".
+          mostrato alla prima visita.
         </p>
         <h2>Gestione e revoca del consenso</h2>
         <p>

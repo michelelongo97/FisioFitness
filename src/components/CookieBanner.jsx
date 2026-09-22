@@ -23,9 +23,9 @@ export default function CookieBanner() {
   return (
     <div className="cookie-banner">
       <p className="cookie-banner-text">
-        Questo sito utilizza cookie tecnici necessari al funzionamento. Nella
-        pagina "Video" sono presenti contenuti Instagram che, se attivati,
-        installano cookie di terze parti di Meta. Consulta la{" "}
+        Questo sito utilizza cookie tecnici necessari al funzionamento. Il tuo
+        consenso ci permette anche di attivare, se presenti, eventuali contenuti
+        di terze parti. Consulta la{" "}
         <Link to="/cookie-policy">Cookie Policy</Link> per maggiori
         informazioni.
       </p>

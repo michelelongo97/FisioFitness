@@ -102,9 +102,9 @@ export default function PrivacyPolicy() {
             relative a nuove prenotazioni o cancellazioni
           </li>
           <li>
-            <strong>Meta/Instagram</strong> — visualizzazione di contenuti video
-            incorporati (reel) nella pagina "Video", caricati solo previo
-            consenso dell'utente
+            <strong>Meta/Instagram</strong> — il sito riporta link esterni al
+            profilo Instagram dello studio; nessun contenuto viene attualmente
+            incorporato direttamente nelle pagine
           </li>
         </ul>
 
