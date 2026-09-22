@@ -32,6 +32,7 @@ export default function ReelsPage() {
                 <div className="reel-video-wrapper">
                   <video
                     src={`/videos/reel${index + 1}.mp4`}
+                    poster={`/videos/reel${index + 1}-poster.jpg`}
                     controls
                     playsInline
                     preload="metadata"
