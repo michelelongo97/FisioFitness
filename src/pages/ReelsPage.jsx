@@ -8,7 +8,7 @@ export default function ReelsPage() {
     fetch("/api/reels")
       .then((r) => r.json())
       .then((data) => {
-        setReels(data);
+        setReels(data.map((reel, i) => ({ ...reel, videoIndex: i + 1 })));
         setLoading(false);
       });
   }, []);
@@ -27,12 +27,12 @@ export default function ReelsPage() {
           <p className="reels-empty">Nessun video disponibile al momento.</p>
         ) : (
           <div className="reels-grid">
-            {reels.map((reel, index) => (
+            {[...reels].reverse().map((reel) => (
               <div key={reel.id} className="reel-card">
                 <div className="reel-video-wrapper">
                   <video
-                    src={`/videos/reel${index + 1}.mp4`}
-                    poster={`/videos/reel${index + 1}-poster.jpg`}
+                    src={`/videos/reel${reel.videoIndex}.mp4`}
+                    poster={`/videos/reel${reel.videoIndex}-poster.jpg`}
                     controls
                     playsInline
                     preload="metadata"
