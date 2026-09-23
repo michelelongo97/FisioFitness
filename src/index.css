@@ -2230,3 +2230,63 @@ body {
 .footer-bottom-copy a:hover {
   opacity: 0.8;
 }
+
+/* PROZIS PARTNER */
+.prozis-banner-card {
+  display: block;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(20, 98, 114, 0.08);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.prozis-banner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(20, 98, 114, 0.16);
+}
+.prozis-banner-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  max-height: 260px;
+}
+.prozis-banner-content {
+  padding: 32px 40px 40px;
+}
+.prozis-banner-content h3 {
+  font-size: 26px;
+  color: #146272;
+  margin-bottom: 16px;
+}
+.prozis-banner-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 12px;
+}
+.prozis-banner-content p:last-child {
+  margin-bottom: 0;
+}
+.prozis-banner-content strong {
+  color: #146272;
+}
+.prozis-banner-note {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #146272;
+  background: #f0f6f6;
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .prozis-banner-content {
+    padding: 24px 24px 32px;
+  }
+}

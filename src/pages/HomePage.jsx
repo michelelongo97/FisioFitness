@@ -173,6 +173,36 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* PROZIS PARTNER */}
+        <section className="chi-section">
+          <div className="chi-container">
+            <a
+              href="https://www.prozis.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="prozis-banner-card"
+            >
+              <img
+                src="/images/prozis/prozis-banner.jpg"
+                alt="Prozis Partners"
+                className="prozis-banner-img"
+                loading="lazy"
+              />
+              <div className="prozis-banner-content">
+                <h3>Partner Prozis</h3>
+                <p>
+                  Da quest'anno con <strong>Prozis.com</strong> abbiamo avviato
+                  una collaborazione specifica per i professionisti del settore
+                  fitness/salute che permette a tutti i clienti di{" "}
+                  <strong>FISIOFITNESS</strong> sconti speciali fino al{" "}
+                  <strong>50%</strong> su tutto il catalogo Prozis.com.
+                </p>
+                <p className="prozis-banner-note">Info in studio</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="chi-cta">
           <h2>Prenota una consulenza</h2>
