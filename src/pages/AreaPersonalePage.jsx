@@ -30,6 +30,7 @@ export default function AreaPersonalePage() {
   const [loading, setLoading] = useState(true);
 
   const [maxLifts, setMaxLifts] = useState([]);
+  const [bodyParams, setBodyParams] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [liftForm, setLiftForm] = useState({ weight: "", reps: "" });
   const [selectedCategory, setSelectedCategory] = useState("gambe");
@@ -47,17 +48,19 @@ export default function AreaPersonalePage() {
   const loadData = async () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
 
-    const [subResRaw, bookResRaw, liftsResRaw] = await Promise.all([
+    const [subResRaw, bookResRaw, liftsResRaw, bodyResRaw] = await Promise.all([
       fetch("/api/user/subscription", { headers }),
       fetch("/api/user/bookings", { headers }),
       fetch("/api/user/bookings?resource=lifts", { headers }),
+      fetch("/api/user/bookings?resource=body", { headers }),
     ]);
 
     // Se una qualsiasi richiesta torna 401, la sessione non è più valida
     if (
       subResRaw.status === 401 ||
       bookResRaw.status === 401 ||
-      liftsResRaw.status === 401
+      liftsResRaw.status === 401 ||
+      bodyResRaw.status === 401
     ) {
       logout();
       navigate("/login");
@@ -67,10 +70,12 @@ export default function AreaPersonalePage() {
     const subRes = await subResRaw.json();
     const bookRes = await bookResRaw.json();
     const liftsRes = await liftsResRaw.json();
+    const bodyRes = await bodyResRaw.json();
 
     setSubscription(subRes);
     setBookings(Array.isArray(bookRes) ? bookRes : []);
     setMaxLifts(Array.isArray(liftsRes) ? liftsRes : []);
+    setBodyParams(Array.isArray(bodyRes) ? bodyRes : []);
     setLoading(false);
   };
 
@@ -318,7 +323,91 @@ export default function AreaPersonalePage() {
                 </div>
               </>
             )}
+            <h3 style={{ color: "#146272", marginBottom: 16 }}>
+              I tuoi parametri corporei
+            </h3>
 
+            {bodyParams.length > 0 ? (
+              <div className="body-params-card" style={{ marginBottom: 32 }}>
+                <div className="body-params-grid">
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {bodyParams[0].weight_kg}
+                    </span>
+                    <span className="body-param-label">Peso (kg)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {bodyParams[0].body_fat_percent}%
+                    </span>
+                    <span className="body-param-label">Massa grassa</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {bodyParams[0].lean_mass_kg}
+                    </span>
+                    <span className="body-param-label">Massa magra (kg)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {bodyParams[0].body_water_percent}%
+                    </span>
+                    <span className="body-param-label">Acqua corporea</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {bodyParams[0].muscle_mass_kg}
+                    </span>
+                    <span className="body-param-label">
+                      Massa muscolare (kg)
+                    </span>
+                  </div>
+                </div>
+                <span
+                  style={{
+                    fontSize: 12,
+                    color: "#888",
+                    marginTop: 12,
+                    display: "block",
+                  }}
+                >
+                  Ultima misurazione:{" "}
+                  {new Date(
+                    bodyParams[0].recorded_at + "T00:00:00",
+                  ).toLocaleDateString("it-IT")}
+                </span>
+              </div>
+            ) : (
+              <div className="body-params-locked" style={{ marginBottom: 32 }}>
+                <div className="body-params-locked-overlay">
+                  <p>Prova la bilancia BIA in studio</p>
+                </div>
+                <div className="body-params-grid">
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Peso (kg)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Massa grassa</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Massa magra (kg)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Acqua corporea</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">
+                      Massa muscolare (kg)
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               I tuoi massimali
             </h3>

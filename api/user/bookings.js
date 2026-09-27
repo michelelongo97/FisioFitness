@@ -20,6 +20,21 @@ export default async function handler(req, res) {
   if (!userId) return res.status(401).json({ error: "Non autenticato" });
 
   const isLifts = req.query.resource === "lifts";
+  const isBody = req.query.resource === "body";
+
+  if (isBody) {
+    if (req.method === "GET") {
+      const { rows } = await sql`
+      SELECT id, weight_kg, body_fat_percent, lean_mass_kg, body_water_percent, muscle_mass_kg,
+        to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
+      FROM body_parameters
+      WHERE user_id = ${userId}
+      ORDER BY recorded_at DESC, created_at DESC
+    `;
+      return res.status(200).json(rows);
+    }
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
   if (isLifts) {
     if (req.method === "GET") {
@@ -83,12 +98,10 @@ export default async function handler(req, res) {
     const slotDateTime = new Date(`${booking.date}T${booking.time}`);
     const minutesUntilSlot = (slotDateTime - new Date()) / 60000;
     if (minutesUntilSlot < 15) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Non puoi cancellare a meno di 15 minuti dall'inizio della seduta",
-        });
+      return res.status(400).json({
+        error:
+          "Non puoi cancellare a meno di 15 minuti dall'inizio della seduta",
+      });
     }
     if (booking.status !== "confirmed") {
       return res.status(400).json({ error: "Prenotazione già cancellata" });

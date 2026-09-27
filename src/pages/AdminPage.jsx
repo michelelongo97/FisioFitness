@@ -435,6 +435,15 @@ export default function AdminPage() {
   };
 
   const [editingUser, setEditingUser] = useState(null);
+  const [bodyParamsUser, setBodyParamsUser] = useState(null);
+  const [bodyParamsHistory, setBodyParamsHistory] = useState([]);
+  const [newBodyParam, setNewBodyParam] = useState({
+    weight_kg: "",
+    body_fat_percent: "",
+    lean_mass_kg: "",
+    body_water_percent: "",
+    muscle_mass_kg: "",
+  });
   const [editEntries, setEditEntries] = useState({
     total: 0,
     used: 0,
@@ -448,6 +457,40 @@ export default function AdminPage() {
       used: u.used_entries || 0,
       expiresAt: u.expires_at ? u.expires_at.slice(0, 10) : "",
     });
+  };
+
+  const openBodyParams = async (u) => {
+    setBodyParamsUser(u);
+    const res = await fetch(
+      `/api/admin/users?resource=body-params&userId=${u.id}`,
+      { headers },
+    );
+    setBodyParamsHistory(await res.json());
+  };
+
+  const saveBodyParam = async () => {
+    await fetch("/api/admin/users?resource=body-params", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ userId: bodyParamsUser.id, ...newBodyParam }),
+    });
+    setNewBodyParam({
+      weight_kg: "",
+      body_fat_percent: "",
+      lean_mass_kg: "",
+      body_water_percent: "",
+      muscle_mass_kg: "",
+    });
+    openBodyParams(bodyParamsUser);
+  };
+
+  const deleteBodyParam = async (id) => {
+    if (!confirm("Eliminare questa misurazione?")) return;
+    await fetch(`/api/admin/users?resource=body-params&id=${id}`, {
+      method: "DELETE",
+      headers,
+    });
+    openBodyParams(bodyParamsUser);
   };
 
   const saveEditUser = async () => {
@@ -826,20 +869,30 @@ export default function AdminPage() {
                   </div>
                 )}
                 {role === "full" && (
-                  <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 8,
+                      marginTop: 12,
+                      flexWrap: "wrap",
+                    }}
+                  >
                     {u.subscription_id && (
                       <button
                         className="btn"
-                        style={{
-                          margin: 0,
-                          padding: "8px 16px",
-                          fontSize: 13,
-                        }}
+                        style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
                         onClick={() => openEditUser(u)}
                       >
                         Modifica ingressi
                       </button>
                     )}
+                    <button
+                      className="btn"
+                      style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
+                      onClick={() => openBodyParams(u)}
+                    >
+                      Parametri corporei
+                    </button>
                     <button
                       className="btn-danger"
                       style={{ margin: 0, padding: "8px 16px", fontSize: 13 }}
@@ -933,6 +986,167 @@ export default function AdminPage() {
                     Annulla
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+          {bodyParamsUser && (
+            <div
+              className="modal-overlay"
+              onClick={() => setBodyParamsUser(null)}
+            >
+              <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <h3 style={{ color: "#146272", marginBottom: 16 }}>
+                  Parametri corporei — {bodyParamsUser.name}
+                </h3>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    marginBottom: 16,
+                  }}
+                >
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Peso (kg)"
+                    value={newBodyParam.weight_kg}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        weight_kg: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Massa grassa (%)"
+                    value={newBodyParam.body_fat_percent}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        body_fat_percent: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Massa magra (kg)"
+                    value={newBodyParam.lean_mass_kg}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        lean_mass_kg: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Acqua corporea (%)"
+                    value={newBodyParam.body_water_percent}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        body_water_percent: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Massa muscolare (kg)"
+                    value={newBodyParam.muscle_mass_kg}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        muscle_mass_kg: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                </div>
+
+                <div className="modal-actions" style={{ marginBottom: 20 }}>
+                  <button className="btn" onClick={saveBodyParam}>
+                    Salva misurazione
+                  </button>
+                  <button
+                    className="btn-danger"
+                    onClick={() => setBodyParamsUser(null)}
+                  >
+                    Chiudi
+                  </button>
+                </div>
+
+                {bodyParamsHistory.length > 0 && (
+                  <>
+                    <h4
+                      style={{
+                        color: "#146272",
+                        marginBottom: 12,
+                        fontSize: 15,
+                      }}
+                    >
+                      Storico
+                    </h4>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 8,
+                        maxHeight: 200,
+                        overflowY: "auto",
+                      }}
+                    >
+                      {bodyParamsHistory.map((b) => (
+                        <div key={b.id} className="lift-history-row">
+                          <span>
+                            {new Date(
+                              b.recorded_at + "T00:00:00",
+                            ).toLocaleDateString("it-IT")}
+                          </span>
+                          <span>
+                            {b.weight_kg}kg · {b.body_fat_percent}% grasso
+                          </span>
+                          <button
+                            className="lift-delete-btn"
+                            onClick={() => deleteBodyParam(b.id)}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}

@@ -17,6 +17,52 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: "Accesso in sola lettura" });
   }
 
+  // --- PARAMETRI CORPOREI (bilancia BIA) ---
+  if (req.query.resource === "body-params") {
+    if (req.method === "GET") {
+      const { userId } = req.query;
+      if (!userId)
+        return res.status(400).json({ error: "userId obbligatorio" });
+      const { rows } = await sql`
+        SELECT id, weight_kg, body_fat_percent, lean_mass_kg, body_water_percent, muscle_mass_kg,
+          to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
+        FROM body_parameters
+        WHERE user_id = ${userId}
+        ORDER BY recorded_at DESC, created_at DESC
+      `;
+      return res.status(200).json(rows);
+    }
+
+    if (req.method === "POST") {
+      const {
+        userId,
+        weight_kg,
+        body_fat_percent,
+        lean_mass_kg,
+        body_water_percent,
+        muscle_mass_kg,
+        recorded_at,
+      } = req.body;
+      if (!userId)
+        return res.status(400).json({ error: "userId obbligatorio" });
+
+      const { rows } = await sql`
+        INSERT INTO body_parameters (user_id, weight_kg, body_fat_percent, lean_mass_kg, body_water_percent, muscle_mass_kg, recorded_at)
+        VALUES (${userId}, ${weight_kg || null}, ${body_fat_percent || null}, ${lean_mass_kg || null}, ${body_water_percent || null}, ${muscle_mass_kg || null}, ${recorded_at || new Date().toISOString().slice(0, 10)})
+        RETURNING id, weight_kg, body_fat_percent, lean_mass_kg, body_water_percent, muscle_mass_kg, to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
+      `;
+      return res.status(201).json(rows[0]);
+    }
+
+    if (req.method === "DELETE") {
+      const { id } = req.query;
+      await sql`DELETE FROM body_parameters WHERE id = ${id}`;
+      return res.status(200).json({ success: true });
+    }
+
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
   // GET — lista utenti con stato abbonamento
   if (req.method === "GET") {
     const currentYear = new Date().getFullYear();
