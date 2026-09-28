@@ -440,10 +440,12 @@ export default function AdminPage() {
   const [newBodyParam, setNewBodyParam] = useState({
     weight_kg: "",
     body_fat_percent: "",
+    visceral_fat_percent: "",
     body_water_percent: "",
     muscle_mass_kg: "",
     waist_cm: "",
     chest_cm: "",
+    thigh_cm: "",
   });
   const [editEntries, setEditEntries] = useState({
     total: 0,
@@ -491,10 +493,12 @@ export default function AdminPage() {
     setNewBodyParam({
       weight_kg: "",
       body_fat_percent: "",
+      visceral_fat_percent: "",
       body_water_percent: "",
       muscle_mass_kg: "",
       waist_cm: "",
       chest_cm: "",
+      thigh_cm: "",
     });
     openBodyParams(bodyParamsUser);
   };
@@ -1056,6 +1060,23 @@ export default function AdminPage() {
                       borderRadius: 8,
                     }}
                   />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Grasso viscerale (%)"
+                    value={newBodyParam.visceral_fat_percent}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        visceral_fat_percent: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
 
                   <input
                     type="number"
@@ -1117,6 +1138,23 @@ export default function AdminPage() {
                       setNewBodyParam((s) => ({
                         ...s,
                         chest_cm: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Circonferenza coscia (cm)"
+                    value={newBodyParam.thigh_cm}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        thigh_cm: e.target.value,
                       }))
                     }
                     style={{

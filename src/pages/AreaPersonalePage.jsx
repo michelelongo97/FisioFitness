@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getUser, getToken, logout } from "../lib/auth";
 import { EXERCISES, CATEGORIES } from "../lib/exercises";
 import { useNavigate, Link } from "react-router-dom";
@@ -25,11 +25,15 @@ function formatParam(value, suffix = "") {
 const BODY_FIELDS = [
   { key: "weight_kg", label: "Peso (kg)", suffix: "" },
   { key: "body_fat_percent", label: "Massa grassa", suffix: "%" },
+  { key: "visceral_fat_percent", label: "Grasso viscerale", suffix: "%" },
   { key: "body_water_percent", label: "Acqua corporea", suffix: "%" },
   { key: "muscle_mass_kg", label: "Massa muscolare (kg)", suffix: "" },
   { key: "waist_cm", label: "Vita (cm)", suffix: "" },
   { key: "chest_cm", label: "Torace (cm)", suffix: "" },
+  { key: "thigh_cm", label: "Coscia (cm)", suffix: "" },
 ];
+
+const BODY_GAP = 16; // deve coincidere con il gap del CSS
 
 export default function AreaPersonalePage() {
   const statusLabels = {
@@ -45,6 +49,8 @@ export default function AreaPersonalePage() {
 
   const [maxLifts, setMaxLifts] = useState([]);
   const [bodyParams, setBodyParams] = useState([]);
+  const [bodyIndex, setBodyIndex] = useState(0);
+  const bodyTrackRef = useRef(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [liftForm, setLiftForm] = useState({ weight: "", reps: "" });
   const [selectedCategory, setSelectedCategory] = useState("gambe");
@@ -206,6 +212,66 @@ export default function AreaPersonalePage() {
     (b) => b.status !== "confirmed" || new Date(`${b.date}T${b.time}`) < now,
   );
 
+  const handleBodyScroll = (e) => {
+    const el = e.currentTarget;
+    setBodyIndex(Math.round(el.scrollLeft / (el.clientWidth + BODY_GAP)));
+  };
+
+  const goToBodySlide = (i) => {
+    const el = bodyTrackRef.current;
+    if (el) {
+      el.scrollTo({
+        left: i * (el.clientWidth + BODY_GAP),
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const renderBodyCard = (m, index) => (
+    <div
+      key={m ? m.id : "locked"}
+      className={`membership-card body-slide ${!m ? "body-params-locked" : ""}`}
+    >
+      {!m && (
+        <div className="body-params-locked-overlay">
+          <p>Prova la bilancia BIA in studio</p>
+        </div>
+      )}
+
+      <div className="membership-card-header">
+        <img
+          src="/images/logos/logo.png"
+          alt="FisioFitness"
+          className="membership-logo"
+        />
+      </div>
+
+      <div className="membership-card-body">
+        <div className="body-params-grid">
+          {BODY_FIELDS.map((f) => (
+            <div key={f.key} className="body-param-item">
+              <span className="body-param-value">
+                {m ? formatParam(m[f.key], f.suffix) : "--"}
+              </span>
+              <span className="body-param-label">{f.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="membership-card-footer body-params-footer">
+        <span className="membership-holder">{user?.name}</span>
+        <span className="body-params-date">
+          {m
+            ? `${index === 0 ? "Ultima misurazione" : "Misurazione del"}: ${new Date(
+                m.recorded_at + "T00:00:00",
+              ).toLocaleDateString("it-IT")}`
+            : "Nessuna misurazione"}
+        </span>
+      </div>
+    </div>
+  );
+
   return (
     <div className="personal-page">
       <div className="personal-container">
@@ -321,50 +387,50 @@ export default function AreaPersonalePage() {
               I tuoi parametri corporei
             </h3>
 
-            <div
-              className={`membership-card ${bodyParams.length === 0 ? "body-params-locked" : ""}`}
-              style={{ marginBottom: 32 }}
-            >
-              {bodyParams.length === 0 && (
-                <div className="body-params-locked-overlay">
-                  <p>Prova la bilancia BIA in studio</p>
+            {bodyParams.length === 0 ? (
+              <div style={{ marginBottom: 32 }}>{renderBodyCard(null, 0)}</div>
+            ) : (
+              <div style={{ marginBottom: 32 }}>
+                <div
+                  className="body-carousel-track"
+                  ref={bodyTrackRef}
+                  onScroll={handleBodyScroll}
+                >
+                  {bodyParams.map((m, i) => renderBodyCard(m, i))}
                 </div>
-              )}
 
-              <div className="membership-card-header">
-                <img
-                  src="/images/logos/logo.png"
-                  alt="FisioFitness"
-                  className="membership-logo"
-                />
-              </div>
-
-              <div className="membership-card-body">
-                <div className="body-params-grid">
-                  {BODY_FIELDS.map((f) => (
-                    <div key={f.key} className="body-param-item">
-                      <span className="body-param-value">
-                        {bodyParams.length > 0
-                          ? formatParam(bodyParams[0][f.key], f.suffix)
-                          : "--"}
+                {bodyParams.length > 1 && (
+                  <>
+                    <div className="body-carousel-nav">
+                      <button
+                        type="button"
+                        className="body-nav-btn"
+                        aria-label="Misurazione più recente"
+                        disabled={bodyIndex === 0}
+                        onClick={() => goToBodySlide(bodyIndex - 1)}
+                      >
+                        ‹
+                      </button>
+                      <span className="body-carousel-count">
+                        {bodyIndex + 1} / {bodyParams.length}
                       </span>
-                      <span className="body-param-label">{f.label}</span>
+                      <button
+                        type="button"
+                        className="body-nav-btn"
+                        aria-label="Misurazione precedente"
+                        disabled={bodyIndex >= bodyParams.length - 1}
+                        onClick={() => goToBodySlide(bodyIndex + 1)}
+                      >
+                        ›
+                      </button>
                     </div>
-                  ))}
-                </div>
+                    <span className="body-carousel-hint">
+                      Scorri per vedere le misurazioni precedenti
+                    </span>
+                  </>
+                )}
               </div>
-
-              <div className="membership-card-footer body-params-footer">
-                <span className="membership-holder">{user?.name}</span>
-                <span className="body-params-date">
-                  {bodyParams.length > 0
-                    ? `Ultima misurazione: ${new Date(
-                        bodyParams[0].recorded_at + "T00:00:00",
-                      ).toLocaleDateString("it-IT")}`
-                    : "Nessuna misurazione"}
-                </span>
-              </div>
-            </div>
+            )}
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               I tuoi massimali
             </h3>

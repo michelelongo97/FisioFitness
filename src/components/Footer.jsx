@@ -4,6 +4,11 @@ import {
   faFacebook,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import {
+  faPhone,
+  faEnvelope,
+  faMapLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { reopenBanner } from "../lib/cookieConsent";
 
@@ -48,7 +53,7 @@ export default function Footer() {
             <h4>Contatti</h4>
 
             <p>
-              e-mail:{" "}
+              <FontAwesomeIcon icon={faEnvelope} />{" "}
               <a
                 href={`mailto:${import.meta.env.VITE_EMAIL}`}
                 className="footer-link"
@@ -58,7 +63,7 @@ export default function Footer() {
             </p>
 
             <p>
-              Tel:{" "}
+              <FontAwesomeIcon icon={faPhone} />{" "}
               <a
                 href={`tel:${import.meta.env.VITE_TEL}`}
                 className="footer-link"
@@ -66,11 +71,18 @@ export default function Footer() {
                 +39 {import.meta.env.VITE_TEL}
               </a>
             </p>
-            <p>
-              Via Palermo, 26
+
+            <a
+              href={`${import.meta.env.VITE_MAPS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              {" "}
+              <FontAwesomeIcon icon={faMapLocationDot} /> Via Palermo, 26
               <br />
               Gravina in Puglia (BA)
-            </p>
+            </a>
           </div>
 
           {/* INFO */}
@@ -110,7 +122,10 @@ export default function Footer() {
           </div>
           <div className="footer-bottom-copy">
             © 2024 - {new Date().getFullYear()} FisioFitness | Tutti i diritti
-            riservati
+            riservati | Sito web realizzato da{" "}
+            <a href="https://longomichele.it" target="_blank">
+              Michele Longo
+            </a>
           </div>
         </div>
       </div>

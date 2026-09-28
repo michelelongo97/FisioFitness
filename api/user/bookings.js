@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   if (isBody) {
     if (req.method === "GET") {
       const { rows } = await sql`
-  SELECT id, weight_kg, body_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm,
+  SELECT id, weight_kg, body_fat_percent, visceral_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm, thigh_cm,
     to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
   FROM body_parameters
   WHERE user_id = ${userId}
