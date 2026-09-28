@@ -440,9 +440,10 @@ export default function AdminPage() {
   const [newBodyParam, setNewBodyParam] = useState({
     weight_kg: "",
     body_fat_percent: "",
-    lean_mass_kg: "",
     body_water_percent: "",
     muscle_mass_kg: "",
+    waist_cm: "",
+    chest_cm: "",
   });
   const [editEntries, setEditEntries] = useState({
     total: 0,
@@ -477,9 +478,10 @@ export default function AdminPage() {
     setNewBodyParam({
       weight_kg: "",
       body_fat_percent: "",
-      lean_mass_kg: "",
       body_water_percent: "",
       muscle_mass_kg: "",
+      waist_cm: "",
+      chest_cm: "",
     });
     openBodyParams(bodyParamsUser);
   };
@@ -1041,23 +1043,7 @@ export default function AdminPage() {
                       borderRadius: 8,
                     }}
                   />
-                  <input
-                    type="number"
-                    step="0.1"
-                    placeholder="Massa magra (kg)"
-                    value={newBodyParam.lean_mass_kg}
-                    onChange={(e) =>
-                      setNewBodyParam((s) => ({
-                        ...s,
-                        lean_mass_kg: e.target.value,
-                      }))
-                    }
-                    style={{
-                      padding: 10,
-                      border: "1.5px solid #ddd",
-                      borderRadius: 8,
-                    }}
-                  />
+
                   <input
                     type="number"
                     step="0.1"
@@ -1084,6 +1070,40 @@ export default function AdminPage() {
                       setNewBodyParam((s) => ({
                         ...s,
                         muscle_mass_kg: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Circonferenza vita (cm)"
+                    value={newBodyParam.waist_cm}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        waist_cm: e.target.value,
+                      }))
+                    }
+                    style={{
+                      padding: 10,
+                      border: "1.5px solid #ddd",
+                      borderRadius: 8,
+                    }}
+                  />
+                  <input
+                    type="number"
+                    step="0.1"
+                    placeholder="Circonferenza toracica (cm)"
+                    value={newBodyParam.chest_cm}
+                    onChange={(e) =>
+                      setNewBodyParam((s) => ({
+                        ...s,
+                        chest_cm: e.target.value,
                       }))
                     }
                     style={{
@@ -1134,7 +1154,10 @@ export default function AdminPage() {
                             ).toLocaleDateString("it-IT")}
                           </span>
                           <span>
-                            {b.weight_kg}kg · {b.body_fat_percent}% grasso
+                            {b.weight_kg ? `${Number(b.weight_kg)}kg` : "--"} ·{" "}
+                            {b.body_fat_percent
+                              ? `${Number(b.body_fat_percent)}% grasso`
+                              : "--"}
                           </span>
                           <button
                             className="lift-delete-btn"

@@ -17,6 +17,11 @@ function formatBookingDate(dateStr) {
   return { weekday, day, month };
 }
 
+function formatParam(value, suffix = "") {
+  if (value === null || value === undefined || value === "") return "--";
+  return `${Number(value)}${suffix}`;
+}
+
 export default function AreaPersonalePage() {
   const statusLabels = {
     attended: "Presente",
@@ -312,35 +317,41 @@ export default function AreaPersonalePage() {
                 <div className="body-params-grid">
                   <div className="body-param-item">
                     <span className="body-param-value">
-                      {bodyParams[0].weight_kg}
+                      {formatParam(bodyParams[0].weight_kg)}
                     </span>
                     <span className="body-param-label">Peso (kg)</span>
                   </div>
                   <div className="body-param-item">
                     <span className="body-param-value">
-                      {bodyParams[0].body_fat_percent}%
+                      {formatParam(bodyParams[0].body_fat_percent, "%")}
                     </span>
                     <span className="body-param-label">Massa grassa</span>
                   </div>
                   <div className="body-param-item">
                     <span className="body-param-value">
-                      {bodyParams[0].lean_mass_kg}
-                    </span>
-                    <span className="body-param-label">Massa magra (kg)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {bodyParams[0].body_water_percent}%
+                      {formatParam(bodyParams[0].body_water_percent, "%")}
                     </span>
                     <span className="body-param-label">Acqua corporea</span>
                   </div>
                   <div className="body-param-item">
                     <span className="body-param-value">
-                      {bodyParams[0].muscle_mass_kg}
+                      {formatParam(bodyParams[0].muscle_mass_kg)}
                     </span>
                     <span className="body-param-label">
                       Massa muscolare (kg)
                     </span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {formatParam(bodyParams[0].waist_cm)}
+                    </span>
+                    <span className="body-param-label">Vita (cm)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">
+                      {formatParam(bodyParams[0].chest_cm)}
+                    </span>
+                    <span className="body-param-label">Torace (cm)</span>
                   </div>
                 </div>
                 <span
@@ -373,10 +384,6 @@ export default function AreaPersonalePage() {
                   </div>
                   <div className="body-param-item">
                     <span className="body-param-value">--</span>
-                    <span className="body-param-label">Massa magra (kg)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
                     <span className="body-param-label">Acqua corporea</span>
                   </div>
                   <div className="body-param-item">
@@ -384,6 +391,14 @@ export default function AreaPersonalePage() {
                     <span className="body-param-label">
                       Massa muscolare (kg)
                     </span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Vita (cm)</span>
+                  </div>
+                  <div className="body-param-item">
+                    <span className="body-param-value">--</span>
+                    <span className="body-param-label">Torace (cm)</span>
                   </div>
                 </div>
               </div>
