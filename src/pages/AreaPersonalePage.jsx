@@ -303,26 +303,6 @@ export default function AreaPersonalePage() {
               </div>
             )}
 
-            {past.length > 0 && (
-              <>
-                <h3 style={{ color: "#146272", marginBottom: 16 }}>Storico</h3>
-                <div className="slots-list" style={{ marginBottom: 32 }}>
-                  {past.map((b) => (
-                    <div key={b.id} className="slot-item inactive">
-                      <span>
-                        {new Date(b.date + "T00:00:00").toLocaleDateString(
-                          "it-IT",
-                        )}{" "}
-                        alle {b.time.slice(0, 5)}
-                      </span>
-                      <span className="slot-count">
-                        {statusLabels[b.status] || b.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               I tuoi parametri corporei
             </h3>
@@ -561,6 +541,25 @@ export default function AreaPersonalePage() {
                 </div>
               </div>
             )}
+          </>
+        )}
+
+        {past.length > 0 && (
+          <>
+            <h3 style={{ color: "#146272", marginBottom: 16 }}>Storico</h3>
+            <div className="slots-list" style={{ marginBottom: 32 }}>
+              {past.map((b) => (
+                <div key={b.id} className="slot-item inactive">
+                  <span>
+                    {new Date(b.date + "T00:00:00").toLocaleDateString("it-IT")}{" "}
+                    alle {b.time.slice(0, 5)}
+                  </span>
+                  <span className="slot-count">
+                    {statusLabels[b.status] || b.status}
+                  </span>
+                </div>
+              ))}
+            </div>
           </>
         )}
 
