@@ -470,11 +470,24 @@ export default function AdminPage() {
   };
 
   const saveBodyParam = async () => {
-    await fetch("/api/admin/users?resource=body-params", {
+    const hasValue = Object.values(newBodyParam).some((v) => v !== "");
+    if (!hasValue) {
+      alert("Inserisci almeno un valore");
+      return;
+    }
+
+    const res = await fetch("/api/admin/users?resource=body-params", {
       method: "POST",
       headers,
       body: JSON.stringify({ userId: bodyParamsUser.id, ...newBodyParam }),
     });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || `Errore nel salvataggio (${res.status})`);
+      return;
+    }
+
     setNewBodyParam({
       weight_kg: "",
       body_fat_percent: "",

@@ -47,12 +47,17 @@ export default async function handler(req, res) {
       if (!userId)
         return res.status(400).json({ error: "userId obbligatorio" });
 
-      const { rows } = await sql`
-    INSERT INTO body_parameters (user_id, weight_kg, body_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm, recorded_at)
-    VALUES (${userId}, ${weight_kg || null}, ${body_fat_percent || null}, ${body_water_percent || null}, ${muscle_mass_kg || null}, ${waist_cm || null}, ${chest_cm || null}, ${recorded_at || new Date().toISOString().slice(0, 10)})
-    RETURNING id, weight_kg, body_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm, to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
-  `;
-      return res.status(201).json(rows[0]);
+      try {
+        const { rows } = await sql`
+      INSERT INTO body_parameters (user_id, weight_kg, body_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm, recorded_at)
+      VALUES (${userId}, ${weight_kg || null}, ${body_fat_percent || null}, ${body_water_percent || null}, ${muscle_mass_kg || null}, ${waist_cm || null}, ${chest_cm || null}, ${recorded_at || new Date().toISOString().slice(0, 10)})
+      RETURNING id, weight_kg, body_fat_percent, body_water_percent, muscle_mass_kg, waist_cm, chest_cm, to_char(recorded_at, 'YYYY-MM-DD') as recorded_at
+    `;
+        return res.status(201).json(rows[0]);
+      } catch (err) {
+        console.error("Errore inserimento parametri corporei:", err);
+        return res.status(500).json({ error: err.message });
+      }
     }
 
     if (req.method === "DELETE") {
