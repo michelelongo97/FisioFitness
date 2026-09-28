@@ -1011,7 +1011,7 @@ export default function AdminPage() {
             >
               <div className="modal-box" onClick={(e) => e.stopPropagation()}>
                 <h3 style={{ color: "#146272", marginBottom: 16 }}>
-                  Parametri corporei — {bodyParamsUser.name}
+                  Parametri corporei di: {bodyParamsUser.name}
                 </h3>
 
                 <div

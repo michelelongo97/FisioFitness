@@ -22,6 +22,15 @@ function formatParam(value, suffix = "") {
   return `${Number(value)}${suffix}`;
 }
 
+const BODY_FIELDS = [
+  { key: "weight_kg", label: "Peso (kg)", suffix: "" },
+  { key: "body_fat_percent", label: "Massa grassa", suffix: "%" },
+  { key: "body_water_percent", label: "Acqua corporea", suffix: "%" },
+  { key: "muscle_mass_kg", label: "Massa muscolare (kg)", suffix: "" },
+  { key: "waist_cm", label: "Vita (cm)", suffix: "" },
+  { key: "chest_cm", label: "Torace (cm)", suffix: "" },
+];
+
 export default function AreaPersonalePage() {
   const statusLabels = {
     attended: "Presente",
@@ -312,97 +321,50 @@ export default function AreaPersonalePage() {
               I tuoi parametri corporei
             </h3>
 
-            {bodyParams.length > 0 ? (
-              <div className="body-params-card" style={{ marginBottom: 32 }}>
-                <div className="body-params-grid">
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].weight_kg)}
-                    </span>
-                    <span className="body-param-label">Peso (kg)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].body_fat_percent, "%")}
-                    </span>
-                    <span className="body-param-label">Massa grassa</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].body_water_percent, "%")}
-                    </span>
-                    <span className="body-param-label">Acqua corporea</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].muscle_mass_kg)}
-                    </span>
-                    <span className="body-param-label">
-                      Massa muscolare (kg)
-                    </span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].waist_cm)}
-                    </span>
-                    <span className="body-param-label">Vita (cm)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">
-                      {formatParam(bodyParams[0].chest_cm)}
-                    </span>
-                    <span className="body-param-label">Torace (cm)</span>
-                  </div>
-                </div>
-                <span
-                  style={{
-                    fontSize: 12,
-                    color: "#888",
-                    marginTop: 12,
-                    display: "block",
-                  }}
-                >
-                  Ultima misurazione:{" "}
-                  {new Date(
-                    bodyParams[0].recorded_at + "T00:00:00",
-                  ).toLocaleDateString("it-IT")}
-                </span>
-              </div>
-            ) : (
-              <div className="body-params-locked" style={{ marginBottom: 32 }}>
+            <div
+              className={`membership-card ${bodyParams.length === 0 ? "body-params-locked" : ""}`}
+              style={{ marginBottom: 32 }}
+            >
+              {bodyParams.length === 0 && (
                 <div className="body-params-locked-overlay">
                   <p>Prova la bilancia BIA in studio</p>
                 </div>
+              )}
+
+              <div className="membership-card-header">
+                <img
+                  src="/images/logos/logo.png"
+                  alt="FisioFitness"
+                  className="membership-logo"
+                />
+              </div>
+
+              <div className="membership-card-body">
                 <div className="body-params-grid">
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">Peso (kg)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">Massa grassa</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">Acqua corporea</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">
-                      Massa muscolare (kg)
-                    </span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">Vita (cm)</span>
-                  </div>
-                  <div className="body-param-item">
-                    <span className="body-param-value">--</span>
-                    <span className="body-param-label">Torace (cm)</span>
-                  </div>
+                  {BODY_FIELDS.map((f) => (
+                    <div key={f.key} className="body-param-item">
+                      <span className="body-param-value">
+                        {bodyParams.length > 0
+                          ? formatParam(bodyParams[0][f.key], f.suffix)
+                          : "--"}
+                      </span>
+                      <span className="body-param-label">{f.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
+
+              <div className="membership-card-footer body-params-footer">
+                <span className="membership-holder">{user?.name}</span>
+                <span className="body-params-date">
+                  {bodyParams.length > 0
+                    ? `Ultima misurazione: ${new Date(
+                        bodyParams[0].recorded_at + "T00:00:00",
+                      ).toLocaleDateString("it-IT")}`
+                    : "Nessuna misurazione"}
+                </span>
+              </div>
+            </div>
             <h3 style={{ color: "#146272", marginBottom: 16 }}>
               I tuoi massimali
             </h3>

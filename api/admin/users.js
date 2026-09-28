@@ -56,7 +56,17 @@ export default async function handler(req, res) {
         return res.status(201).json(rows[0]);
       } catch (err) {
         console.error("Errore inserimento parametri corporei:", err);
-        return res.status(500).json({ error: err.message });
+        if (err.code === "22003") {
+          return res
+            .status(400)
+            .json({
+              error:
+                "Uno dei valori inseriti è fuori scala, ricontrolla i numeri",
+            });
+        }
+        return res
+          .status(500)
+          .json({ error: "Errore nel salvataggio della misurazione" });
       }
     }
 
