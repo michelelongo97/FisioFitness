@@ -55,30 +55,53 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* BIO */}
+        {/* BIO + STORYTIME */}
         <section className="chi-section">
           <div className="chi-container">
-            <div className="chi-feature-card">
-              <h3>Chi Sono</h3>
-              <p>
-                Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e
-                sono un
-                <strong> FISIOTERAPISTA</strong> specializzato in
-                <strong>
-                  {" "}
-                  Riabilitazione dei Disordini Muscolo-Scheletrici
-                </strong>
-                .
-                <br /> Il mio obiettivo è aiutare le persone a recuperare il
-                benessere fisico e migliorare la qualità della vita attraverso
-                percorsi terapeutici basati su evidenze scientifiche. <br />
-                Affianco all'attività clinica di{" "}
-                <strong>Fisioterapista </strong>
-                quella di
-                <strong> Personal Trainer certificato Project Invictus</strong>,
-                per offrire un approccio completo che unisca riabilitazione e
-                allenamento.
-              </p>
+            <div className="chi-feature-card chi-bio-radio-card">
+              <div className="chi-bio-radio-text">
+                <h3>Chi Sono</h3>
+                <p>
+                  Mi chiamo <strong>Costantino Picciallo</strong>, ho 28 anni e
+                  sono un
+                  <strong> FISIOTERAPISTA</strong> specializzato in
+                  <strong>
+                    {" "}
+                    Riabilitazione dei Disordini Muscolo-Scheletrici
+                  </strong>
+                  .
+                  <br /> Il mio obiettivo è aiutare le persone a recuperare il
+                  benessere fisico e migliorare la qualità della vita attraverso
+                  percorsi terapeutici basati su evidenze scientifiche. <br />
+                  Affianco all'attività clinica di{" "}
+                  <strong>Fisioterapista </strong>
+                  quella di
+                  <strong>
+                    {" "}
+                    Personal Trainer certificato Project Invictus
+                  </strong>
+                  , per offrire un approccio completo che unisca riabilitazione
+                  e allenamento.
+                </p>
+              </div>
+
+              <div className="chi-bio-radio-video">
+                <video
+                  src="/videos/radio-storytime.mp4"
+                  poster="/videos/radio-storytime-poster.jpg"
+                  controls
+                  playsInline
+                  preload="metadata"
+                />
+                <a
+                  href="https://www.instagram.com/p/Dd8p-y-Mb8U/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="chi-radio-link"
+                >
+                  Guarda il reel su Instagram
+                </a>
+              </div>
             </div>
           </div>
         </section>

@@ -2407,3 +2407,53 @@ body {
   color: #888;
   margin-top: 6px;
 }
+/* RADIO STORYTIME */
+
+.chi-radio-link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #146272;
+  text-decoration: none;
+  border-bottom: 2px solid #146272;
+  padding-bottom: 2px;
+}
+.chi-radio-link:hover {
+  opacity: 0.75;
+}
+.chi-bio-radio-card {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+.chi-bio-radio-text {
+  flex: 1;
+}
+.chi-bio-radio-video {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.chi-bio-radio-video video {
+  width: 300px;
+  aspect-ratio: 13 / 16;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(20, 98, 114, 0.15);
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .chi-bio-radio-card {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .chi-bio-radio-video {
+    flex: 0 0 auto;
+    width: 200px;
+  }
+}
