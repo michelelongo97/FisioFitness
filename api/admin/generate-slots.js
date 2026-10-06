@@ -20,10 +20,10 @@ const WEEKDAY_TIMES = [
   "15:00:00",
   "15:45:00",
   "16:30:00",
-  "17:15:00",
-  "18:00:00",
-  "18:45:00",
-  "19:30:00",
+  "17:30:00",
+  "18:30:00",
+  "19:15:00",
+  "20:00:00",
 ];
 
 const SATURDAY_TIMES = [
@@ -36,7 +36,7 @@ const SATURDAY_TIMES = [
 
 // Corso: lunedì(1), martedì(2), giovedì(4), venerdì(5)
 const COURSE_DAYS = [1, 2, 4, 5];
-const COURSE_TIMES = ["08:30:00", "17:30:00", "18:30:00"];
+const COURSE_TIMES = ["08:30:00"];
 
 export default async function handler(req, res) {
   if (!checkAuth(req, res)) return;

@@ -596,8 +596,8 @@ export default function AdminPage() {
   const generateSlots = async (type = "normal") => {
     const confirmMsg =
       type === "course"
-        ? "Generare gli slot del corso per le prossime 4 settimane? (Lun/Mar/Gio/Ven — 8:30, 17:30, 18:30)"
-        : "Generare gli slot standard per le prossime 4 settimane? (Lun-Ven 9-19, Sab 9-13, ogni 45 min)";
+        ? "Generare gli slot del corso per le prossime 4 settimane? (Lun/Mar/Gio/Ven alle 8:30)"
+        : "Generare gli slot standard per le prossime 4 settimane? (Lun-Ven 8.15-20-00, Sab 9-13, ogni 45 min)";
 
     if (!confirm(confirmMsg)) return;
 
