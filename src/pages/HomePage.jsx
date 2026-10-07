@@ -78,7 +78,7 @@ export default function HomePage() {
                   quella di
                   <strong>
                     {" "}
-                    Personal Trainer certificato Project Invictus
+                    Personal Trainer Certificato Project Invictus
                   </strong>
                   , per offrire un approccio completo che unisca riabilitazione
                   e allenamento.
