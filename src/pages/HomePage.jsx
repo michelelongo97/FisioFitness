@@ -48,7 +48,7 @@ export default function HomePage() {
 
                 <li>
                   <FontAwesomeIcon icon={faStaffSnake} /> Postural Trainer
-                  certificato Project Invictus
+                  Certificato Project Invictus
                 </li>
               </ul>
             </div>
