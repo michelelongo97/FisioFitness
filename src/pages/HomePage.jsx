@@ -48,7 +48,7 @@ export default function HomePage() {
 
                 <li>
                   <FontAwesomeIcon icon={faStaffSnake} /> Postural Trainer
-                  certificato Project Invicutus
+                  certificato Project Invictus
                 </li>
               </ul>
             </div>
@@ -115,22 +115,34 @@ export default function HomePage() {
               <div className="chi-service">
                 <h4>Terapia Manuale</h4>
                 <p>
-                  Trattamenti mirati per ridurre il dolore e migliorare la
-                  mobilità articolare.
+                  La terapia manuale può aiutarti a gestire il dolore e
+                  migliorare la mobilità. Utilizzo le tecniche più adatte alle
+                  tue esigenze all'interno di un percorso che comprende anche il
+                  movimento e l'esercizio, per accompagnarti nel ritorno alle
+                  tue attività.
                 </p>
               </div>
 
               <div className="chi-service">
                 <h4>Esercizio Terapeutico</h4>
                 <p>
-                  Programmi di esercizio personalizzati per il recupero
-                  funzionale.
+                  Il movimento diventa parte della cura. Attraverso esercizi
+                  personalizzati e progressivi ti aiuto a recuperare forza,
+                  mobilità e fiducia nel tuo corpo. Il percorso parte dalle tue
+                  capacità attuali e si sviluppa in base alle attività
+                  quotidiane, lavorative o sportive che vuoi tornare a svolgere.
                 </p>
               </div>
 
               <div className="chi-service">
                 <h4>Riabilitazione Ortopedica</h4>
-                <p>Percorsi post-infortunio e post-chirurgici su misura.</p>
+                <p>
+                  Dopo un infortunio o un intervento chirurgico, ti accompagno
+                  in un percorso di recupero costruito sulle tue esigenze e sui
+                  tempi di guarigione. Lavoriamo sul movimento, sulla forza e
+                  sulle capacità necessarie per tornare alle tue attività con
+                  maggiore sicurezza e autonomia.
+                </p>
               </div>
 
               <div className="chi-service">
@@ -142,7 +154,14 @@ export default function HomePage() {
 
               <div className="chi-service">
                 <h4>Allenamento Personalizzato</h4>
-                <p>Integrazione tra riabilitazione e performance fisica.</p>
+                <p>
+                  Un programma di allenamento costruito sulle tue
+                  caratteristiche, sui tuoi obiettivi e sul tuo livello di
+                  partenza. Per migliorare la forza e la forma fisica, oppure
+                  proseguire dopo la riabilitazione. Ti seguo nella scelta degli
+                  esercizi e nella progressione dei carichi, adattando il lavoro
+                  ai tuoi progressi.
+                </p>
               </div>
             </div>
           </div>
@@ -184,13 +203,34 @@ export default function HomePage() {
             <div className="chi-feature-card">
               <h3>Studio & Palestra</h3>
               <p>
-                Lo studio è uno spazio dedicato alla fisioterapia e
-                all'allenamento personalizzato, dove il movimento diventa parte
-                integrante del percorso di recupero.
+                <strong>FISIOFITNESS</strong> è uno spazio in cui fisioterapia e
+                allenamento si incontrano per aiutarti a recuperare il
+                movimento, costruire forza e migliorare la tua forma fisica.
               </p>
               <p>
-                Un ambiente professionale pensato per offrire continuità tra
-                cura, prevenzione e performance fisica.
+                Lo studio e la palestra permettono di dare continuità al tuo
+                percorso: dalla gestione del dolore e dalle prime fasi della
+                riabilitazione fino al ritorno alle attività quotidiane, allo
+                sport e all'allenamento. E se il tuo obiettivo è migliorare la
+                forma fisica, puoi iniziare un programma personalizzato sulle
+                tue capacità e sulle tue esigenze.
+              </p>
+              <p>
+                Ogni percorso parte dall'ascolto e dalla valutazione. La scelta
+                degli esercizi, la progressione dei carichi e gli obiettivi
+                vengono adattati al tuo livello di partenza e aggiornati in base
+                ai tuoi progressi.
+              </p>
+              <p>
+                Durante le sedute ti accompagno anche nella comprensione del
+                lavoro che svolgiamo, perché sapere come muoverti e come gestire
+                l'esercizio ti aiuta a diventare più autonomo.
+              </p>
+              <p>
+                Un ambiente pensato per prenderti cura del tuo corpo e
+                sviluppare le capacità necessarie per ciò che conta nella tua
+                vita: lavorare, praticare sport, coltivare le tue passioni e
+                sentirti più sicuro nel movimento.
               </p>
             </div>
           </div>
