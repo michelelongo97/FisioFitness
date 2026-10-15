@@ -2457,3 +2457,12 @@ body {
     width: 200px;
   }
 }
+.sm-slot-row.sm-slot-full {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: #f4f4f4;
+}
+.sm-slot-row.sm-slot-full .sm-slot-time {
+  background: #999;
+}

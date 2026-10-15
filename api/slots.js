@@ -9,18 +9,16 @@ export default async function handler(req, res) {
 
   try {
     const { rows } = await sql`
-      SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, 
-        s.max_bookings,
-        (SELECT COUNT(*) FROM bookings b 
-         WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
-      FROM slots s
-      WHERE s.is_active = true 
-        AND s.date >= CURRENT_DATE
-        AND s.type = ${type}
-        AND (SELECT COUNT(*) FROM bookings b 
-             WHERE b.slot_id = s.id AND b.status = 'confirmed') < s.max_bookings
-      ORDER BY s.date, s.time
-    `;
+  SELECT s.id, to_char(s.date, 'YYYY-MM-DD') as date, s.time, 
+    s.max_bookings,
+    (SELECT COUNT(*) FROM bookings b 
+     WHERE b.slot_id = s.id AND b.status = 'confirmed') as booked_count
+  FROM slots s
+  WHERE s.is_active = true 
+    AND s.date >= CURRENT_DATE
+    AND s.type = ${type}
+  ORDER BY s.date, s.time
+`;
     res.status(200).json(rows);
   } catch (err) {
     console.error(err);

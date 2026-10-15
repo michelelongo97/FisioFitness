@@ -135,13 +135,16 @@ export default function BookingPage({
               {currentSlots.map((slot) => {
                 const slotDateTime = new Date(`${slot.date}T${slot.time}`);
                 const isPast = slotDateTime < new Date();
+                const remaining = slot.max_bookings - Number(slot.booked_count);
+                const isFull = remaining <= 0;
+                const disabled = isPast || isFull;
 
                 return (
                   <button
                     key={slot.id}
-                    className={`sm-slot-row ${isPast ? "sm-slot-past" : ""}`}
-                    onClick={() => !isPast && setBooking(slot)}
-                    disabled={isPast}
+                    className={`sm-slot-row ${isPast ? "sm-slot-past" : ""} ${isFull && !isPast ? "sm-slot-full" : ""}`}
+                    onClick={() => !disabled && setBooking(slot)}
+                    disabled={disabled}
                     type="button"
                   >
                     <span className="sm-slot-time">
@@ -150,7 +153,7 @@ export default function BookingPage({
                     <span className="sm-slot-badge">
                       {isPast
                         ? "Non disponibile"
-                        : `${slot.max_bookings - slot.booked_count} / ${slot.max_bookings}`}
+                        : `${Math.max(remaining, 0)} / ${slot.max_bookings}`}
                     </span>
                   </button>
                 );
