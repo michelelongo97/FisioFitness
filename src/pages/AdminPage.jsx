@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import DatePickerField from "../components/DatePickerField";
 import TimePickerField from "../components/TimePickerField";
+import TrainerHoursTab from "../components/TrainerHoursTab";
 
 const statusLabels = {
   confirmed: "Confermata",
@@ -701,6 +702,14 @@ export default function AdminPage() {
         </button>
         {role === "full" && (
           <button
+            className={`tab-btn ${tab === "hours" ? "active" : ""}`}
+            onClick={() => setTab("hours")}
+          >
+            Ore PT
+          </button>
+        )}
+        {role === "full" && (
+          <button
             className={`tab-btn ${tab === "slots" ? "active" : ""}`}
             onClick={() => setTab("slots")}
           >
@@ -723,6 +732,11 @@ export default function AdminPage() {
           </button>
         )}
       </div>
+
+      {/* TAB ORE PT */}
+      {tab === "hours" && role === "full" && (
+        <TrainerHoursTab headers={headers} />
+      )}
 
       {/* TAB REELS */}
       {tab === "reels" && (

@@ -1,4 +1,5 @@
 import { sql } from "@vercel/postgres";
+import { handleTrainers } from "../../src/lib/trainers.js";
 import bcrypt from "bcryptjs";
 
 function checkAuth(req, res) {
@@ -77,6 +78,17 @@ export default async function handler(req, res) {
     }
 
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  // --- ORE PERSONAL TRAINER ---
+  if (
+    req.query.resource === "trainers" ||
+    req.query.resource === "work-hours"
+  ) {
+    if (role !== "full") {
+      return res.status(403).json({ error: "Accesso non consentito" });
+    }
+    return handleTrainers(req, res);
   }
 
   // GET — lista utenti con stato abbonamento
