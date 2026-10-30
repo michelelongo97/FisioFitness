@@ -2760,14 +2760,38 @@ body {
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 420px) {
+/* campo orario nativo: stessa larghezza degli altri campi su iPhone */
+.pt-input[type="time"] {
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* bottoni dentro la sezione Ore PT: niente margini/padding giganti */
+.pt-add-trainer .btn,
+.pt-trainer-row .btn,
+.pt-trainer-row .btn-danger,
+.pt-entry-actions .btn,
+.pt-entry-actions .btn-danger {
+  margin: 0;
+  padding: 12px 20px;
+  font-size: 15px;
+}
+
+.pt-add-trainer {
+  align-items: center;
+}
+
+@media (max-width: 520px) {
   .pt-card {
     padding: 14px 12px;
   }
+  .pt-form-grid,
   .pt-range {
     grid-template-columns: 1fr;
   }
   .pt-add-trainer {
     flex-direction: column;
+    align-items: stretch;
   }
 }
