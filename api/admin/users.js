@@ -85,9 +85,8 @@ export default async function handler(req, res) {
     req.query.resource === "trainers" ||
     req.query.resource === "work-hours"
   ) {
-    if (role !== "full") {
-      return res.status(403).json({ error: "Accesso non consentito" });
-    }
+    // sola lettura: la password readonly può solo consultare (GET).
+    // Le modifiche sono già bloccate più in alto con 403 per ogni metodo diverso da GET.
     return handleTrainers(req, res);
   }
 

@@ -700,14 +700,12 @@ export default function AdminPage() {
         >
           Prenotazioni
         </button>
-        {role === "full" && (
-          <button
-            className={`tab-btn ${tab === "hours" ? "active" : ""}`}
-            onClick={() => setTab("hours")}
-          >
-            Ore PT
-          </button>
-        )}
+        <button
+          className={`tab-btn ${tab === "hours" ? "active" : ""}`}
+          onClick={() => setTab("hours")}
+        >
+          Ore PT
+        </button>
         {role === "full" && (
           <button
             className={`tab-btn ${tab === "slots" ? "active" : ""}`}
@@ -734,8 +732,8 @@ export default function AdminPage() {
       </div>
 
       {/* TAB ORE PT */}
-      {tab === "hours" && role === "full" && (
-        <TrainerHoursTab headers={headers} />
+      {tab === "hours" && (
+        <TrainerHoursTab headers={headers} readOnly={role !== "full"} />
       )}
 
       {/* TAB REELS */}

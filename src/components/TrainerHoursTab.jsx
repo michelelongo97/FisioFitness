@@ -78,7 +78,8 @@ function formatDecimal(min) {
 }
 
 // ---------- componente ----------
-export default function TrainerHoursTab({ headers }) {
+// readOnly = true: solo consultazione (niente registrazione, modifica, eliminazione, gestione PT)
+export default function TrainerHoursTab({ headers, readOnly = false }) {
   const headersRef = useRef(headers);
   headersRef.current = headers;
 
@@ -130,7 +131,7 @@ export default function TrainerHoursTab({ headers }) {
     try {
       const data = await api("resource=trainers");
       setTrainers(data);
-      if (data.length === 0) setShowTrainers(true);
+      if (data.length === 0 && !readOnly) setShowTrainers(true);
     } catch (err) {
       alert(err.message);
     }
@@ -334,6 +335,7 @@ export default function TrainerHoursTab({ headers }) {
       {flash && <div className="pt-flash">{flash}</div>}
 
       {/* REGISTRA ORE */}
+      {!readOnly && (
       <form className="pt-card" onSubmit={saveEntry} ref={formRef}>
         <h3 className="pt-card-title">
           {editingId ? "Modifica registrazione" : "Registra ore"}
@@ -440,6 +442,7 @@ export default function TrainerHoursTab({ headers }) {
           )}
         </div>
       </form>
+      )}
 
       {/* RIEPILOGO */}
       <div className="pt-card">
@@ -565,6 +568,7 @@ export default function TrainerHoursTab({ headers }) {
                       </span>
                     </div>
                     {en.notes && <div className="pt-entry-notes">{en.notes}</div>}
+                    {!readOnly && (
                     <div className="pt-entry-actions">
                       <button
                         type="button"
@@ -581,6 +585,7 @@ export default function TrainerHoursTab({ headers }) {
                         Elimina
                       </button>
                     </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -590,6 +595,7 @@ export default function TrainerHoursTab({ headers }) {
       </div>
 
       {/* COLLABORATORI */}
+      {!readOnly && (
       <div className="pt-card">
         <button
           type="button"
@@ -648,6 +654,7 @@ export default function TrainerHoursTab({ headers }) {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }
