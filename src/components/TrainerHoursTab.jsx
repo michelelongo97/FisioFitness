@@ -37,21 +37,22 @@ function periodLabel(mode, anchor) {
       anchor.toLocaleDateString("it-IT", { month: "long", year: "numeric" }),
     );
   }
+  // settimana: "16 – 22 Novembre 2026" oppure "30 Novembre – 6 Dicembre 2026"
   const s = startOfWeek(anchor);
   const e = addDays(s, 6);
-  const a = s.toLocaleDateString("it-IT", { day: "numeric", month: "short" });
-  const b = e.toLocaleDateString("it-IT", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-  return `${a} – ${b}`;
+  const month = (d) => cap(d.toLocaleDateString("it-IT", { month: "long" }));
+  if (s.getMonth() === e.getMonth()) {
+    return `${s.getDate()} – ${e.getDate()} ${month(e)} ${e.getFullYear()}`;
+  }
+  return `${s.getDate()} ${month(s)} – ${e.getDate()} ${month(e)} ${e.getFullYear()}`;
 }
 
+// "Giovedì 19 Novembre" (giorno della settimana e mese per intero)
 function formatDay(iso) {
   const d = fromISO(iso);
-  const w = d.toLocaleDateString("it-IT", { weekday: "short" }).replace(".", "");
-  return `${cap(w)} ${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+  const w = d.toLocaleDateString("it-IT", { weekday: "long" });
+  const m = d.toLocaleDateString("it-IT", { month: "long" });
+  return `${cap(w)} ${d.getDate()} ${cap(m)}`;
 }
 
 // ---------- helper ore ----------
@@ -78,7 +79,7 @@ function formatDecimal(min) {
 }
 
 // ---------- componente ----------
-// readOnly = true: solo consultazione (niente registrazione, modifica, eliminazione, gestione PT)
+// readOnly = true: solo consultazione, vista settimanale a calendario
 export default function TrainerHoursTab({ headers, readOnly = false }) {
   const headersRef = useRef(headers);
   headersRef.current = headers;
@@ -96,7 +97,8 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [mode, setMode] = useState("month"); // week | month | range
+  const [mode, setMode] = useState(readOnly ? "week" : "month"); // week | month | range
+  const [selectedDay, setSelectedDay] = useState(null); // giorno scelto nella vista a calendario
   const [anchor, setAnchor] = useState(new Date());
   const [custom, setCustom] = useState({ from: todayISO, to: todayISO });
   const [filterTrainer, setFilterTrainer] = useState("all");
@@ -300,6 +302,9 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
 
   // ----- navigazione periodo -----
   const shiftPeriod = (dir) => {
+    if (mode === "week") {
+      setSelectedDay((d) => (d ? toISO(addDays(fromISO(d), 7 * dir)) : d));
+    }
     setAnchor((a) =>
       mode === "week"
         ? addDays(a, 7 * dir)
@@ -330,12 +335,206 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
   );
   const activeCount = trainers.filter((t) => t.is_active).length;
 
+  // ================= VISTA SOLA LETTURA: settimana a calendario =================
+  if (readOnly) {
+    const weekStart = startOfWeek(anchor);
+    const weekDays = Array.from({ length: 7 }, (_, i) =>
+      toISO(addDays(weekStart, i)),
+    );
+    const day = weekDays.includes(selectedDay)
+      ? selectedDay
+      : weekDays.includes(todayISO)
+        ? todayISO
+        : weekDays[0];
+    const daysWithHours = new Set(entries.map((en) => en.work_date));
+
+    // turni del giorno scelto, raggruppati per PT
+    const dayGroups = [];
+    entries
+      .filter((en) => en.work_date === day)
+      .forEach((en) => {
+        let g = dayGroups.find((x) => x.id === en.trainer_id);
+        if (!g) {
+          g = {
+            id: en.trainer_id,
+            name: en.trainer_name,
+            minutes: 0,
+            items: [],
+          };
+          dayGroups.push(g);
+        }
+        g.items.push(en);
+        g.minutes += Number(en.minutes);
+      });
+
+    const showsToday = weekDays.includes(todayISO);
+
+    return (
+      <div className="pt-wrap">
+        <div className="pt-card">
+          <h3 className="pt-card-title">Ore dei personal trainer</h3>
+
+          <div className="pt-period">
+            <button
+              type="button"
+              className="body-nav-btn"
+              aria-label="Settimana precedente"
+              onClick={() => shiftPeriod(-1)}
+            >
+              ‹
+            </button>
+            <span className="pt-period-label pt-upper">
+              {periodLabel("week", anchor)}
+            </span>
+            <button
+              type="button"
+              className="body-nav-btn"
+              aria-label="Settimana successiva"
+              onClick={() => shiftPeriod(1)}
+            >
+              ›
+            </button>
+          </div>
+
+          <div
+            className="pt-weekstrip"
+            role="tablist"
+            aria-label="Giorni della settimana"
+          >
+            {weekDays.map((iso) => {
+              const d = fromISO(iso);
+              const wd = d
+                .toLocaleDateString("it-IT", { weekday: "short" })
+                .replace(".", "");
+              return (
+                <button
+                  key={iso}
+                  type="button"
+                  role="tab"
+                  aria-selected={iso === day}
+                  className={`pt-weekday ${iso === day ? "active" : ""} ${iso === todayISO ? "today" : ""}`}
+                  onClick={() => setSelectedDay(iso)}
+                >
+                  <span className="pt-weekday-name">{wd}</span>
+                  <span className="pt-weekday-num">{d.getDate()}</span>
+                  <span
+                    className={`pt-weekday-dot ${daysWithHours.has(iso) ? "on" : ""}`}
+                    aria-hidden="true"
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          {!showsToday && (
+            <button
+              type="button"
+              className="wk-link pt-today-link"
+              onClick={() => {
+                setAnchor(new Date());
+                setSelectedDay(todayISO);
+              }}
+            >
+              Torna a questa settimana
+            </button>
+          )}
+
+          <label className="pt-field pt-field-full">
+            <span>Personal trainer</span>
+            <select
+              className="pt-input"
+              value={filterTrainer}
+              onChange={(e) => setFilterTrainer(e.target.value)}
+            >
+              <option value="all">Tutti i PT</option>
+              {trainers.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.name}
+                  {!t.is_active ? " (non attivo)" : ""}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        {/* GIORNO SCELTO */}
+        <div className="pt-card">
+          <h3 className="pt-card-title pt-upper">{formatDay(day)}</h3>
+          {loading ? (
+            <p className="pt-empty">Caricamento…</p>
+          ) : dayGroups.length === 0 ? (
+            <p className="pt-empty">
+              Nessun turno registrato in questo giorno.
+            </p>
+          ) : (
+            dayGroups.map((g) => (
+              <div key={g.id} className="pt-group">
+                <div className="pt-group-head">
+                  <span className="pt-group-name">{g.name}</span>
+                  <span className="user-card-badge badge-teal">
+                    {formatMinutes(g.minutes)}
+                  </span>
+                </div>
+                {g.items.map((en) => (
+                  <div key={en.id} className="pt-entry">
+                    <div className="pt-entry-top">
+                      <span className="pt-entry-time pt-entry-time-big">
+                        {en.start_time} – {en.end_time}
+                      </span>
+                      <span className="pt-entry-hours">
+                        {formatMinutes(Number(en.minutes))}
+                      </span>
+                    </div>
+                    {en.notes && (
+                      <div className="pt-entry-notes">{en.notes}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* TOTALI DELLA SETTIMANA */}
+        <div className="pt-card">
+          <h3 className="pt-card-title">Totale della settimana</h3>
+          {loading ? (
+            <p className="pt-empty">Caricamento…</p>
+          ) : groups.length === 0 ? (
+            <p className="pt-empty">
+              Nessuna registrazione in questa settimana.
+            </p>
+          ) : (
+            <>
+              {groups.map((g) => (
+                <div key={g.id} className="pt-trainer-row">
+                  <span className="pt-trainer-name">{g.name}</span>
+                  <span className="user-card-badge badge-teal">
+                    {formatMinutes(g.minutes)} · {formatDecimal(g.minutes)}
+                  </span>
+                </div>
+              ))}
+              {groups.length > 1 && (
+                <div className="pt-total">
+                  <span className="pt-total-label">Totale di tutti i PT</span>
+                  <span className="pt-total-value">
+                    {formatMinutes(totalMinutes)}
+                    <small> · {formatDecimal(totalMinutes)}</small>
+                  </span>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-wrap">
       {flash && <div className="pt-flash">{flash}</div>}
 
       {/* REGISTRA ORE */}
-      {!readOnly && (
       <form className="pt-card" onSubmit={saveEntry} ref={formRef}>
         <h3 className="pt-card-title">
           {editingId ? "Modifica registrazione" : "Registra ore"}
@@ -442,7 +641,6 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
           )}
         </div>
       </form>
-      )}
 
       {/* RIEPILOGO */}
       <div className="pt-card">
@@ -567,8 +765,9 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
                         {formatMinutes(Number(en.minutes))}
                       </span>
                     </div>
-                    {en.notes && <div className="pt-entry-notes">{en.notes}</div>}
-                    {!readOnly && (
+                    {en.notes && (
+                      <div className="pt-entry-notes">{en.notes}</div>
+                    )}
                     <div className="pt-entry-actions">
                       <button
                         type="button"
@@ -585,7 +784,6 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
                         Elimina
                       </button>
                     </div>
-                    )}
                   </div>
                 ))}
               </div>
@@ -595,7 +793,6 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
       </div>
 
       {/* COLLABORATORI */}
-      {!readOnly && (
       <div className="pt-card">
         <button
           type="button"
@@ -654,7 +851,6 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
           </div>
         )}
       </div>
-      )}
     </div>
   );
 }

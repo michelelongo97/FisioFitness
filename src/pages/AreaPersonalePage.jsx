@@ -340,10 +340,7 @@ export default function AreaPersonalePage() {
               </h3>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <Link to="/prenota" className="btn hero-book-btn">
-                  <strong>Prenota SALA</strong>
-                </Link>
-                <Link to="/prenota-corso" className="btn hero-book-btn">
-                  <strong>Prenota CORSO</strong>
+                  <strong>Prenota</strong>
                 </Link>
               </div>
             </div>

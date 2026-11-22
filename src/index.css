@@ -2816,3 +2816,74 @@ body {
     align-items: stretch;
   }
 }
+
+/* ORE PT: vista settimanale a calendario (sola lettura) */
+.pt-upper {
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.pt-entry-date {
+  text-transform: uppercase;
+}
+
+.pt-weekstrip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.pt-weekday {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 8px 0;
+  background: none;
+  border: none;
+  border-radius: 14px;
+  font: inherit;
+  color: #1e3a40;
+  cursor: pointer;
+}
+.pt-weekday-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b8388;
+}
+.pt-weekday-num {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.pt-weekday.today .pt-weekday-num {
+  color: #146272;
+  box-shadow: inset 0 0 0 2px #3da9a9;
+}
+.pt-weekday.active .pt-weekday-num {
+  background: #146272;
+  color: #fff;
+  box-shadow: none;
+}
+.pt-weekday-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+}
+.pt-weekday-dot.on {
+  background: #3da9a9;
+}
+.pt-entry-time-big {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e3a40;
+}
+.pt-today-link {
+  align-self: center;
+}
