@@ -99,6 +99,7 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
 
   const [mode, setMode] = useState(readOnly ? "week" : "month"); // week | month | range
   const [selectedDay, setSelectedDay] = useState(null); // giorno scelto nella vista a calendario
+  const [roView, setRoView] = useState("week"); // sola lettura: "week" (tutta la settimana) | "day" (giorno scelto)
   const [anchor, setAnchor] = useState(new Date());
   const [custom, setCustom] = useState({ from: todayISO, to: todayISO });
   const [filterTrainer, setFilterTrainer] = useState("all");
@@ -411,9 +412,12 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
                   key={iso}
                   type="button"
                   role="tab"
-                  aria-selected={iso === day}
-                  className={`pt-weekday ${iso === day ? "active" : ""} ${iso === todayISO ? "today" : ""}`}
-                  onClick={() => setSelectedDay(iso)}
+                  aria-selected={roView === "day" && iso === day}
+                  className={`pt-weekday ${roView === "day" && iso === day ? "active" : ""} ${iso === todayISO ? "today" : ""}`}
+                  onClick={() => {
+                    setSelectedDay(iso);
+                    setRoView("day");
+                  }}
                 >
                   <span className="pt-weekday-name">{wd}</span>
                   <span className="pt-weekday-num">{d.getDate()}</span>
@@ -424,6 +428,23 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
                 </button>
               );
             })}
+          </div>
+
+          <div className="pt-modes pt-modes-2">
+            <button
+              type="button"
+              className={`tab-btn ${roView === "week" ? "active" : ""}`}
+              onClick={() => setRoView("week")}
+            >
+              Tutta la settimana
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${roView === "day" ? "active" : ""}`}
+              onClick={() => setRoView("day")}
+            >
+              Giorno scelto
+            </button>
           </div>
 
           {!showsToday && (
@@ -457,75 +478,133 @@ export default function TrainerHoursTab({ headers, readOnly = false }) {
           </label>
         </div>
 
-        {/* GIORNO SCELTO */}
-        <div className="pt-card">
-          <h3 className="pt-card-title pt-upper">{formatDay(day)}</h3>
-          {loading ? (
-            <p className="pt-empty">Caricamento…</p>
-          ) : dayGroups.length === 0 ? (
-            <p className="pt-empty">
-              Nessun turno registrato in questo giorno.
-            </p>
-          ) : (
-            dayGroups.map((g) => (
-              <div key={g.id} className="pt-group">
-                <div className="pt-group-head">
-                  <span className="pt-group-name">{g.name}</span>
-                  <span className="user-card-badge badge-teal">
-                    {formatMinutes(g.minutes)}
-                  </span>
-                </div>
-                {g.items.map((en) => (
-                  <div key={en.id} className="pt-entry">
-                    <div className="pt-entry-top">
-                      <span className="pt-entry-time pt-entry-time-big">
-                        {en.start_time} – {en.end_time}
-                      </span>
-                      <span className="pt-entry-hours">
-                        {formatMinutes(Number(en.minutes))}
+        {/* TUTTA LA SETTIMANA: per PT, con tutti i turni */}
+        {roView === "week" && (
+          <div className="pt-card">
+            <h3 className="pt-card-title">Ore della settimana</h3>
+            {loading ? (
+              <p className="pt-empty">Caricamento…</p>
+            ) : groups.length === 0 ? (
+              <p className="pt-empty">
+                Nessuna registrazione in questa settimana.
+              </p>
+            ) : (
+              <>
+                {groups.map((g) => (
+                  <div key={g.id} className="pt-group">
+                    <div className="pt-group-head">
+                      <span className="pt-group-name">{g.name}</span>
+                      <span className="user-card-badge badge-teal">
+                        {formatMinutes(g.minutes)} · {formatDecimal(g.minutes)}
                       </span>
                     </div>
-                    {en.notes && (
-                      <div className="pt-entry-notes">{en.notes}</div>
-                    )}
+                    {g.items.map((en) => (
+                      <div key={en.id} className="pt-entry">
+                        <div className="pt-entry-top">
+                          <span className="pt-entry-date">
+                            {formatDay(en.work_date)}
+                          </span>
+                          <span className="pt-entry-hours">
+                            {formatMinutes(Number(en.minutes))}
+                          </span>
+                        </div>
+                        <div className="pt-entry-time pt-entry-time-big">
+                          {en.start_time} – {en.end_time}
+                        </div>
+                        {en.notes && (
+                          <div className="pt-entry-notes">{en.notes}</div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 ))}
-              </div>
-            ))
-          )}
-        </div>
+                {groups.length > 1 && (
+                  <div className="pt-total">
+                    <span className="pt-total-label">Totale di tutti i PT</span>
+                    <span className="pt-total-value">
+                      {formatMinutes(totalMinutes)}
+                      <small> · {formatDecimal(totalMinutes)}</small>
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
 
-        {/* TOTALI DELLA SETTIMANA */}
-        <div className="pt-card">
-          <h3 className="pt-card-title">Totale della settimana</h3>
-          {loading ? (
-            <p className="pt-empty">Caricamento…</p>
-          ) : groups.length === 0 ? (
-            <p className="pt-empty">
-              Nessuna registrazione in questa settimana.
-            </p>
-          ) : (
-            <>
-              {groups.map((g) => (
-                <div key={g.id} className="pt-trainer-row">
-                  <span className="pt-trainer-name">{g.name}</span>
-                  <span className="user-card-badge badge-teal">
-                    {formatMinutes(g.minutes)} · {formatDecimal(g.minutes)}
-                  </span>
+        {/* GIORNO SCELTO */}
+        {roView === "day" && (
+          <div className="pt-card">
+            <h3 className="pt-card-title pt-upper">{formatDay(day)}</h3>
+            {loading ? (
+              <p className="pt-empty">Caricamento…</p>
+            ) : dayGroups.length === 0 ? (
+              <p className="pt-empty">
+                Nessun turno registrato in questo giorno.
+              </p>
+            ) : (
+              dayGroups.map((g) => (
+                <div key={g.id} className="pt-group">
+                  <div className="pt-group-head">
+                    <span className="pt-group-name">{g.name}</span>
+                    <span className="user-card-badge badge-teal">
+                      {formatMinutes(g.minutes)}
+                    </span>
+                  </div>
+                  {g.items.map((en) => (
+                    <div key={en.id} className="pt-entry">
+                      <div className="pt-entry-top">
+                        <span className="pt-entry-time pt-entry-time-big">
+                          {en.start_time} – {en.end_time}
+                        </span>
+                        <span className="pt-entry-hours">
+                          {formatMinutes(Number(en.minutes))}
+                        </span>
+                      </div>
+                      {en.notes && (
+                        <div className="pt-entry-notes">{en.notes}</div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-              {groups.length > 1 && (
-                <div className="pt-total">
-                  <span className="pt-total-label">Totale di tutti i PT</span>
-                  <span className="pt-total-value">
-                    {formatMinutes(totalMinutes)}
-                    <small> · {formatDecimal(totalMinutes)}</small>
-                  </span>
-                </div>
-              )}
-            </>
-          )}
-        </div>
+              ))
+            )}
+          </div>
+        )}
+
+        {/* TOTALI DELLA SETTIMANA (vista giorno) */}
+        {roView === "day" && (
+          <div className="pt-card">
+            <h3 className="pt-card-title">Totale della settimana</h3>
+            {loading ? (
+              <p className="pt-empty">Caricamento…</p>
+            ) : groups.length === 0 ? (
+              <p className="pt-empty">
+                Nessuna registrazione in questa settimana.
+              </p>
+            ) : (
+              <>
+                {groups.map((g) => (
+                  <div key={g.id} className="pt-trainer-row">
+                    <span className="pt-trainer-name">{g.name}</span>
+                    <span className="user-card-badge badge-teal">
+                      {formatMinutes(g.minutes)} · {formatDecimal(g.minutes)}
+                    </span>
+                  </div>
+                ))}
+                {groups.length > 1 && (
+                  <div className="pt-total">
+                    <span className="pt-total-label">Totale di tutti i PT</span>
+                    <span className="pt-total-value">
+                      {formatMinutes(totalMinutes)}
+                      <small> · {formatDecimal(totalMinutes)}</small>
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
     );
   }

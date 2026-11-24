@@ -2887,3 +2887,11 @@ body {
 .pt-today-link {
   align-self: center;
 }
+.pt-modes-2 {
+  flex-wrap: nowrap;
+}
+.pt-modes-2 .tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  font-size: 14px;
+}
